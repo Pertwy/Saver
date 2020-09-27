@@ -70,7 +70,7 @@ export default function Saver({
       ...varTimeAndDateArray,
       varSaverRecord,
     ]);
-    //console.log(varTimeAndDateArray);
+    console.log(varTimeAndDateArray);
   }
 
   /*

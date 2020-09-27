@@ -12,9 +12,7 @@ import {
 //import "firebase/auth";
 import { Text } from "native-base";
 
-import firebaseConfig from '../../firebaseConfig.js';
-
-console.log(firebaseConfig)
+import firebaseConfig from "../../firebaseConfig.js";
 
 //var firebaseapp = require('firebase/app');
 //require("firebase/auth");
@@ -60,10 +58,9 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      
       <View style={styles.headingTopElement}>
-          <Text style={styles.informationTextHeading}>PROFILE</Text>
-        </View>
+        <Text style={styles.informationTextHeading}>PROFILE</Text>
+      </View>
 
       <View style={styles.loginForm}>
         <TextInput

@@ -152,6 +152,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
       setSaverColour("#FFF7F0");
       setGoalSwitch(true);
       setTransferMethod(1);
+      console.log("GIT  Friends");
       //storeSomething(saverTitle, saverAmount);
     }
   }
@@ -511,7 +512,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
 const styles = StyleSheet.create({
   optionalText: {
     alignItems: "center",
-    marginBottom:10
+    marginBottom: 10,
   },
   topButtons: {
     fontSize: 20,

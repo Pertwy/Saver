@@ -12,16 +12,9 @@ import {
 //import "firebase/auth";
 import { Text } from "native-base";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCldOuLQaxZxzblxlNYUzQr0A8FP2PxLQY",
-  authDomain: "saverapp-28931.firebaseapp.com",
-  databaseURL: "https://saverapp-28931.firebaseio.com",
-  projectId: "saverapp-28931",
-  storageBucket: "saverapp-28931.appspot.com",
-  messagingSenderId: "664778103227",
-  appId: "1:664778103227:web:12d27f3872086d73ab4c9e",
-  measurementId: "G-MCRZZMKTPE",
-};
+import firebaseConfig from '../../firebaseConfig.js';
+
+console.log(firebaseConfig)
 
 //var firebaseapp = require('firebase/app');
 //require("firebase/auth");

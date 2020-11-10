@@ -70,7 +70,7 @@ export default function Saver({
       ...varTimeAndDateArray,
       varSaverRecord,
     ]);
-    console.log(varTimeAndDateArray);
+    //console.log(varTimeAndDateArray);
   }
 
   /*
@@ -174,7 +174,7 @@ export default function Saver({
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
-        { text: "OK", onPress: () => Addition(TotalSaved)},
+        { text: "OK", onPress: () => Addition() },
       ],
       { cancelable: false }
     );
@@ -189,7 +189,7 @@ export default function Saver({
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
-        { text: "OK", onPress: () => Addition(TotalSaved) },
+        { text: "OK", onPress: () => Addition() },
       ],
       { cancelable: false }
     );
@@ -204,7 +204,7 @@ export default function Saver({
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
-        { text: "OK", onPress: () => Addition(TotalSaved)},
+        { text: "OK", onPress: () => Addition() },
       ],
       { cancelable: false }
     );

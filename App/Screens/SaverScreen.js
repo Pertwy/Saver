@@ -142,7 +142,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
         ...(addSaver.transfer = transferMethod),
       });
       handleSaverList();
-      //console.log(saverList);
+      console.log(saverList);
       setIdCount(idCount + 1);
       setModalVisible(false);
       setFormError(null);
@@ -497,7 +497,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
               GoalSwitch={item.goalSwitch}
               Transfer={item.transfer}
               Delete={() => deleteItemById(item.id)}
-              onPress={() => handleDeleteSaverList(item)}
+              //onPress={() => handleDeleteSaverList(item)}
               Addition={() => addToTotalSaved(item.price)}
               Variable={item.variable}
             />
@@ -511,7 +511,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
 const styles = StyleSheet.create({
   optionalText: {
     alignItems: "center",
-    marginBottom:10
+    marginBottom: 10,
   },
   topButtons: {
     fontSize: 20,

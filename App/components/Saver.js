@@ -81,7 +81,10 @@ export default function Saver({
     ...(addSaver.price = parseFloat(saverAmount).toFixed(2)),
   });*/
 
-  const handleModal = () => setModalVisible(true);
+  function handleModal() {
+    //console.log(varTimeAndDateArray)
+    return setModalVisible(true);
+  }
 
   function handleSaver() {
     setTotalSaved(parseFloat(TotalSaved) + parseFloat(varCost));

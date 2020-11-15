@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch } from "native-base";
 import {
   StyleSheet,
@@ -142,7 +142,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
         ...(addSaver.transfer = transferMethod),
       });
       handleSaverList();
-      console.log(saverList);
+      //console.log(saverList);
       setIdCount(idCount + 1);
       setModalVisible(false);
       setFormError(null);
@@ -158,10 +158,16 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
 
   function handleSaverList() {
     setSaverList((saverList) => [...saverList, addSaver]);
+    
   }
 
-  const handleAdd = () => setModalVisible(true);
-  const handleInfo = () => setInformationModalVisible(true);
+  function handleAdd() {
+    return setModalVisible(true);
+  }
+  function handleInfo() {
+    //console.log(saverList)
+    return setInformationModalVisible(true);
+  }
 
   deleteItemById = (id) => {
     const filteredData = saverList.filter((item) => item.id !== id);

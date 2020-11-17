@@ -41,6 +41,7 @@ const firebaseConfig = {
   measurementId: "G-MCRZZMKTPE",
 };
 
+
 export default function SaverScreen({ navigation }) {
   const [totalSaved, setTotalSaved] = useState(0);
   const [saverTitle, setSaverTitle] = useState("");

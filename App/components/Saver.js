@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -42,61 +42,40 @@ export default function Saver({
     date: "",
   });
 
-  function findDate() {
+
+
+  function timeAndDate() {
     var date = new Date().getDate(); //Current Date
     var month = new Date().getMonth() + 1; //Current Month
     var year = new Date().getFullYear(); //Current Year
     var hours = new Date().getHours(); //Current Hours
     var min = new Date().getMinutes(); //Current Minutes
     var sec = new Date().getSeconds(); //Current Seconds
-    setVarTimeAndDate(
-      date + "/" + month + "/" + year + " " + hours + ":" + min + ":" + sec
-    );
-  }
-
-  function timeAndDate() {
-    findDate();
-    setVarSaverRecord({
-      ...(varSaverRecord.amount = varCost),
-    });
-    setVarSaverRecord({
-      ...(varSaverRecord.date = varTimeAndDate),
-    });
-    handleDateAndTime();
-  }
-
-  function handleDateAndTime() {
+    return date + "/" + month + "/" + year + " " + hours + ":" + min + ":" + sec}
+    
+  function setArray(){
     setVarTimeAndDateArray((varTimeAndDateArray) => [
       ...varTimeAndDateArray,
-      varSaverRecord,
-    ]);
-    console.log(varTimeAndDateArray);
+      {amount: varCost, date: timeAndDate()},
+        ]);
   }
-
-  /*
-  setAddSaver({
-    ...(addSaver.title = saverTitle),
-  });
-  setAddSaver({
-    ...(addSaver.price = parseFloat(saverAmount).toFixed(2)),
-  });*/
+  
 
   function handleModal() {
     //console.log(varTimeAndDateArray)
+    //console.log(varTimeAndDate)
     return setModalVisible(true);
   }
 
   function handleSaver() {
     setTotalSaved(parseFloat(TotalSaved) + parseFloat(varCost));
-    timeAndDate();
-
+    setArray();
+    //This is where the update issue is
     if (transferOption == 1) {
       transfer1Alert();
     } else if (transferOption == 2 && TotalSaved >= varGoal) {
       transfer2Alert();
     }
-
-    //console.log(varCost);
   }
 
   let mainSaverText;

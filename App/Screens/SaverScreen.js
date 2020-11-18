@@ -158,7 +158,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
   }
 
   function handleSaverList() {
-    console.log('addSaver', addSaver);
+    //console.log('addSaver', addSaver);
     setSaverList((saverList) => [...saverList, addSaver]);
 
   }

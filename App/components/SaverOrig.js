@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,22 +11,23 @@ import {
   TouchableOpacity,
   Switch,
   ScrollView,
+  Variable,
+  ImagePropTypes,
 } from "react-native";
-import {MaterialCommunityIcons} from "@expo/vector-icons";
-import {AntDesign} from "@expo/vector-icons";
-import moment from 'moment';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function Saver({
-                                Title,
-                                Cost,
-                                Goal,
-                                onPress,
-                                Colour,
-                                GoalSwitch,
-                                Transfer,
-                                Delete,
-                                Addition,
-                              }) {
+  Title,
+  Cost,
+  Goal,
+  onPress,
+  Colour,
+  GoalSwitch,
+  Transfer,
+  Delete,
+  Addition,
+}) {
   const [TotalSaved, setTotalSaved] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [varTitle, setVarTitle] = useState(Title);
@@ -41,21 +42,39 @@ export default function Saver({
     date: "",
   });
 
+
+
+  function timeAndDate() {
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
+    var hours = new Date().getHours(); //Current Hours
+    var min = new Date().getMinutes(); //Current Minutes
+    var sec = new Date().getSeconds(); //Current Seconds
+    return date + "/" + month + "/" + year + " " + hours + ":" + min + ":" + sec}
+    
+  function setArray(){
+    setVarTimeAndDateArray((varTimeAndDateArray) => [
+      ...varTimeAndDateArray,
+      {amount: varCost, date: timeAndDate()},
+        ]);
+  }
+  
+
   function handleModal() {
+    //console.log(varTimeAndDateArray)
+    //console.log(varTimeAndDate)
     return setModalVisible(true);
   }
 
   function handleSaver() {
-    setVarTimeAndDateArray([...varTimeAndDateArray, {
-      amount: Cost,
-      date: moment().format("DD-MM-YY HH:mm:ss")
-    }]);
+    setTotalSaved(parseFloat(TotalSaved) + parseFloat(varCost));
+    setArray();
+    //This is where the update issue is
     if (transferOption == 1) {
       transfer1Alert();
-    } else if (transferOption == 2 && (parseFloat(TotalSaved) + parseFloat(varCost)) > parseFloat(varGoal)) {
+    } else if (transferOption == 2 && TotalSaved >= varGoal) {
       transfer2Alert();
-    } else {
-      setTotalSaved(parseFloat(TotalSaved) + parseFloat(varCost));
     }
   }
 
@@ -92,7 +111,7 @@ export default function Saver({
           style={styles.buttonAreaEdit}
         >
           <View>
-            <AntDesign name="edit" size={30} color="black"/>
+            <AntDesign name="edit" size={30} color="black" />
           </View>
         </TouchableOpacity>
       </View>
@@ -107,7 +126,7 @@ export default function Saver({
           style={styles.buttonAreaEdit}
         >
           <View>
-            <AntDesign name="edit" size={30} color="black"/>
+            <AntDesign name="edit" size={30} color="black" />
           </View>
         </TouchableOpacity>
 
@@ -137,14 +156,9 @@ export default function Saver({
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
-        {
-          text: "OK", onPress: () => {
-            setTotalSaved(parseFloat(TotalSaved) + parseFloat(varCost));
-            Addition()
-          }
-        },
+        { text: "OK", onPress: () => Addition() },
       ],
-      {cancelable: false}
+      { cancelable: false }
     );
 
   const transfer2Alert = () =>
@@ -157,14 +171,9 @@ export default function Saver({
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
-        {
-          text: "OK", onPress: () => {
-            setTotalSaved(parseFloat(TotalSaved) + parseFloat(varCost));
-            Addition()
-          }
-        },
+        { text: "OK", onPress: () => Addition() },
       ],
-      {cancelable: false}
+      { cancelable: false }
     );
 
   const transferAlert = () =>
@@ -177,9 +186,9 @@ export default function Saver({
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
-        {text: "OK", onPress: () => Addition()},
+        { text: "OK", onPress: () => Addition() },
       ],
-      {cancelable: false}
+      { cancelable: false }
     );
 
   function clickSaver() {
@@ -193,7 +202,7 @@ export default function Saver({
         <TouchableOpacity
           onPress={() => clickSaver()}
           onLongPress={() => handleModal()}
-          style={[styles.info, {backgroundColor: Colour}]}
+          style={[styles.info, { backgroundColor: Colour }]}
         >
           <View>
             <View style={styles.saverTop}>
@@ -254,7 +263,7 @@ export default function Saver({
               <Text style={styles.formQuestions}>Edit your goal?</Text>
               <View style={styles.switchView}>
                 <Switch
-                  trackColor={{true: "black", false: "red"}}
+                  trackColor={{ true: "black", false: "red" }}
                   value={varGoalSwitch}
                   onValueChange={(newValue) => setVarGoalSwitch(newValue)}
                 />
@@ -298,7 +307,7 @@ export default function Saver({
                   <Text
                     style={[
                       styles.transferButtonText,
-                      {color: transferOption == 1 ? "white" : "black"},
+                      { color: transferOption == 1 ? "white" : "black" },
                     ]}
                   >
                     On every click
@@ -320,7 +329,7 @@ export default function Saver({
                     <Text
                       style={[
                         styles.transferButtonText,
-                        {color: transferOption == 2 ? "white" : "black"},
+                        { color: transferOption == 2 ? "white" : "black" },
                       ]}
                     >
                       On achieving your goal
@@ -342,7 +351,7 @@ export default function Saver({
                   <Text
                     style={[
                       styles.transferButtonText,
-                      {color: transferOption == 3 ? "white" : "black"},
+                      { color: transferOption == 3 ? "white" : "black" },
                     ]}
                   >
                     Upon pressing the "transfer" button
@@ -363,7 +372,7 @@ export default function Saver({
                   <Text
                     style={[
                       styles.transferButtonText,
-                      {color: transferOption == 4 ? "white" : "black"},
+                      { color: transferOption == 4 ? "white" : "black" },
                     ]}
                   >
                     No Transfer
@@ -432,7 +441,7 @@ const styles = StyleSheet.create({
     margin: "5%",
     marginTop: 0,
     shadowColor: "black",
-    shadowOffset: {width: 6, height: 6},
+    shadowOffset: { width: 6, height: 6 },
     shadowOpacity: 0.4,
     flexDirection: "row",
   },

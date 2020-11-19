@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Switch } from "native-base";
+import React, {useState, useEffect} from "react";
+import {Switch} from "native-base";
 import {
   StyleSheet,
   Text,
@@ -16,7 +16,8 @@ import Saver from "../components/Saver";
 import InformationText from "../components/InformationText";
 import TransferInformationText from "../components/TransferInformationText";
 import IdeaInformationText from "../components/IdeaInformationText";
-import { FontAwesome } from "@expo/vector-icons";
+import {FontAwesome} from "@expo/vector-icons";
+import {add} from "react-native-reanimated";
 
 //import * as firebase from "firebase/app";
 //import "firebase/auth";
@@ -41,7 +42,7 @@ const firebaseConfig = {
   measurementId: "G-MCRZZMKTPE",
 };
 
-export default function SaverScreen({ navigation }) {
+export default function SaverScreen({navigation}) {
   const [totalSaved, setTotalSaved] = useState(0);
   const [saverTitle, setSaverTitle] = useState("");
   const [saverAmount, setSaverAmount] = useState("");
@@ -157,19 +158,21 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
   }
 
   function handleSaverList() {
+    //console.log('addSaver', addSaver);
     setSaverList((saverList) => [...saverList, addSaver]);
-    
+
   }
 
   function handleAdd() {
     return setModalVisible(true);
   }
+
   function handleInfo() {
     //console.log(saverList)
     return setInformationModalVisible(true);
   }
 
-  deleteItemById = (id) => {
+  const deleteItemById = (id) => {
     const filteredData = saverList.filter((item) => item.id !== id);
     setSaverList(filteredData);
     //console.log(id);
@@ -177,7 +180,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
     //console.log(totalSaved);
   };
 
-  addToTotalSaved = (addition) => {
+  const addToTotalSaved = (addition) => {
     setTotalSaved(totalSaved + parseFloat(addition));
     console.log(totalSaved);
   };
@@ -204,11 +207,11 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
         >
           <ScrollView>
             <SafeAreaView style={styles.informationContainer}>
-              <InformationText />
+              <InformationText/>
               <Button
                 title="Close"
                 onPress={() => setInformationModalVisible(false)}
-              ></Button>
+              />
             </SafeAreaView>
           </ScrollView>
         </Modal>
@@ -226,7 +229,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
                   <Button
                     title="Close"
                     onPress={() => closeAddModal()}
-                  ></Button>
+                  />
                 </View>
               </View>
               <View style={styles.formContainer}>
@@ -243,11 +246,11 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
 
                   <Modal visible={ideaModalVisible} animationType="slide">
                     <SafeAreaView>
-                      <IdeaInformationText />
+                      <IdeaInformationText/>
                       <Button
                         title="Close"
                         onPress={() => setIdeaModalVisible(false)}
-                      ></Button>
+                      />
                     </SafeAreaView>
                   </Modal>
                 </View>
@@ -266,7 +269,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
 
                   <View style={styles.costSwitchView}>
                     <Switch
-                      trackColor={{ true: "black", false: "red" }}
+                      trackColor={{true: "black", false: "red"}}
                       value={variable}
                       onValueChange={(newValue) => setVariable(newValue)}
                     />
@@ -295,7 +298,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
                   </Text>
                   <View style={styles.switchView}>
                     <Switch
-                      trackColor={{ true: "black", false: "red" }}
+                      trackColor={{true: "black", false: "red"}}
                       value={goalSwitch}
                       onValueChange={(newValue) => setGoalSwitch(newValue)}
                     />
@@ -328,11 +331,11 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
                     animationType="slide"
                   >
                     <SafeAreaView>
-                      <TransferInformationText />
+                      <TransferInformationText/>
                       <Button
                         title="Close"
                         onPress={() => setTransferMoneyModalVisible(false)}
-                      ></Button>
+                      />
                     </SafeAreaView>
                   </Modal>
                 </View>
@@ -352,7 +355,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
                       <Text
                         style={[
                           styles.transferButtonText,
-                          { color: transferMethod == 1 ? "white" : "black" },
+                          {color: transferMethod == 1 ? "white" : "black"},
                         ]}
                       >
                         On every click
@@ -375,7 +378,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
                         <Text
                           style={[
                             styles.transferButtonText,
-                            { color: transferMethod == 2 ? "white" : "black" },
+                            {color: transferMethod == 2 ? "white" : "black"},
                           ]}
                         >
                           On achieving your goal
@@ -398,7 +401,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
                       <Text
                         style={[
                           styles.transferButtonText,
-                          { color: transferMethod == 3 ? "white" : "black" },
+                          {color: transferMethod == 3 ? "white" : "black"},
                         ]}
                       >
                         Upon pressing the "transfer" button
@@ -420,7 +423,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
                       <Text
                         style={[
                           styles.transferButtonText,
-                          { color: transferMethod == 4 ? "white" : "black" },
+                          {color: transferMethod == 4 ? "white" : "black"},
                         ]}
                       >
                         No Transfer
@@ -444,7 +447,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
                       </View>
                     </TouchableOpacity>
 
-                    <FontAwesome name="arrow-right" size={24} color="black" />
+                    <FontAwesome name="arrow-right" size={24} color="black"/>
                     <View style={styles.inComingAccount}>
                       <Text>Select incoming account</Text>
                     </View>
@@ -489,12 +492,11 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
         {noSaver}
         <Text>Total Transfered: £{totalSaved.toFixed(2)}</Text>
       </View>
-      <SafeAreaView style={styles.saverArea}>
         <FlatList
-          nestedScrollEnabled
+          style={{flex: 1}}
           data={saverList}
           keyExtractor={(saverList) => saverList.id.toString()}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <Saver
               Title={item.title}
               Cost={item.price}
@@ -509,7 +511,6 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
             />
           )}
         />
-      </SafeAreaView>
     </View>
   );
 }
@@ -616,9 +617,9 @@ const styles = StyleSheet.create({
   transferSchedule: {
     padding: "5%",
   },
-  container: {
-    flex: 1,
-  },
+  // container: {
+  //   flex: 1,
+  // },
 
   headerText: {
     padding: 20,
@@ -631,7 +632,7 @@ const styles = StyleSheet.create({
   buttonArea: {
     maxHeight: "10%",
     flexDirection: "row",
-    justifyContent: "flex-end",
+    // justifyContent: "flex-end",
     justifyContent: "center",
     flex: 1,
     marginBottom: 15,

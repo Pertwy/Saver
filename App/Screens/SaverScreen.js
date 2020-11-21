@@ -63,24 +63,14 @@ export default function SaverScreen({navigation}) {
   const [ideaModalVisible, setIdeaModalVisible] = useState(false);
   const [variable, setVariable] = useState(false);
   const [counter, setCounter] = useState(0);
-  const [transferMoneyModalVisible, setTransferMoneyModalVisible] = useState(
-    false
-  );
+  const [transferMoneyModalVisible, setTransferMoneyModalVisible] = useState(false);
   const [saverList, setSaverList] = useState([]);
+  const [newSaverList, setNewSaverList] = useState();
   const [idCount, setIdCount] = useState(1);
   const [formError, setFormError] = useState(null);
-  const [addSaver, setAddSaver] = useState({
-    id: "",
-    title: "",
-    price: 0,
-    goal: 0,
-    goalSwitch: true,
-    colour: "#FFF7F0",
-    transfer: 1,
-  });
+
 
   let noSaver;
-
   if (saverList.length < 1 || saverList == undefined) {
     noSaver = <Text>Click "Add Saver" to get started</Text>;
   }
@@ -104,11 +94,6 @@ export default function SaverScreen({navigation}) {
       console.log("New high score: " + highscore);
     });
   }
-
-
-const issue = await getIssue()
-const owner = await getOwner(issue.ownerId)
-await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
 */
 
   function closeAddModal() {
@@ -130,50 +115,12 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
       setFormError("All fields must be filled in");
       //console.log(formError);
     } else {
-      setAddSaver({
-        ...(addSaver.title = saverTitle),
-      });
-      setAddSaver({
-        ...(addSaver.price = parseFloat(saverAmount).toFixed(2)),
-      });
-      setAddSaver({
-        ...(addSaver.goal = parseFloat(saverGoal).toFixed(2)),
-      });
-      setAddSaver({
-        ...(addSaver.id = idCount),
-      });
-      setAddSaver({
-        ...(addSaver.colour = saverColour),
-      });
-      setAddSaver({
-        ...(addSaver.goalSwitch = goalSwitch),
-      });
-      setAddSaver({
-        ...(addSaver.transfer = transferMethod),
-      });
-      
-      store.dispatch(newSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod))
-      console.log(store.getState())
-
-      handleSaverList();
-      //console.log(saverList);
-      setIdCount(idCount + 1);
-      setModalVisible(false);
-      setFormError(null);
-      setSaverTitle("");
-      setSaverGoal("");
-      setSaverAmount("");
-      setSaverColour("#FFF7F0");
-      setGoalSwitch(true);
-      setTransferMethod(1);
-      storeSomething(saverTitle, saverAmount);
+        store.dispatch(newSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod))
+        setNewSaverList(store.getState())
+        setIdCount(idCount + 1);
+        setModalVisible(false);
+      //storeSomething(saverTitle, saverAmount);
     }
-  }
-
-  function handleSaverList() {
-    //console.log('addSaver', addSaver);
-    setSaverList((saverList) => [...saverList, addSaver]);
-
   }
 
   function handleAdd() {
@@ -182,15 +129,13 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
 
   function handleInfo() {
     //console.log(saverList)
+    //console.log(newSaverList)
     return setInformationModalVisible(true);
   }
 
   const deleteItemById = (id) => {
     const filteredData = saverList.filter((item) => item.id !== id);
     setSaverList(filteredData);
-    //console.log(id);
-    //setTotalSaved(totalSaved + id);
-    //console.log(totalSaved);
   };
 
   const addToTotalSaved = (addition) => {
@@ -208,11 +153,6 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
           <Text style={styles.topButtons}>INFORMATION</Text>
         </TouchableOpacity>
 
-        {/*<Button
-          color="black"
-          title="Login Screen"
-          onPress={() => navigation.navigate("Card")}
-        />*/}
         <Modal
           style={styles.addModal}
           visible={informationModalVisible}
@@ -507,8 +447,8 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
       </View>
         <FlatList
           style={{flex: 1}}
-          data={saverList}
-          keyExtractor={(saverList) => saverList.id.toString()}
+          data={newSaverList}
+          keyExtractor={(newSaverList) => newSaverList.id.toString()}
           renderItem={({item}) => (
             <Saver
               Title={item.title}
@@ -516,7 +456,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
               Goal={item.goal}
               Colour={item.colour}
               GoalSwitch={item.goalSwitch}
-              Transfer={item.transfer}
+              Transfer={item.transOpt}
               Delete={() => deleteItemById(item.id)}
               //onPress={() => handleDeleteSaverList(item)}
               Addition={() => addToTotalSaved(item.price)}

@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {Provider} from "react-redux";
 import {
   StyleSheet,
   Text,
@@ -16,6 +17,10 @@ import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {AntDesign} from "@expo/vector-icons";
 import moment from 'moment';
 
+import {logClick} from "../Redux/actions"
+import store from "../Redux/store"
+
+
 export default function Saver({
                                 Title,
                                 Cost,
@@ -26,6 +31,7 @@ export default function Saver({
                                 Transfer,
                                 Delete,
                                 Addition,
+                                id,
                               }) {
   const [TotalSaved, setTotalSaved] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
@@ -51,12 +57,16 @@ export default function Saver({
       date: moment().format("DD-MM-YY HH:mm:ss")
     }]);
     if (transferOption == 1) {
-      transfer1Alert();
+      transfer1Alert();``
     } else if (transferOption == 2 && (parseFloat(TotalSaved) + parseFloat(varCost)) > parseFloat(varGoal)) {
       transfer2Alert();
     } else {
       setTotalSaved(parseFloat(TotalSaved) + parseFloat(varCost));
     }
+
+    store.dispatch(logClick(moment().format("DD-MM-YY HH:mm:ss"), id, TotalSaved))
+    console.log(store.getState())
+
   }
 
   let mainSaverText;
@@ -182,16 +192,12 @@ export default function Saver({
       {cancelable: false}
     );
 
-  function clickSaver() {
-    handleSaver();
-    //Addition
-  }
 
   return (
     <View>
       <View style={styles.saver}>
         <TouchableOpacity
-          onPress={() => clickSaver()}
+          onPress={() => handleSaver()}
           onLongPress={() => handleModal()}
           style={[styles.info, {backgroundColor: Colour}]}
         >

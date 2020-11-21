@@ -19,17 +19,10 @@ import IdeaInformationText from "../components/IdeaInformationText";
 import {FontAwesome} from "@expo/vector-icons";
 import {add} from "react-native-reanimated";
 
-//import * as firebase from "firebase/app";
-//import "firebase/auth";
+import {logClick, newSaver} from "../Redux/actions"
+import store from "../Redux/store"
 
-//var firebaseapp = require('firebase/app');
-//require("firebase/auth");
-//require("firebase/database");
-/*
-if (firebase.apps.length === 0) {
-  firebase.initializeApp({ firebaseConfig });
-}
-*/
+import * as firebase from 'firebase';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCldOuLQaxZxzblxlNYUzQr0A8FP2PxLQY",
@@ -39,8 +32,23 @@ const firebaseConfig = {
   storageBucket: "saverapp-28931.appspot.com",
   messagingSenderId: "664778103227",
   appId: "1:664778103227:web:12d27f3872086d73ab4c9e",
-  measurementId: "G-MCRZZMKTPE",
+  measurementId: "G-MCRZZMKTPE"
 };
+/*
+const database = firebase.database();
+const auth = firebase.auth()
+const admin = firebase.admin()
+
+admin.initializeApp(firebaseConfig);
+const Appp = firebase.initializeApp(firebaseConfig)
+*/
+
+
+/*
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}*/
+
 
 export default function SaverScreen({navigation}) {
   const [totalSaved, setTotalSaved] = useState(0);
@@ -77,7 +85,8 @@ export default function SaverScreen({navigation}) {
     noSaver = <Text>Click "Add Saver" to get started</Text>;
   }
 
-  /*//   Upload Function   ///////////////
+  //   Upload Function   //////////////
+  /*
   function storeSomething(saverTitle, saverAmount) {
     firebase
       .database()
@@ -142,6 +151,10 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
       setAddSaver({
         ...(addSaver.transfer = transferMethod),
       });
+      
+      store.dispatch(newSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod))
+      console.log(store.getState())
+
       handleSaverList();
       //console.log(saverList);
       setIdCount(idCount + 1);
@@ -153,7 +166,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
       setSaverColour("#FFF7F0");
       setGoalSwitch(true);
       setTransferMethod(1);
-      //storeSomething(saverTitle, saverAmount);
+      storeSomething(saverTitle, saverAmount);
     }
   }
 
@@ -508,6 +521,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
               //onPress={() => handleDeleteSaverList(item)}
               Addition={() => addToTotalSaved(item.price)}
               Variable={item.variable}
+              id = {item.id}
             />
           )}
         />

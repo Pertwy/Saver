@@ -1,5 +1,6 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -43,23 +44,5 @@ function App() {
     </NavigationContainer>
   );}
 
-/*
-function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Card" component={CardScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Saver" component={SaverScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-*/
 
 export default App;

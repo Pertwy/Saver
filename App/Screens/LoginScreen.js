@@ -8,14 +8,24 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
+import * as firebase from 'firebase';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   //Sign in Function /////////////
-  /*
+  
   function handleSignUp(email, password) {
+      if (password.length < 6) {
+        alert("Please enter more than 6 characters for a password");
+        return;
+      }
+      firebase.auth().createUserWithEmailAndPassword(email, password);
+    } 
+
+  /*
+    function handleSignUp(email, password) {
     try {
       if (password.length < 6) {
         alert("Please enter more than 6 characters for a password");
@@ -27,8 +37,10 @@ export default function LoginScreen({ navigation }) {
       console.log(error.toString());
     }
   }
+  */
 
   //Login Function ////////////
+
   function handleLogin(email, password) {
     try {
       firebase
@@ -39,8 +51,8 @@ export default function LoginScreen({ navigation }) {
         });
     } catch {
       console.log(error.toString());
-    }
-  }*/
+    }}
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -69,10 +81,10 @@ export default function LoginScreen({ navigation }) {
       <View style={styles.loginButtons}>
         <TouchableOpacity
           Style={styles.butContainer}
-          //onPress={() => handleLogin(email, password)}
-          onPress={() =>
-            console.log("Login - Email: " + email + "  Password: " + password)
-          }
+          onPress={() => handleLogin(email, password)}
+          //onPress={() =>
+            //console.log("Login - Email: " + email + "  Password: " + password)
+          //}
         >
           <View style={styles.button}>
             <Text style={styles.buttonText}>LOGIN</Text>
@@ -81,25 +93,15 @@ export default function LoginScreen({ navigation }) {
 
         <TouchableOpacity
           Style={styles.butContainer}
-          //onPress={() => handleSignUp(email, password)}
-          onPress={() =>
-            console.log("Sign up - Email: " + email + " Password: " + password)
-          }
+          onPress={() => handleSignUp(email, password)}
+          //onPress={() =>
+            //console.log("Sign up - Email: " + email + " Password: " + password)
+          //}
         >
           <View style={styles.button}>
             <Text style={styles.buttonText}>SIGN UP</Text>
           </View>
         </TouchableOpacity>
-
-        {/*
-        <TouchableOpacity
-          Style={styles.butContainer}
-          onPress={() => navigation.navigate("Saver")}
-        >
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>SAVER PAGE</Text>
-          </View>
-        </TouchableOpacity>*/}
       </View>
     </SafeAreaView>
   );
@@ -158,4 +160,4 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 40,
   },
-});
+})

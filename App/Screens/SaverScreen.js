@@ -19,7 +19,6 @@ import IdeaInformationText from "../components/IdeaInformationText";
 import {FontAwesome} from "@expo/vector-icons";
 import {newSaver} from "../Redux/actions"
 import store from "../Redux/store"
-
 import * as firebase from 'firebase';
 
 const firebaseConfig = {
@@ -32,26 +31,18 @@ const firebaseConfig = {
   appId: "1:664778103227:web:12d27f3872086d73ab4c9e",
   measurementId: "G-MCRZZMKTPE"
 };
-/*
-const database = firebase.database();
-const auth = firebase.auth()
-const admin = firebase.admin()
 
-admin.initializeApp(firebaseConfig);
-const Appp = firebase.initializeApp(firebaseConfig)
-*/
-
-/*
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-}*/
+}
 
 
 export default function SaverScreen({navigation}) {
+  const [user, setUser] = useState("John");
   const [totalSaved, setTotalSaved] = useState(0);
   const [saverTitle, setSaverTitle] = useState("");
-  const [saverAmount, setSaverAmount] = useState("");
-  const [saverGoal, setSaverGoal] = useState("");
+  const [saverAmount, setSaverAmount] = useState(0);
+  const [saverGoal, setSaverGoal] = useState(0);
   const [goalSwitch, setGoalSwitch] = useState(true);
   const [saverColour, setSaverColour] = useState("#FFF7F0");
   const [transferMethod, setTransferMethod] = useState(1);
@@ -72,15 +63,23 @@ export default function SaverScreen({navigation}) {
   }
 
   //   Upload Function   //////////////
-  /*
-  function storeSomething(saverTitle, saverAmount) {
+  function storeSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod) {
     firebase
       .database()
-      .ref("Title/" + saverTitle)
+      .ref()
+      .child(user)
+      .child("Savers")
+      .child(idCount)
       .set({
-        Amount: saverAmount,
+          colour : saverColour,
+          dateTime : [],
+          title : saverTitle,
+          goal : saverGoal,
+          goalSwitch : goalSwitch,
+          price : saverAmount,
+          runningTot : 0,
       });
-  }*/
+  }
 
   /*  Download function ////////////////////
 
@@ -115,7 +114,7 @@ export default function SaverScreen({navigation}) {
         setNewSaverList(store.getState())
         setIdCount(idCount + 1);
         closeAddModal();
-      //storeSomething(saverTitle, saverAmount);
+        //storeSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod);
     }
   }
 
@@ -126,7 +125,8 @@ export default function SaverScreen({navigation}) {
   function handleInfo() {
     //console.log(saverList)
     //console.log(newSaverList)
-    return setInformationModalVisible(true);
+    updateAddSaver()
+    //return setInformationModalVisible(true);
   }
 
   const deleteItemById = (id) => {

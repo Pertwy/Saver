@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Text } from "native-base";
 import {
   StyleSheet,
   TextInput,
@@ -7,21 +8,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
-
-//import * as firebase from "firebase/app";
-//import "firebase/auth";
-import { Text } from "native-base";
-
-import firebaseConfig from "../../firebaseConfig.js";
-
-//var firebaseapp = require('firebase/app');
-//require("firebase/auth");
-//require("firebase/database");
-
-/*
-if (firebase.apps.length === 0) {
-  firebase.initializeApp({ firebaseConfig });
-}*/
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");

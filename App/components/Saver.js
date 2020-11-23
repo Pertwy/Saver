@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import {Provider} from "react-redux";
 import {
   StyleSheet,
   Text,
@@ -25,9 +24,7 @@ export default function Saver({
                                 Title,
                                 Cost,
                                 Goal,
-                                onPress,
                                 Colour,
-                                GoalSwitch,
                                 Transfer,
                                 Delete,
                                 Addition,
@@ -40,22 +37,13 @@ export default function Saver({
   const [varGoal, setVarGoal] = useState(Goal);
   const [transferOption, setTransferOption] = useState(Transfer);
   const [varGoalSwitch, setVarGoalSwitch] = useState(true);
-  const [varTimeAndDateArray, setVarTimeAndDateArray] = useState([]);
-  const [varTimeAndDate, setVarTimeAndDate] = useState("");
-  const [varSaverRecord, setVarSaverRecord] = useState({
-    amount: "",
-    date: "",
-  });
+
 
   function handleModal() {
     return setModalVisible(true);
   }
 
   function handleSaver() {
-    setVarTimeAndDateArray([...varTimeAndDateArray, {
-      amount: Cost,
-      date: moment().format("DD-MM-YY HH:mm:ss")
-    }]);
     if (transferOption == 1) {
       transfer1Alert();``
     } else if (transferOption == 2 && (parseFloat(TotalSaved) + parseFloat(varCost)) > parseFloat(varGoal)) {
@@ -65,7 +53,7 @@ export default function Saver({
     }
 
     store.dispatch(logClick(moment().format("DD-MM-YY HH:mm:ss"), id, TotalSaved))
-    console.log(store.getState())
+    //console.log(store.getState())
 
   }
 

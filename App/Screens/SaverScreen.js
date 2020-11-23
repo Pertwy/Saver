@@ -17,9 +17,7 @@ import InformationText from "../components/InformationText";
 import TransferInformationText from "../components/TransferInformationText";
 import IdeaInformationText from "../components/IdeaInformationText";
 import {FontAwesome} from "@expo/vector-icons";
-import {add} from "react-native-reanimated";
-
-import {logClick, newSaver} from "../Redux/actions"
+import {newSaver} from "../Redux/actions"
 import store from "../Redux/store"
 
 import * as firebase from 'firebase';
@@ -43,7 +41,6 @@ admin.initializeApp(firebaseConfig);
 const Appp = firebase.initializeApp(firebaseConfig)
 */
 
-
 /*
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -62,7 +59,6 @@ export default function SaverScreen({navigation}) {
   const [informationModalVisible, setInformationModalVisible] = useState(false);
   const [ideaModalVisible, setIdeaModalVisible] = useState(false);
   const [variable, setVariable] = useState(false);
-  const [counter, setCounter] = useState(0);
   const [transferMoneyModalVisible, setTransferMoneyModalVisible] = useState(false);
   const [saverList, setSaverList] = useState([]);
   const [newSaverList, setNewSaverList] = useState();
@@ -118,7 +114,7 @@ export default function SaverScreen({navigation}) {
         store.dispatch(newSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod))
         setNewSaverList(store.getState())
         setIdCount(idCount + 1);
-        setModalVisible(false);
+        closeAddModal();
       //storeSomething(saverTitle, saverAmount);
     }
   }
@@ -140,7 +136,7 @@ export default function SaverScreen({navigation}) {
 
   const addToTotalSaved = (addition) => {
     setTotalSaved(totalSaved + parseFloat(addition));
-    console.log(totalSaved);
+    //console.log(totalSaved);
   };
 
   return (

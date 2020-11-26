@@ -67,25 +67,6 @@ export default function SaverScreen({navigation}) {
     noSaver = <Text>Click "Add Saver" to get started</Text>;
   }
 
-  //   Upload Function   //////////////
-  function storeSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod) {
-    firebase
-      .database()
-      .ref()
-      .child((userStore.getState().user).substring(0, (userStore.getState().user).indexOf("@")))
-      .child("Savers")
-      .child(idCount)
-      .set({
-          colour : saverColour,
-          dateTime : [],
-          title : saverTitle,
-          goal : saverGoal,
-          goalSwitch : goalSwitch,
-          price : saverAmount,
-          runningTot : 0,
-      });
-  }
-
   /*  Download function ////////////////////
 
   setupHighscoreListener(userId) {

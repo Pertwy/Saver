@@ -19,6 +19,14 @@ export default function LoginScreen({ navigation }) {
 
   //Sign in Function /////////////
   
+  function backup(){
+    firebase
+      .database()
+      .ref()
+      .child(store.getState().user)
+      .set(store.getState());
+  }
+
 
   function navSaver(){
     navigation.navigate('Saver')}
@@ -30,8 +38,9 @@ export default function LoginScreen({ navigation }) {
         return;
       }
       //firebase.auth().createUserWithEmailAndPassword(email, password);
-      store.dispatch(currentUser(email))
+      store.dispatch(currentUser(email.substring(0, email.indexOf("@"))))
       console.log(store.getState().user)
+      
       navSaver()
       setEmail("")
       setPassword("")
@@ -95,9 +104,6 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity
           Style={styles.butContainer}
           onPress={() => handleLogin(email, password)}
-          //onPress={() =>
-            //console.log("Login - Email: " + email + "  Password: " + password)
-          //}
         >
           <View style={styles.button}>
             <Text style={styles.buttonText}>LOGIN</Text>
@@ -107,14 +113,21 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity
           Style={styles.butContainer}
           onPress={() => handleSignUp(email, password)}
-          //onPress={() =>
-            //console.log("Sign up - Email: " + email + " Password: " + password)
-          //}
         >
           <View style={styles.button}>
             <Text style={styles.buttonText}>SIGN UP</Text>
           </View>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          Style={styles.butContainer}
+          onPress={() => backup()}
+        >
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>BACKUP DATA</Text>
+          </View>
+        </TouchableOpacity>
+
       </View>
     </SafeAreaView>
   );

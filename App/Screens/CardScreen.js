@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
+  ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Cards from "../components/Cards";
@@ -46,7 +47,6 @@ export default function CardScreen({ navigation }) {
     setAddCardSwitch(false);
     store.dispatch(newCardOut(accountNumber,sortCode,accountName, idCounter))
     setNewCardListOut(store.getState().cardsOut)
-    //storeCardsOut(sortCode, accountName, idCounter, accountNumber)
     setIdCounter(idCounter + 1);
   }
 
@@ -78,38 +78,7 @@ export default function CardScreen({ navigation }) {
     store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounterIn))
     setNewCardListIn(store.getState().cardsIn)
     console.log(store.getState())
-    //storeCardsIn(sortCodeIn, accountNameIn, idCounterIn, accountNumberIn)
     setIdCounterIn(idCounterIn + 1);
-  }
-
-  function storeCardsIn(sortCodeIn, accountNameIn, idCounterIn, accountNumberIn) {
-    firebase
-      .database()
-      .ref()
-      .child((store.getState().user).substring(0, (store.getState().user).indexOf("@")))
-      .child("cardsIn")
-      .child(idCounterIn)
-      .set({
-          id : idCounterIn,
-          cardName : accountNameIn,
-          accountNumber : accountNumberIn,
-          sortCode: sortCodeIn
-      });
-  }
-
-  function storeCardsOut(sortCode, accountName, idCounter, accountNumber) {
-    firebase
-      .database()
-      .ref()
-      .child((store.getState().user).substring(0, (store.getState().user).indexOf("@")))
-      .child("cardsOut")
-      .child(idCounter)
-      .set({
-          id : idCounter,
-          cardName : accountName,
-          accountNumber : accountNumber,
-          sortCode: sortCode
-      });
   }
 
   return (

@@ -127,6 +127,7 @@ export default function CardScreen({ navigation }) {
         </View>
 
         <FlatList
+          style={{flex: 1}}
           data={newCardListOut}
           keyExtractor={(newCardListOut) => newCardListOut.id.toString()}
           renderItem={({ item }) => (
@@ -187,6 +188,7 @@ export default function CardScreen({ navigation }) {
         </View>
 
         <FlatList
+          style={{flex: 1}}
           data={newCardListIn}
           keyExtractor={(newCardListIn) => newCardListIn.id.toString()}
           renderItem={({ item }) => (

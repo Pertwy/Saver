@@ -17,6 +17,9 @@ import InformationText from "../components/InformationText";
 import TransferInformationText from "../components/TransferInformationText";
 import IdeaInformationText from "../components/IdeaInformationText";
 import {FontAwesome} from "@expo/vector-icons";
+import DropDownPicker from 'react-native-dropdown-picker';
+import Icon from 'react-native-vector-icons/Feather';
+import { AntDesign } from "@expo/vector-icons";
 
 import {newSaver} from "../Redux/actions";
 import {store} from "../Redux/store";
@@ -396,8 +399,26 @@ export default function SaverScreen({navigation}) {
                     </TouchableOpacity>
 
                     <FontAwesome name="arrow-right" size={24} color="black"/>
+
                     <View style={styles.inComingAccount}>
-                      <Text>Select incoming account</Text>
+                      <DropDownPicker
+                          items={[
+                              {label: 'USA', value: 'usa', icon: () => <AntDesign name="creditcard" size={18} color="black" />, hidden: true},
+                              {label: 'UK', value: 'uk', icon: () => <AntDesign name="creditcard" size={18} color="black" />},
+                              {label: 'France', value: 'france', icon: () => <AntDesign name="creditcard" size={18} color="black" />},
+                          ]}
+                          //defaultValue={this.state.country}
+                          placeholder = "Select incoming details"
+                          containerStyle={{height: 40, zIndex:-100,}}
+                          style={{backgroundColor: '#fafafa'}}
+                          itemStyle={{
+                              justifyContent: 'flex-start'
+                          }}
+                          dropDownStyle={{backgroundColor: '#fafafa', zIndex:-100,}}
+                          onChangeItem={item => this.setState({
+                              country: item.value
+                          })}
+                      />
                     </View>
                   </View>
                 </View>
@@ -478,7 +499,8 @@ const styles = StyleSheet.create({
     marginRight: "5%",
     width: "40%",
     height: 50,
-    backgroundColor: "#ccc",
+    zIndex:-100,
+    //backgroundColor: "#ccc",
   },
   outGoingAccount: {
     marginLeft: "5%",

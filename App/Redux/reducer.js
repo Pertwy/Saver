@@ -66,4 +66,17 @@ export function reducer(state = start, action){
         return produce(state, draftState => {
             draftState.user = action.payload.currentUser
         })
+
+    else if (action.type === actions.EDIT_SAVER)
+        return produce(state, draftState => {
+            const index = draftState.savers.findIndex(saver => saver.id === action.payload.id)
+            draftState.savers[index].title = action.payload.title
+            draftState.savers[index].price = action.payload.price
+            draftState.savers[index].goalSwitch = action.payload.goalSwitch
+            draftState.savers[index].title = action.payload.title
+            draftState.savers[index].goal = action.payload.goal
+            draftState.savers[index].colour = action.payload.colour
+            draftState.savers[index].transOpt = action.payload.transOpt
+            draftState.savers[index].runningTot = parseFloat(action.payload.runningTot)
+        })    
 }

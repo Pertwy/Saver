@@ -64,13 +64,28 @@ export function newSaver(id, title, price, goalSwitch, goal, colour, transOpt){
             id,
             title,
             price,
-            //price: parseFloat(price),
             goalSwitch,
             goal,
             colour,
             transOpt,
             runningTot : 0,
             dateTime: []
+        }
+    }
+}
+
+export function editSaver(id, title, price, goalSwitch, goal, colour, transOpt, runningTot){
+    return{
+        type: actions.EDIT_SAVER,
+        payload:{
+            id,
+            title,
+            price,
+            goalSwitch,
+            goal,
+            colour,
+            transOpt,
+            runningTot,
         }
     }
 }

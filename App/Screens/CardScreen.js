@@ -11,20 +11,19 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Cards from "../components/Cards";
+import * as firebase from 'firebase';
+import {newCardOut, newCardIn} from "../Redux/actions";
+import {store} from "../Redux/store";
 
 export default function CardScreen({ navigation }) {
   const [addCardSwitch, setAddCardSwitch] = useState(false);
-  const [cardList, setCardList] = useState([]);
   const [sortCode, setSortCode] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [idCounter, setIdCounter] = useState(1);
   const [accountName, setAccountName] = useState("");
-  const [addNewCard, setAddNewCard] = useState({
-    id: 0,
-    sort: 0,
-    account: 0,
-    name: "",
-  });
+  const [newCardListIn, setNewCardListIn] = useState()
+  const [newCardListOut, setNewCardListOut] = useState()
+
 
   let addSubtract;
   if (addCardSwitch == true) {
@@ -44,43 +43,18 @@ export default function CardScreen({ navigation }) {
   }
 
   function addCard() {
-    setAddNewCard({
-      ...(addNewCard.sort = parseFloat(sortCode)),
-    });
-
-    setAddNewCard({
-      ...(addNewCard.account = parseFloat(accountNumber)),
-    });
-
-    setAddNewCard({
-      ...(addNewCard.id = idCounter),
-    });
-    setAddNewCard({
-      ...(addNewCard.name = accountName),
-    });
-
     setAddCardSwitch(false);
-    updateCardList();
+    store.dispatch(newCardOut(accountNumber,sortCode,accountName, idCounter))
+    setNewCardListOut(store.getState().cardsOut)
+    //storeCardsOut(sortCode, accountName, idCounter, accountNumber)
     setIdCounter(idCounter + 1);
   }
 
-  function updateCardList() {
-    setCardList((cardList) => [...cardList, addNewCard]);
-    //console.log(cardList);
-  }
-
   const [addCardSwitchIn, setAddCardSwitchIn] = useState(false);
-  const [cardListIn, setCardListIn] = useState([]);
   const [sortCodeIn, setSortCodeIn] = useState("");
   const [accountNumberIn, setAccountNumberIn] = useState("");
   const [idCounterIn, setIdCounterIn] = useState(1);
   const [accountNameIn, setAccountNameIn] = useState("");
-  const [addNewCardIn, setAddNewCardIn] = useState({
-    id: 0,
-    sort: 0,
-    account: 0,
-    name: "",
-  });
 
   let addSubtractIn;
   if (addCardSwitchIn == true) {
@@ -100,29 +74,42 @@ export default function CardScreen({ navigation }) {
   }
 
   function addCardIn() {
-    setAddNewCardIn({
-      ...(addNewCardIn.sort = parseFloat(sortCodeIn)),
-    });
-
-    setAddNewCardIn({
-      ...(addNewCardIn.account = parseFloat(accountNumberIn)),
-    });
-
-    setAddNewCardIn({
-      ...(addNewCardIn.id = idCounterIn),
-    });
-    setAddNewCardIn({
-      ...(addNewCardIn.name = accountNameIn),
-    });
-
     setAddCardSwitchIn(false);
-    updateCardListIn();
+    store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounterIn))
+    setNewCardListIn(store.getState().cardsIn)
+    console.log(store.getState())
+    //storeCardsIn(sortCodeIn, accountNameIn, idCounterIn, accountNumberIn)
     setIdCounterIn(idCounterIn + 1);
   }
 
-  function updateCardListIn() {
-    setCardListIn((cardListIn) => [...cardListIn, addNewCardIn]);
-    //console.log(cardList);
+  function storeCardsIn(sortCodeIn, accountNameIn, idCounterIn, accountNumberIn) {
+    firebase
+      .database()
+      .ref()
+      .child((store.getState().user).substring(0, (store.getState().user).indexOf("@")))
+      .child("cardsIn")
+      .child(idCounterIn)
+      .set({
+          id : idCounterIn,
+          cardName : accountNameIn,
+          accountNumber : accountNumberIn,
+          sortCode: sortCodeIn
+      });
+  }
+
+  function storeCardsOut(sortCode, accountName, idCounter, accountNumber) {
+    firebase
+      .database()
+      .ref()
+      .child((store.getState().user).substring(0, (store.getState().user).indexOf("@")))
+      .child("cardsOut")
+      .child(idCounter)
+      .set({
+          id : idCounter,
+          cardName : accountName,
+          accountNumber : accountNumber,
+          sortCode: sortCode
+      });
   }
 
   return (
@@ -140,8 +127,8 @@ export default function CardScreen({ navigation }) {
         </View>
 
         <FlatList
-          data={cardList}
-          keyExtractor={(cardList) => cardList.id.toString()}
+          data={newCardListOut}
+          keyExtractor={(newCardListOut) => newCardListOut.id.toString()}
           renderItem={({ item }) => (
             <Cards
               SortCode={item.sort}
@@ -200,8 +187,8 @@ export default function CardScreen({ navigation }) {
         </View>
 
         <FlatList
-          data={cardListIn}
-          keyExtractor={(cardListIn) => cardListIn.id.toString()}
+          data={newCardListIn}
+          keyExtractor={(newCardListIn) => newCardListIn.id.toString()}
           renderItem={({ item }) => (
             <Cards
               SortCode={item.sort}
@@ -210,13 +197,7 @@ export default function CardScreen({ navigation }) {
             />
           )}
         />
-        {/*}
-        <View style={styles.addCard}>
-          <TouchableOpacity onPress={() => viewAddCardIn()}>
-            {addSubtractIn}
-          </TouchableOpacity>
-          <Text style={styles.addCardText}>ADD A CARD</Text>
-          </View>*/}
+
 
         {addCardSwitchIn && (
           <View>

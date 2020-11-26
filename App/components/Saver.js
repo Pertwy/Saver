@@ -17,7 +17,7 @@ import {AntDesign} from "@expo/vector-icons";
 import moment from 'moment';
 
 import {logClick} from "../Redux/actions"
-import store from "../Redux/store"
+import {store} from "../Redux/store"
 
 
 export default function Saver({
@@ -53,7 +53,7 @@ export default function Saver({
     }
 
     store.dispatch(logClick(moment().format("DD-MM-YY HH:mm:ss"), id, TotalSaved))
-    //console.log(store.getState())
+    console.log(store.getState())
 
   }
 

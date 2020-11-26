@@ -17,8 +17,10 @@ import InformationText from "../components/InformationText";
 import TransferInformationText from "../components/TransferInformationText";
 import IdeaInformationText from "../components/IdeaInformationText";
 import {FontAwesome} from "@expo/vector-icons";
-import {newSaver} from "../Redux/actions"
-import store from "../Redux/store"
+
+import {newSaver} from "../Redux/actions";
+import {store} from "../Redux/store";
+
 import * as firebase from 'firebase';
 
 const firebaseConfig = {
@@ -67,7 +69,7 @@ export default function SaverScreen({navigation}) {
     firebase
       .database()
       .ref()
-      .child(user)
+      .child((userStore.getState().user).substring(0, (userStore.getState().user).indexOf("@")))
       .child("Savers")
       .child(idCount)
       .set({
@@ -111,7 +113,8 @@ export default function SaverScreen({navigation}) {
       //console.log(formError);
     } else {
         store.dispatch(newSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod))
-        setNewSaverList(store.getState())
+        setNewSaverList(store.getState().savers)
+        console.log(store.getState())
         setIdCount(idCount + 1);
         closeAddModal();
         //storeSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod);
@@ -123,10 +126,7 @@ export default function SaverScreen({navigation}) {
   }
 
   function handleInfo() {
-    //console.log(saverList)
-    //console.log(newSaverList)
-    updateAddSaver()
-    //return setInformationModalVisible(true);
+    return setInformationModalVisible(true);
   }
 
   const deleteItemById = (id) => {
@@ -136,7 +136,6 @@ export default function SaverScreen({navigation}) {
 
   const addToTotalSaved = (addition) => {
     setTotalSaved(totalSaved + parseFloat(addition));
-    //console.log(totalSaved);
   };
 
   return (

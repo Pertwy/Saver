@@ -9,19 +9,32 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as firebase from 'firebase';
+import {currentUser} from "../Redux/actions"
+import {store} from "../Redux/store"
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState("");
 
   //Sign in Function /////////////
   
+
+  function navSaver(){
+    navigation.navigate('Saver')}
+
+
   function handleSignUp(email, password) {
       if (password.length < 6) {
         alert("Please enter more than 6 characters for a password");
         return;
       }
-      firebase.auth().createUserWithEmailAndPassword(email, password);
+      //firebase.auth().createUserWithEmailAndPassword(email, password);
+      store.dispatch(currentUser(email))
+      console.log(store.getState().user)
+      navSaver()
+      //setEmail("")
+      //setPassword("")
     } 
 
   /*

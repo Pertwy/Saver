@@ -1,5 +1,32 @@
 import * as actions from "./actionNames";
 
+export function removeCardIn(id){
+    return{
+        type: actions.REMOVE_CARD,
+        payload:{
+            id,
+        }
+    }
+}
+
+export function removeCardOut(id){
+    return{
+        type: actions.REMOVE_CARD,
+        payload:{
+            id,
+        }
+    }
+}
+
+export function removeSaver(id){
+    return{
+        type: actions.REMOVE_SAVER,
+        payload:{
+            id,
+        }
+    }
+}
+
 export function logClick(dateTime, id, total){
     return{
         type: actions.LOG_CLICK,

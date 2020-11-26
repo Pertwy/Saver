@@ -16,6 +16,34 @@ export function reducer(state = start, action){
             draftState.savers.push(action.payload)
         })
 
+    else if (action.type === actions.REMOVE_SAVER)
+        return produce(state, draftState => {
+            const index = draftState.savers.findIndex(saver => saver.id === action.payload.id)
+            delete draftState.savers[index]
+            draftState.savers = draftState.savers.filter(function( element ) {
+                return element !== undefined;
+             });
+            //console.log(index)
+        })
+
+    else if (action.type === actions.REMOVE_CARD_IN)
+        return produce(state, draftState => {
+            const index = draftState.cardsIn.findIndex(card => card.id === action.payload.id)
+            delete draftState.cardsIn[index]
+            draftState.savers = draftState.cardsIn.filter(function( element ) {
+                return element !== undefined;
+            });
+        })
+
+    else if (action.type === actions.REMOVE_CARD_OUT)
+        return produce(state, draftState => {
+            const index = draftState.cardsOut.findIndex(card => card.id === action.payload.id)
+            delete draftState.cardsOut[index]
+            draftState.savers = draftState.cardsOut.filter(function( element ) {
+                return element !== undefined;
+            });
+        })
+
     else if (action.type === actions.NEW_CARD_IN)
         return produce(state, draftState => {
             draftState.cardsIn.push(action.payload)

@@ -443,6 +443,7 @@ export default function SaverScreen({navigation}) {
         <FlatList
           style={{flex: 1}}
           data={newSaverList}
+          //extraData={store.getState().savers}
           keyExtractor={(newSaverList) => newSaverList.id.toString()}
           renderItem={({item}) => (
             <Saver

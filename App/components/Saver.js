@@ -16,7 +16,7 @@ import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {AntDesign} from "@expo/vector-icons";
 import moment from 'moment';
 
-import {logClick} from "../Redux/actions"
+import {logClick, removeSaver} from "../Redux/actions"
 import {store} from "../Redux/store"
 
 
@@ -26,7 +26,6 @@ export default function Saver({
                                 Goal,
                                 Colour,
                                 Transfer,
-                                Delete,
                                 Addition,
                                 id,
                               }) {
@@ -38,6 +37,12 @@ export default function Saver({
   const [transferOption, setTransferOption] = useState(Transfer);
   const [varGoalSwitch, setVarGoalSwitch] = useState(true);
 
+
+  function deleteSaver(){
+    store.dispatch(removeSaver(id));
+    console.log(store.getState());
+    return setModalVisible(false);
+  }
 
   function handleModal() {
     return setModalVisible(true);
@@ -365,7 +370,7 @@ export default function Saver({
                 </View>
               </TouchableOpacity>
             </View>
-            <Button title="Delete Saver" color="red" onPress={Delete}></Button>
+            <Button title="Delete Saver" color="red" onPress={() =>deleteSaver()}></Button>
           </SafeAreaView>
         </ScrollView>
       </Modal>

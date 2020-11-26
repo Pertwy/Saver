@@ -33,8 +33,8 @@ export default function LoginScreen({ navigation }) {
       store.dispatch(currentUser(email))
       console.log(store.getState().user)
       navSaver()
-      //setEmail("")
-      //setPassword("")
+      setEmail("")
+      setPassword("")
     } 
 
   /*

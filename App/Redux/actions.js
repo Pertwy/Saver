@@ -11,13 +11,33 @@ export function logClick(dateTime, id, total){
     }   
 }
 
+export function newCardIn(acount, sort, name, id){
+    return{
+        type: actions.NEW_CARD_IN,
+        payload:{
+            name,
+            acount,
+            sort,
+            id}}}
+
+export function newCardOut(acount, sort, name, id){
+    return{
+        type: actions.NEW_CARD_OUT,
+        payload:{
+            name,
+            acount,
+            sort,
+            id,}}}
+
+
 export function newSaver(id, title, price, goalSwitch, goal, colour, transOpt){
     return{
         type: actions.NEW_SAVER,
         payload:{
             id,
             title,
-            price: parseFloat(price),
+            price,
+            //price: parseFloat(price),
             goalSwitch,
             goal,
             colour,
@@ -26,4 +46,13 @@ export function newSaver(id, title, price, goalSwitch, goal, colour, transOpt){
             dateTime: []
         }
     }
+}
+
+export function currentUser(currentUser){
+    return{
+        type: actions.CURRENT_USER,
+        payload:{
+            currentUser,
+        }
+    }   
 }

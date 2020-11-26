@@ -1,24 +1,41 @@
+import { Immer } from "immer"
 import * as actions from "./actionNames"
+import {produce} from "immer"
 
-function reducer(state = [], action){
-    if (action.type === actions.NEW_SAVER)
-        return [
-            ...state, action.payload]
-
-    else if (action.type === actions.LOG_CLICK)
-        return state.map((item, index) => {
-            if(item.id === action.payload.id) {
-                return {
-                    ...item,
-                        dateTime: action.payload.dateTime ,
-                        runningTot: item.runningTot + item.price
-                }
-            }  
-            return item
-        })
-        //return [
-          //  ...state, action.payload.dateTime];
+let start = {
+    user:"",
+    savers:[],
+    cardsIn:[],
+    cardsOut:[],
 }
 
 
-export default reducer
+export function reducer(state = start, action){
+    if (action.type === actions.NEW_SAVER)
+        return produce(state, draftState => {
+            draftState.savers.push(action.payload)
+        })
+
+    else if (action.type === actions.NEW_CARD_IN)
+        return produce(state, draftState => {
+            draftState.cardsIn.push(action.payload)
+        })
+
+    else if (action.type === actions.NEW_CARD_OUT)
+        return produce(state, draftState => {
+            draftState.cardsOut.push(action.payload)
+        })
+
+    else if (action.type === actions.LOG_CLICK)
+        return produce(state, draftState => {
+            const index = draftState.savers.findIndex(saver => saver.id === action.payload.id)
+            draftState.savers[index].dateTime.push(action.payload.dateTime)
+            draftState.savers[index].runningTot += parseFloat(draftState.savers[index].price)
+        
+        })
+
+    else if (action.type === actions.CURRENT_USER)
+        return produce(state, draftState => {
+            draftState.user = action.payload.currentUser
+        })
+}

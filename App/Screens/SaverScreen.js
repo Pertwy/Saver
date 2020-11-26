@@ -17,10 +17,9 @@ import InformationText from "../components/InformationText";
 import TransferInformationText from "../components/TransferInformationText";
 import IdeaInformationText from "../components/IdeaInformationText";
 import {FontAwesome} from "@expo/vector-icons";
-import {add} from "react-native-reanimated";
 
-import {logClick, newSaver} from "../Redux/actions"
-import store from "../Redux/store"
+import {newSaver} from "../Redux/actions";
+import {store} from "../Redux/store";
 
 import * as firebase from 'firebase';
 
@@ -34,27 +33,18 @@ const firebaseConfig = {
   appId: "1:664778103227:web:12d27f3872086d73ab4c9e",
   measurementId: "G-MCRZZMKTPE"
 };
-/*
-const database = firebase.database();
-const auth = firebase.auth()
-const admin = firebase.admin()
 
-admin.initializeApp(firebaseConfig);
-const Appp = firebase.initializeApp(firebaseConfig)
-*/
-
-
-/*
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-}*/
+}
 
 
 export default function SaverScreen({navigation}) {
+  const [user, setUser] = useState("John");
   const [totalSaved, setTotalSaved] = useState(0);
   const [saverTitle, setSaverTitle] = useState("");
-  const [saverAmount, setSaverAmount] = useState("");
-  const [saverGoal, setSaverGoal] = useState("");
+  const [saverAmount, setSaverAmount] = useState(0);
+  const [saverGoal, setSaverGoal] = useState(0);
   const [goalSwitch, setGoalSwitch] = useState(true);
   const [saverColour, setSaverColour] = useState("#FFF7F0");
   const [transferMethod, setTransferMethod] = useState(1);
@@ -62,39 +52,36 @@ export default function SaverScreen({navigation}) {
   const [informationModalVisible, setInformationModalVisible] = useState(false);
   const [ideaModalVisible, setIdeaModalVisible] = useState(false);
   const [variable, setVariable] = useState(false);
-  const [counter, setCounter] = useState(0);
-  const [transferMoneyModalVisible, setTransferMoneyModalVisible] = useState(
-    false
-  );
+  const [transferMoneyModalVisible, setTransferMoneyModalVisible] = useState(false);
   const [saverList, setSaverList] = useState([]);
+  const [newSaverList, setNewSaverList] = useState();
   const [idCount, setIdCount] = useState(1);
   const [formError, setFormError] = useState(null);
-  const [addSaver, setAddSaver] = useState({
-    id: "",
-    title: "",
-    price: 0,
-    goal: 0,
-    goalSwitch: true,
-    colour: "#FFF7F0",
-    transfer: 1,
-  });
+
 
   let noSaver;
-
   if (saverList.length < 1 || saverList == undefined) {
     noSaver = <Text>Click "Add Saver" to get started</Text>;
   }
 
   //   Upload Function   //////////////
-  /*
-  function storeSomething(saverTitle, saverAmount) {
+  function storeSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod) {
     firebase
       .database()
-      .ref("Title/" + saverTitle)
+      .ref()
+      .child((userStore.getState().user).substring(0, (userStore.getState().user).indexOf("@")))
+      .child("Savers")
+      .child(idCount)
       .set({
-        Amount: saverAmount,
+          colour : saverColour,
+          dateTime : [],
+          title : saverTitle,
+          goal : saverGoal,
+          goalSwitch : goalSwitch,
+          price : saverAmount,
+          runningTot : 0,
       });
-  }*/
+  }
 
   /*  Download function ////////////////////
 
@@ -104,11 +91,6 @@ export default function SaverScreen({navigation}) {
       console.log("New high score: " + highscore);
     });
   }
-
-
-const issue = await getIssue()
-const owner = await getOwner(issue.ownerId)
-await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
 */
 
   function closeAddModal() {
@@ -130,50 +112,13 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
       setFormError("All fields must be filled in");
       //console.log(formError);
     } else {
-      setAddSaver({
-        ...(addSaver.title = saverTitle),
-      });
-      setAddSaver({
-        ...(addSaver.price = parseFloat(saverAmount).toFixed(2)),
-      });
-      setAddSaver({
-        ...(addSaver.goal = parseFloat(saverGoal).toFixed(2)),
-      });
-      setAddSaver({
-        ...(addSaver.id = idCount),
-      });
-      setAddSaver({
-        ...(addSaver.colour = saverColour),
-      });
-      setAddSaver({
-        ...(addSaver.goalSwitch = goalSwitch),
-      });
-      setAddSaver({
-        ...(addSaver.transfer = transferMethod),
-      });
-      
-      store.dispatch(newSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod))
-      console.log(store.getState())
-
-      handleSaverList();
-      //console.log(saverList);
-      setIdCount(idCount + 1);
-      setModalVisible(false);
-      setFormError(null);
-      setSaverTitle("");
-      setSaverGoal("");
-      setSaverAmount("");
-      setSaverColour("#FFF7F0");
-      setGoalSwitch(true);
-      setTransferMethod(1);
-      storeSomething(saverTitle, saverAmount);
+        store.dispatch(newSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod))
+        setNewSaverList(store.getState().savers)
+        console.log(store.getState())
+        setIdCount(idCount + 1);
+        closeAddModal();
+        //storeSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod);
     }
-  }
-
-  function handleSaverList() {
-    //console.log('addSaver', addSaver);
-    setSaverList((saverList) => [...saverList, addSaver]);
-
   }
 
   function handleAdd() {
@@ -181,21 +126,16 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
   }
 
   function handleInfo() {
-    //console.log(saverList)
     return setInformationModalVisible(true);
   }
 
   const deleteItemById = (id) => {
     const filteredData = saverList.filter((item) => item.id !== id);
     setSaverList(filteredData);
-    //console.log(id);
-    //setTotalSaved(totalSaved + id);
-    //console.log(totalSaved);
   };
 
   const addToTotalSaved = (addition) => {
     setTotalSaved(totalSaved + parseFloat(addition));
-    console.log(totalSaved);
   };
 
   return (
@@ -208,11 +148,6 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
           <Text style={styles.topButtons}>INFORMATION</Text>
         </TouchableOpacity>
 
-        {/*<Button
-          color="black"
-          title="Login Screen"
-          onPress={() => navigation.navigate("Card")}
-        />*/}
         <Modal
           style={styles.addModal}
           visible={informationModalVisible}
@@ -507,8 +442,8 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
       </View>
         <FlatList
           style={{flex: 1}}
-          data={saverList}
-          keyExtractor={(saverList) => saverList.id.toString()}
+          data={newSaverList}
+          keyExtractor={(newSaverList) => newSaverList.id.toString()}
           renderItem={({item}) => (
             <Saver
               Title={item.title}
@@ -516,7 +451,7 @@ await sendEmail(owner.email, `Some text #${issue.number}`) // tiny change here
               Goal={item.goal}
               Colour={item.colour}
               GoalSwitch={item.goalSwitch}
-              Transfer={item.transfer}
+              Transfer={item.transOpt}
               Delete={() => deleteItemById(item.id)}
               //onPress={() => handleDeleteSaverList(item)}
               Addition={() => addToTotalSaved(item.price)}

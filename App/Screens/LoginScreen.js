@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as firebase from 'firebase';
-import {currentUser} from "../Redux/actions"
+import {currentUser, firebasePull} from "../Redux/actions"
 import {store} from "../Redux/store"
 
 export default function LoginScreen({ navigation }) {
@@ -27,6 +27,21 @@ export default function LoginScreen({ navigation }) {
       .set(store.getState());
   }
 
+    const johnUser = "johnperkins"
+//Download function ////////////////////
+function setupDataListener() {
+  firebase
+    .database()
+    //.ref(store.getState().user)
+    .ref(johnUser)
+    .on('value', (snapshot) => {
+      store.dispatch(firebasePull(snapshot.val()));
+      //console.log(snapshot.val())
+      //console.log(store.getState())
+
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+      })};
 
   function navSaver(){
     navigation.navigate('Saver')}
@@ -125,6 +140,15 @@ export default function LoginScreen({ navigation }) {
         >
           <View style={styles.button}>
             <Text style={styles.buttonText}>BACKUP DATA</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          Style={styles.butContainer}
+          onPress={() => setupDataListener()}
+        >
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>DOWNLOAD DATA</Text>
           </View>
         </TouchableOpacity>
 

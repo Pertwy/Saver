@@ -16,6 +16,11 @@ export function reducer(state = start, action){
             draftState.savers.push(action.payload)
         })
 
+    else if (action.type === actions.FIREBASE_PULL)    
+        return produce(state, draftState => {
+            draftState = action.payload.fbData
+        })
+
     else if (action.type === actions.REMOVE_SAVER)
         return produce(state, draftState => {
             const index = draftState.savers.findIndex(saver => saver.id === action.payload.id)

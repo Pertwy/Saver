@@ -67,16 +67,6 @@ export default function SaverScreen({navigation}) {
     noSaver = <Text>Click "Add Saver" to get started</Text>;
   }
 
-  /*  Download function ////////////////////
-
-  setupHighscoreListener(userId) {
-    firebase.database().ref('users/' + userId).on('value', (snapshot) => {
-      const highscore = snapshot.val().highscore;
-      console.log("New high score: " + highscore);
-    });
-  }
-*/
-
   function closeAddModal() {
     setSaverTitle("");
     setSaverGoal("");
@@ -88,6 +78,10 @@ export default function SaverScreen({navigation}) {
     setTransferMethod(1);
   }
 
+  const unsubscribe = store.subscribe(() => {
+    setNewSaverList(store.getState().savers)
+  })
+
   function updateAddSaver() {
     if (
       goalSwitch == true &&
@@ -98,16 +92,15 @@ export default function SaverScreen({navigation}) {
     } else {
         store.dispatch(newSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod))
         setNewSaverList(store.getState().savers)
+        unsubscribe()
         console.log(store.getState())
         setIdCount(idCount + 1);
         closeAddModal();
-        //storeSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod);
     }
   }
 
-  store.subscribe(() => {
-    setNewSaverList(store.getState().savers)
-  })
+
+
 
 
   function handleAdd() {

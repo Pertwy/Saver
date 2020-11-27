@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, Text, SafeAreaView } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Cards({ SortCode, AccountNum, AccountName }) {
-  
-  //const [isSelected, setIsSelected] = useState(false)
-  
+    
   return (
     <SafeAreaView>
       <TouchableOpacity>
@@ -26,7 +24,6 @@ export default function Cards({ SortCode, AccountNum, AccountName }) {
 const styles = StyleSheet.create({
   cardContainer: {
     borderTopWidth: 3,
-    //borderBottomWidth: 3,
     flexDirection: "row",
     alignItems:"center",
     paddingTop: 5,

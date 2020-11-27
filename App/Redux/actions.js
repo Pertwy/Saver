@@ -1,5 +1,14 @@
 import * as actions from "./actionNames";
 
+export function firebasePull(fbData){
+    return{
+        type: actions.FIREBASE_PULL,
+        payload:{
+            fbData
+        }
+    }
+}
+
 export function removeCardIn(id){
     return{
         type: actions.REMOVE_CARD,
@@ -38,21 +47,21 @@ export function logClick(dateTime, id, total){
     }   
 }
 
-export function newCardIn(acount, sort, name, id){
+export function newCardIn(account, sort, name, id){
     return{
         type: actions.NEW_CARD_IN,
         payload:{
             name,
-            acount,
+            account,
             sort,
             id}}}
 
-export function newCardOut(acount, sort, name, id){
+export function newCardOut(account, sort, name, id){
     return{
         type: actions.NEW_CARD_OUT,
         payload:{
             name,
-            acount,
+            account,
             sort,
             id,}}}
 

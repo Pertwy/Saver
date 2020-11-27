@@ -77,7 +77,8 @@ export default function CardScreen({ navigation }) {
     setAddCardSwitchIn(false);
     store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounterIn))
     setNewCardListIn(store.getState().cardsIn)
-    console.log(store.getState())
+    console.log(store.getState().cardsIn)
+    //console.log(newCardListIn)
     setIdCounterIn(idCounterIn + 1);
   }
 

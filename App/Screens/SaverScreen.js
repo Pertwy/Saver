@@ -105,6 +105,11 @@ export default function SaverScreen({navigation}) {
     }
   }
 
+  store.subscribe(() => {
+    setNewSaverList(store.getState().savers)
+  })
+
+
   function handleAdd() {
     return setModalVisible(true);
   }
@@ -444,8 +449,9 @@ export default function SaverScreen({navigation}) {
       </View>
         <FlatList
           style={{flex: 1}}
+          //data={store.getState().savers}
           data={newSaverList}
-          //extraData={store.getState().savers}
+          //extraData={newSaverList}
           keyExtractor={(newSaverList) => newSaverList.id.toString()}
           renderItem={({item}) => (
             <Saver

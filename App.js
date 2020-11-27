@@ -8,6 +8,7 @@ import SaverScreen from "./App/Screens/SaverScreen";
 import LoginScreen from "./App/Screens/LoginScreen";
 import WelcomeScreen from "./App/Screens/WelcomeScreen";
 import CardScreen from "./App/Screens/CardScreen";
+import SignUpScreen from "./App/Screens/SignUpScreen"
 
 const Tab = createBottomTabNavigator();
 
@@ -21,6 +22,7 @@ function MainScreens() {
       >
         
         <Tab.Screen name="Login" component={LoginScreen}/>
+        
         <Tab.Screen name="Saver" component={SaverScreen} />
         <Tab.Screen name="Card" component={CardScreen} />
       </Tab.Navigator>
@@ -37,6 +39,7 @@ function App() {
           headerShown: false,
         }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen}/>
         <Stack.Screen name="Main" component={MainScreens} />
       </Stack.Navigator>
     </NavigationContainer>

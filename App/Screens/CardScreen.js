@@ -77,8 +77,6 @@ export default function CardScreen({ navigation }) {
     setAddCardSwitchIn(false);
     store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounterIn))
     setNewCardListIn(store.getState().cardsIn)
-    console.log(store.getState().cardsIn)
-    //console.log(newCardListIn)
     setIdCounterIn(idCounterIn + 1);
   }
 
@@ -97,7 +95,7 @@ export default function CardScreen({ navigation }) {
         </View>
 
         <FlatList
-          style={{flex: 1}}
+          //style={{flex: 1}}
           data={newCardListOut}
           keyExtractor={(newCardListOut) => newCardListOut.id.toString()}
           renderItem={({ item }) => (
@@ -158,7 +156,7 @@ export default function CardScreen({ navigation }) {
         </View>
 
         <FlatList
-          style={{flex: 1}}
+          //style={{flex: 1}}
           data={newCardListIn}
           keyExtractor={(newCardListIn) => newCardListIn.id.toString()}
           renderItem={({ item }) => (

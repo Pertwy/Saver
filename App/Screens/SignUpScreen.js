@@ -12,10 +12,10 @@ import * as firebase from 'firebase';
 import {currentUser, firebasePull} from "../Redux/actions"
 import {store} from "../Redux/store"
 
-export default function LoginScreen({ navigation }) {
+export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState("");
+  const [userName, setUserName] = useState("");
 
   //Sign in Function /////////////
   
@@ -44,7 +44,7 @@ function setupDataListener() {
       })};
 
   function navSaver(){
-    navigation.navigate('Saver')}
+    navigation.navigate("Main", { screen: 'Saver' })}
 
 
   function handleSignUp(email, password) {
@@ -53,8 +53,9 @@ function setupDataListener() {
         return;
       }
       //firebase.auth().createUserWithEmailAndPassword(email, password);
-      store.dispatch(currentUser(email.substring(0, email.indexOf("@"))))
+      store.dispatch(currentUser(userName))
       console.log(store.getState().user)
+      navSaver()
       
       navSaver()
       setEmail("")
@@ -76,21 +77,6 @@ function setupDataListener() {
   }
   */
 
-  //Login Function ////////////
-
-  function handleLogin(email, password) {
-    try {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(function (user) {
-          console.log(user);
-        });
-    } catch {
-      console.log(error.toString());
-    }}
-
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headingTopElement}>
@@ -98,6 +84,14 @@ function setupDataListener() {
       </View>
 
       <View style={styles.loginForm}>
+      <TextInput
+          placeholder="User Name"
+          onChangeText={(text) => setUserName(text)}
+          style={styles.formStyle}
+          autoCorrect={false}
+          autoCapitalize="none"
+          secureTextEntry={true}
+        />
         <TextInput
           placeholder="Email"
           onChangeText={(text) => setEmail(text)}
@@ -118,37 +112,10 @@ function setupDataListener() {
       <View style={styles.loginButtons}>
         <TouchableOpacity
           Style={styles.butContainer}
-          onPress={() => handleLogin(email, password)}
-        >
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>LOGIN</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          Style={styles.butContainer}
           onPress={() => handleSignUp(email, password)}
         >
           <View style={styles.button}>
             <Text style={styles.buttonText}>SIGN UP</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          Style={styles.butContainer}
-          onPress={() => backup()}
-        >
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>BACKUP DATA</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          Style={styles.butContainer}
-          onPress={() => setupDataListener()}
-        >
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>DOWNLOAD DATA</Text>
           </View>
         </TouchableOpacity>
 

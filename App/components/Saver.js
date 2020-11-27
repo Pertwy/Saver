@@ -50,6 +50,10 @@ export default function Saver({
   }
 
   function completeEdit(){
+    //if (varCost == "NaN"){setVarCost(0)}
+    //if (varGoal == "NaN"){setVarGoal(0)}
+    //if (TotalSaved == "NaN"){setTotalSaved(0)}
+
     store.dispatch(editSaver(id, varTitle, varCost, varGoalSwitch, varGoal, Colour, transferOption, TotalSaved))
     setModalVisible(false)
   }

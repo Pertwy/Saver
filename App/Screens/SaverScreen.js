@@ -61,11 +61,11 @@ export default function SaverScreen({navigation}) {
   const [idCount, setIdCount] = useState(1);
   const [formError, setFormError] = useState(null);
 
-
+  /*
   let noSaver;
-  if (saverList.length < 1 || saverList == undefined) {
+  if (newSaverList.length < 1 || saverList == undefined) {
     noSaver = <Text>Click "Add Saver" to get started</Text>;
-  }
+  }*/
 
   function closeAddModal() {
     setSaverTitle("");
@@ -437,14 +437,12 @@ export default function SaverScreen({navigation}) {
         </Modal>
       </SafeAreaView>
       <View style={styles.optionalText}>
-        {noSaver}
+        
         <Text>Total Transfered: £{totalSaved.toFixed(2)}</Text>
       </View>
         <FlatList
           style={{flex: 1}}
-          //data={store.getState().savers}
           data={newSaverList}
-          //extraData={newSaverList}
           keyExtractor={(newSaverList) => newSaverList.id.toString()}
           renderItem={({item}) => (
             <Saver

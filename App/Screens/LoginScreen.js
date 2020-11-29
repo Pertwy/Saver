@@ -23,21 +23,26 @@ export default function LoginScreen({ navigation }) {
     firebase
       .database()
       .ref()
-      .child(store.getState().user)
+      .child(store.getState().redux.user)
       .set(store.getState());
   }
+
+
 
     const johnUser = "johnperkins"
 //Download function ////////////////////
 function setupDataListener() {
   firebase
     .database()
-    //.ref(store.getState().user)
+    //.ref(store.getState().redux.user)
     .ref(johnUser)
+
     .on('value', (snapshot) => {
-      //store.dispatch(firebasePull(snapshot.val()));
-      console.log(snapshot.val())
-      //console.log(store.getState())
+
+      firebasePull(snapshot.val())
+      store.dispatch(firebasePull(snapshot.val()));
+      // console.log(Objects.values(snapshot.val()))
+      console.log(store.getState())
 
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
@@ -45,21 +50,8 @@ function setupDataListener() {
 
   function navSaver(){
     navigation.navigate('Saver')}
+  
 
-
-  function handleSignUp(email, password) {
-      if (password.length < 6) {
-        alert("Please enter more than 6 characters for a password");
-        return;
-      }
-      //firebase.auth().createUserWithEmailAndPassword(email, password);
-      store.dispatch(currentUser(email.substring(0, email.indexOf("@"))))
-      console.log(store.getState().user)
-      
-      navSaver()
-      setEmail("")
-      setPassword("")
-    } 
 
   /*
     function handleSignUp(email, password) {

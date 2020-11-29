@@ -17,31 +17,6 @@ export default function SignUpScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
 
-  //Sign in Function /////////////
-  
-  function backup(){
-    firebase
-      .database()
-      .ref()
-      .child(store.getState().user)
-      .set(store.getState());
-  }
-
-    const johnUser = "johnperkins"
-//Download function ////////////////////
-function setupDataListener() {
-  firebase
-    .database()
-    //.ref(store.getState().user)
-    .ref(johnUser)
-    .on('value', (snapshot) => {
-      //store.dispatch(firebasePull(snapshot.val()));
-      console.log(snapshot.val())
-      //console.log(store.getState())
-
-    }, function (errorObject) {
-      console.log("The read failed: " + errorObject.code);
-      })};
 
   function navSaver(){
     navigation.navigate("Main", { screen: 'Saver' })}
@@ -54,10 +29,9 @@ function setupDataListener() {
       }
       //firebase.auth().createUserWithEmailAndPassword(email, password);
       store.dispatch(currentUser(userName))
-      console.log(store.getState().user)
+      console.log(store.getState().redux.user)
       navSaver()
       
-      navSaver()
       setEmail("")
       setPassword("")
     } 
@@ -116,6 +90,15 @@ function setupDataListener() {
         >
           <View style={styles.button}>
             <Text style={styles.buttonText}>SIGN UP</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          Style={styles.butContainer}
+          onPress={() => navSaver()}
+        >
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>NAVIGATE TO Saver</Text>
           </View>
         </TouchableOpacity>
 

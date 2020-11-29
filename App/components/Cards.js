@@ -1,25 +1,99 @@
-import React from "react";
-import { StyleSheet, View, Text, SafeAreaView } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, SafeAreaView, TextInput, Button } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function Cards({ SortCode, AccountNum, AccountName }) {
+import {removeCardIn, removeCardOut} from "../Redux/actions"
+import {store} from "../Redux/store"
+
+
+export default function Cards({ SortCode, AccountNum, AccountName, id, inOut}) {
     
+  const [editCardSwitch, setEditCardSwitch] = useState(false)
+  const [varSortCode, setVarSortCode] = useState(SortCode)
+  const [varAccountNum, setVarAccountNum] = useState(AccountNum)
+  const [varAccountName, setVarAccountName] = useState(AccountName)
+
+  function handleEditOn(){
+    setEditCardSwitch(true)
+  }
+
+  function handleEditOff(){
+    setEditCardSwitch(false)
+  }
+
+  function deleteCard(){
+    if (inOut == "cardsIn"){
+      store.dispatch(removeCardIn(id));
+      console.log(store.getState());
+      handleEditOff();}
+    else if (inOut == "cardsOut"){
+      store.dispatch(removeCardOut(id));
+      console.log(store.getState());
+      handleEditOff();}
+  }
+
+
   return (
     <SafeAreaView>
-      <TouchableOpacity>
+      <TouchableOpacity
+      onLongPress={() => handleEditOn()}
+      >
       <View style={styles.cardContainer}>
         <AntDesign name="creditcard" size={36} color="black" />
         <View style={styles.cardContainerText}>
-          <Text>{AccountName}</Text>
-          <Text>Sort code: {SortCode}</Text>
-          <Text>Account Number: {AccountNum}</Text>
+          <Text>{varAccountName}</Text>
+          <Text>Sort code: {varSortCode}</Text>
+          <Text>Account Number: {varAccountNum}</Text>
         </View>
       </View>
       </TouchableOpacity>
+
+      {editCardSwitch && (
+          <View>
+            <View style={styles.switchQuestion}>
+              <Text style={styles.formQuestions}>Give the card a name</Text>
+            </View>
+
+            <TextInput
+              onChangeText={(text) => setVarAccountName(text)}
+              placeholder="Current account"
+              style={styles.formStyle}
+              //returnKeyType={"done"}
+            />
+
+            <View style={styles.switchQuestion}>
+              <Text style={styles.formQuestions2}>Account Number</Text>
+            </View>
+
+            <TextInput
+              onChangeText={(text) => setVarAccountNum(text)}
+              placeholder="XXXXXXXX"
+              style={styles.formStyle}
+              keyboardType="decimal-pad"
+              returnKeyType={"done"}
+            />
+            <View style={styles.switchQuestion}>
+              <Text style={styles.formQuestions2}>Sort Code</Text>
+            </View>
+
+            <TextInput
+              onChangeText={(text) => setVarSortCode(text)}
+              placeholder="XX-XX-XX"
+              style={styles.formStyle}
+              keyboardType="decimal-pad"
+              returnKeyType={"done"}
+            />
+            <Button title="Done editing" onPress={() => handleEditOff()}></Button>
+            <Button title="Delete Card" color="red" onPress={() =>deleteCard()}></Button>
+          </View>
+        )}
+
     </SafeAreaView>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   cardContainer: {

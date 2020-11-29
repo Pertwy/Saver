@@ -58,14 +58,11 @@ export default function SaverScreen({navigation}) {
   const [transferMoneyModalVisible, setTransferMoneyModalVisible] = useState(false);
   const [saverList, setSaverList] = useState([]);
   const [newSaverList, setNewSaverList] = useState();
+  //const [cardsInList, setCardsInList] = useState([]);
+
   const [idCount, setIdCount] = useState(1);
   const [formError, setFormError] = useState(null);
 
-  /*
-  let noSaver;
-  if (newSaverList.length < 1 || saverList == undefined) {
-    noSaver = <Text>Click "Add Saver" to get started</Text>;
-  }*/
 
   function closeAddModal() {
     setSaverTitle("");
@@ -78,9 +75,14 @@ export default function SaverScreen({navigation}) {
     setTransferMethod(1);
   }
 
-  const unsubscribe = store.subscribe(() => {
-    setNewSaverList(store.getState().savers)
-  })
+
+  //componentDidUMount(store.getState().redux.savers)
+  // const SampleComponent = () => {
+  //   useEffect(() => {
+  //     setNewSaverList(store.getState().redux.savers)
+  //   }, [])}
+
+  
 
   function updateAddSaver() {
     if (
@@ -91,20 +93,20 @@ export default function SaverScreen({navigation}) {
       //console.log(formError);
     } else {
         store.dispatch(newSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod))
-        setNewSaverList(store.getState().savers)
-        unsubscribe()
+        setNewSaverList(store.getState().redux.savers)
+        //unsubscribe()
         console.log(store.getState())
         setIdCount(idCount + 1);
         closeAddModal();
     }
   }
 
-
-
-
-
   function handleAdd() {
     return setModalVisible(true);
+  }
+
+  function handleRefresh(){
+    setNewSaverList(store.getState().redux.savers)
   }
 
   function handleInfo() {
@@ -120,11 +122,21 @@ export default function SaverScreen({navigation}) {
     setTotalSaved(totalSaved + parseFloat(addition));
   };
 
+/*
+  function loadUserTypes() {
+    return cardsInList.map(card => (
+      {label: card.name, value: card.name, icon: "() => <AntDesign name=\"creditcard\" size={18} color=\"black\" />", hidden: true}
+    ))
+  }*/
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.buttonArea}>
         <TouchableOpacity onPress={handleAdd}>
           <Text style={styles.topButtons}>ADD SAVER</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleRefresh}>
+          <Text style={styles.topButtons}>REFRESH</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleInfo}>
           <Text style={styles.topButtons}>INFORMATION</Text>
@@ -382,10 +394,10 @@ export default function SaverScreen({navigation}) {
                     <View style={styles.inComingAccount}>
                       <DropDownPicker
                           items={[
-                              {label: 'USA', value: 'usa', icon: () => <AntDesign name="creditcard" size={18} color="black" />, hidden: true},
-                              {label: 'UK', value: 'uk', icon: () => <AntDesign name="creditcard" size={18} color="black" />},
-                              {label: 'France', value: 'france', icon: () => <AntDesign name="creditcard" size={18} color="black" />},
-                          ]}
+                            {label: 'USA', value: 'usa', icon: () => <AntDesign name="creditcard" size={18} color="black" />, hidden: true},
+                            {label: 'UK', value: 'uk', icon: () => <AntDesign name="creditcard" size={18} color="black" />},
+                            {label: 'France', value: 'france', icon: () => <AntDesign name="creditcard" size={18} color="black" />},
+                        ]}
                           //defaultValue={this.state.country}
                           placeholder = "Select incoming details"
                           containerStyle={{height: 40, zIndex:-100,}}
@@ -438,8 +450,8 @@ export default function SaverScreen({navigation}) {
       </SafeAreaView>
       <View style={styles.optionalText}>
         
-        <Text>Total Transfered: £{totalSaved.toFixed(2)}</Text>
-      </View>
+        {//<Text>Total Transfered: £{totalSaved.toFixed(2)}</Text>*/
+      }</View>
         <FlatList
           style={{flex: 1}}
           data={newSaverList}

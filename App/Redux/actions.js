@@ -1,6 +1,7 @@
 import * as actions from "./actionNames";
 
 export function firebasePull(fbData){
+    //console.log(fbData)
     return{
         type: actions.FIREBASE_PULL,
         payload:{
@@ -11,7 +12,7 @@ export function firebasePull(fbData){
 
 export function removeCardIn(id){
     return{
-        type: actions.REMOVE_CARD,
+        type: actions.REMOVE_CARD_IN,
         payload:{
             id,
         }
@@ -20,7 +21,7 @@ export function removeCardIn(id){
 
 export function removeCardOut(id){
     return{
-        type: actions.REMOVE_CARD,
+        type: actions.REMOVE_CARD_OUT,
         payload:{
             id,
         }
@@ -54,7 +55,7 @@ export function newCardIn(account, sort, name, id){
             name,
             account,
             sort,
-            id}}}
+            id,}}}
 
 export function newCardOut(account, sort, name, id){
     return{

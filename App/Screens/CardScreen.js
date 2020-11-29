@@ -22,8 +22,14 @@ export default function CardScreen({ navigation }) {
   const [accountNumber, setAccountNumber] = useState("");
   const [idCounter, setIdCounter] = useState(1);
   const [accountName, setAccountName] = useState("");
-  const [newCardListIn, setNewCardListIn] = useState()
-  const [newCardListOut, setNewCardListOut] = useState()
+  const [newCardListIn, setNewCardListIn] = useState([])
+  const [newCardListOut, setNewCardListOut] = useState([])
+
+  
+  // const unsubscribe = store.subscribe(() => {
+  //   setNewCardListIn(store.getState().redux.cardsIn)
+  //   setNewCardListOut(store.getState().redux.cardsOut)
+  // })
 
 
   let addSubtract;
@@ -46,14 +52,14 @@ export default function CardScreen({ navigation }) {
   function addCard() {
     setAddCardSwitch(false);
     store.dispatch(newCardOut(accountNumber,sortCode,accountName, idCounter))
-    setNewCardListOut(store.getState().cardsOut)
+    setNewCardListOut(store.getState().redux.cardsOut)
+    //unsubscribe()
     setIdCounter(idCounter + 1);
   }
 
   const [addCardSwitchIn, setAddCardSwitchIn] = useState(false);
   const [sortCodeIn, setSortCodeIn] = useState("");
   const [accountNumberIn, setAccountNumberIn] = useState("");
-  const [idCounterIn, setIdCounterIn] = useState(1);
   const [accountNameIn, setAccountNameIn] = useState("");
 
   let addSubtractIn;
@@ -75,9 +81,16 @@ export default function CardScreen({ navigation }) {
 
   function addCardIn() {
     setAddCardSwitchIn(false);
-    store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounterIn))
-    setNewCardListIn(store.getState().cardsIn)
-    setIdCounterIn(idCounterIn + 1);
+    store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
+    setNewCardListIn(store.getState().redux.cardsIn)
+    //unsubscribe()
+    console.log(store.getState())
+    setIdCounter(idCounter + 1);
+  }
+
+  function handleRefresh(){
+    setNewCardListIn(store.getState().redux.cardsIn)
+    setNewCardListOut(store.getState().redux.cardsOut)
   }
 
   return (
@@ -86,6 +99,9 @@ export default function CardScreen({ navigation }) {
         <View style={styles.headingTopElement}>
           <Text style={styles.informationTextHeading}>ACCOUNTS</Text>
         </View>
+        <TouchableOpacity onPress={handleRefresh}>
+          <Text style={styles.topButtons}>REFRESH</Text>
+        </TouchableOpacity>
 
         <View style={styles.headingElement}>
           <Text style={styles.informationTextHeading}>OUTGOING ACCOUNTS</Text>
@@ -103,6 +119,8 @@ export default function CardScreen({ navigation }) {
               SortCode={item.sort}
               AccountNum={item.account}
               AccountName={item.name}
+              id = {item.id}
+              inOut = "cardsOut"
             />
           )}
         />
@@ -155,6 +173,17 @@ export default function CardScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
+
+{/* {
+ newCardListIn.map(person=>{
+   return(
+     <Cards
+     
+     />
+   )
+ })
+} */}
+         
         <FlatList
           //style={{flex: 1}}
           data={newCardListIn}
@@ -164,6 +193,8 @@ export default function CardScreen({ navigation }) {
               SortCode={item.sort}
               AccountNum={item.account}
               AccountName={item.name}
+              id = {item.id}
+              inOut = "cardsIn"
             />
           )}
         />

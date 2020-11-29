@@ -1,5 +1,6 @@
 import * as React from "react";
-
+//ca-app-pub-8989962601724744~1688453206
+//ca-app-pub-8989962601724744/3843843250
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -20,9 +21,7 @@ function MainScreens() {
           headerShown: false,
         }}
       >
-        
         <Tab.Screen name="Login" component={LoginScreen}/>
-        
         <Tab.Screen name="Saver" component={SaverScreen} />
         <Tab.Screen name="Card" component={CardScreen} />
       </Tab.Navigator>

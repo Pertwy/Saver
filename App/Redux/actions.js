@@ -79,7 +79,7 @@ export function newSaver(id, title, price, goalSwitch, goal, colour, transOpt){
             colour,
             transOpt,
             runningTot : 0,
-            dateTime: []
+            dateTime: ["init"]
         }
     }
 }
@@ -100,11 +100,11 @@ export function editSaver(id, title, price, goalSwitch, goal, colour, transOpt, 
     }
 }
 
-export function currentUser(currentUser){
+export function currentUser(userName){
     return{
         type: actions.CURRENT_USER,
         payload:{
-            currentUser,
+            userName,
         }
     }   
 }

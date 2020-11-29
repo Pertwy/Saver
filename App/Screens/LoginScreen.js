@@ -24,9 +24,8 @@ export default function LoginScreen({ navigation }) {
       .database()
       .ref()
       .child(store.getState().redux.user)
-      .set(store.getState());
+      .set(store.getState().redux);
   }
-
 
 
     const johnUser = "johnperkins"
@@ -34,14 +33,10 @@ export default function LoginScreen({ navigation }) {
 function setupDataListener() {
   firebase
     .database()
-    //.ref(store.getState().redux.user)
-    .ref(johnUser)
-
+    .ref(store.getState().redux.user)
     .on('value', (snapshot) => {
-
-      firebasePull(snapshot.val())
+      //console.log(snapshot.val())
       store.dispatch(firebasePull(snapshot.val()));
-      // console.log(Objects.values(snapshot.val()))
       console.log(store.getState())
 
     }, function (errorObject) {
@@ -74,14 +69,32 @@ function setupDataListener() {
     try {
       firebase
         .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(function (user) {
-          console.log(user);
+        .signInWithEmailAndPassword(email, password).then(cred =>{
+          store.dispatch(currentUser(cred.user.uid))
+          setupDataListener()
+          navSaver()
+          console.log(cred.user.uid);
         });
     } catch {
       console.log(error.toString());
     }}
 
+
+
+    //SignUP
+    function handleSignUp(email, password) {
+      if (password.length < 6) {
+        alert("Please enter more than 6 characters for a password");
+        return;
+      }
+      firebase.auth().createUserWithEmailAndPassword(email, password).then(cred =>{
+        store.dispatch(currentUser(cred.user.uid))
+        console.log(store.getState().redux.user)
+        setEmail("")
+        setPassword("")
+        navSaver()
+        })
+    } 
 
   return (
     <SafeAreaView style={styles.container}>

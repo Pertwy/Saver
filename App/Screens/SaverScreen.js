@@ -21,7 +21,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
 import { AntDesign } from "@expo/vector-icons";
 
-import {newSaver} from "../Redux/actions";
+import {newSaver, firebasePull} from "../Redux/actions";
 import {store} from "../Redux/store";
 
 import * as firebase from 'firebase';
@@ -128,6 +128,17 @@ export default function SaverScreen({navigation}) {
       {label: card.name, value: card.name, icon: "() => <AntDesign name=\"creditcard\" size={18} color=\"black\" />", hidden: true}
     ))
   }*/
+
+
+
+
+  // firebase.auth().onAuthStateChanged((user) => {
+  //   if (user){
+  //     //console.log(user)
+  //     //setupDataListener()
+  //     //setNewSaverList(store.getState().redux.savers)
+  //   }
+  // })
 
   return (
     <View style={styles.container}>

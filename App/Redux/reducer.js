@@ -70,7 +70,7 @@ export function reducer(state = start, action){
 
     else if (action.type === actions.CURRENT_USER)
         return produce(state, draftState => {
-            draftState.redux.user = action.payload.currentUser
+            draftState.redux.user = action.payload.userName
         })
 
     else if (action.type === actions.EDIT_SAVER)

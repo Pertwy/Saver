@@ -15,3 +15,4 @@ export const REMOVE_CARD_IN = "removeCardIn";
 export const REMOVE_CARD_OUT = "removeCardOut";
 
 export const FIREBASE_PULL = "firebasePull"
+export const SIGNOUT = "signOutRedux"

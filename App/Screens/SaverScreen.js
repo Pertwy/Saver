@@ -75,14 +75,22 @@ export default function SaverScreen({navigation}) {
     setTransferMethod(1);
   }
 
+  const unsubscribe = store.subscribe(() => {
+    setNewSaverList(store.getState().redux.savers)
+  })
 
+  useEffect(() => {
+    unsubscribe
+  },[])
   //componentDidUMount(store.getState().redux.savers)
   // const SampleComponent = () => {
   //   useEffect(() => {
   //     setNewSaverList(store.getState().redux.savers)
   //   }, [])}
 
-  
+  // useEffect(() => {
+  //   setNewSaverList(store.getState().redux.savers)
+  // }, [store.getState()])
 
   function updateAddSaver() {
     if (

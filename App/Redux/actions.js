@@ -10,6 +10,12 @@ export function firebasePull(fbData){
     }
 }
 
+export function signOutRedux(){
+    return{
+        type: actions.SIGNOUT
+    }
+}
+
 export function removeCardIn(id){
     return{
         type: actions.REMOVE_CARD_IN,

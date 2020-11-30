@@ -19,7 +19,16 @@ export function reducer(state = start, action){
     else if (action.type === actions.FIREBASE_PULL)    
         return produce(state, draftState => {
             draftState.redux = (action.payload.fbData)
-            //console.log(action.payload.fbData)
+        })
+
+    else if (action.type === actions.SIGNOUT)    
+        return produce(state, draftState => {
+            draftState.redux = {redux:{
+                user:"",
+                savers:[],
+                cardsIn:[],
+                cardsOut:[],
+            }}
         })
 
     else if (action.type === actions.REMOVE_SAVER)

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -26,11 +26,14 @@ export default function CardScreen({ navigation }) {
   const [newCardListOut, setNewCardListOut] = useState([])
 
   
-  // const unsubscribe = store.subscribe(() => {
-  //   setNewCardListIn(store.getState().redux.cardsIn)
-  //   setNewCardListOut(store.getState().redux.cardsOut)
-  // })
+  const unsubscribe = store.subscribe(() => {
+    setNewCardListIn(store.getState().redux.cardsIn)
+    setNewCardListOut(store.getState().redux.cardsOut)
+  })
 
+  useEffect(()=>{
+    unsubscribe
+  },[])
 
   let addSubtract;
   if (addCardSwitch == true) {
@@ -53,7 +56,7 @@ export default function CardScreen({ navigation }) {
     setAddCardSwitch(false);
     store.dispatch(newCardOut(accountNumber,sortCode,accountName, idCounter))
     setNewCardListOut(store.getState().redux.cardsOut)
-    //unsubscribe()
+    unsubscribe()
     setIdCounter(idCounter + 1);
   }
 
@@ -83,7 +86,7 @@ export default function CardScreen({ navigation }) {
     setAddCardSwitchIn(false);
     store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
     setNewCardListIn(store.getState().redux.cardsIn)
-    //unsubscribe()
+    unsubscribe()
     console.log(store.getState())
     setIdCounter(idCounter + 1);
   }

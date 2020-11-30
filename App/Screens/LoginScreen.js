@@ -9,16 +9,20 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as firebase from 'firebase';
-import {currentUser, firebasePull} from "../Redux/actions"
+import {currentUser, firebasePull, signOutRedux} from "../Redux/actions"
 import {store} from "../Redux/store"
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState("");
 
-  //Sign in Function /////////////
-  
+
+  //Navigate to Saver Page////..
+  function navSaver(){
+    navigation.navigate('Saver')}
+
+
+  //Upload data to Firebase /////////////
   function backup(){
     firebase
       .database()
@@ -27,26 +31,59 @@ export default function LoginScreen({ navigation }) {
       .set(store.getState().redux);
   }
 
+  //const johnUser = "johnperkins"
+  //Download function ////////////////////
+  function setupDataListener() {
+    firebase
+      .database()
+      .ref(store.getState().redux.user)
+      .on('value', (snapshot) => {
+        store.dispatch(firebasePull(snapshot.val()));
 
-    const johnUser = "johnperkins"
-//Download function ////////////////////
-function setupDataListener() {
-  firebase
-    .database()
-    .ref(store.getState().redux.user)
-    .on('value', (snapshot) => {
-      //console.log(snapshot.val())
-      store.dispatch(firebasePull(snapshot.val()));
-      console.log(store.getState())
+      }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+        })};
 
-    }, function (errorObject) {
-      console.log("The read failed: " + errorObject.code);
-      })};
 
-  function navSaver(){
-    navigation.navigate('Saver')}
   
 
+    //Login Function ////////////
+    function handleLogin(email, password) {
+      try {
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password).then(cred =>{
+            store.dispatch(currentUser(cred.user.uid))
+            setupDataListener()
+            navSaver()
+          });
+      } catch {
+        console.log(error.toString());
+      }}
+
+
+    //SignUP
+    function handleSignUp(email, password) {
+      if (password.length < 6) {
+        alert("Please enter more than 6 characters for a password");
+        return;
+      }
+      firebase.auth().createUserWithEmailAndPassword(email, password).then(cred =>{
+        store.dispatch(currentUser(cred.user.uid))
+        setEmail("")
+        setPassword("")
+        navSaver()
+        })
+    } 
+
+    //Log out /////////
+    function signUserOut(){
+      setupDataListener();
+      firebase.auth().signOut().then(function() {
+        store.dispatch(signOutRedux())
+      }).catch(function(error) {
+        // An error happened.
+      })}
 
   /*
     function handleSignUp(email, password) {
@@ -63,38 +100,7 @@ function setupDataListener() {
   }
   */
 
-  //Login Function ////////////
 
-  function handleLogin(email, password) {
-    try {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password).then(cred =>{
-          store.dispatch(currentUser(cred.user.uid))
-          setupDataListener()
-          navSaver()
-          console.log(cred.user.uid);
-        });
-    } catch {
-      console.log(error.toString());
-    }}
-
-
-
-    //SignUP
-    function handleSignUp(email, password) {
-      if (password.length < 6) {
-        alert("Please enter more than 6 characters for a password");
-        return;
-      }
-      firebase.auth().createUserWithEmailAndPassword(email, password).then(cred =>{
-        store.dispatch(currentUser(cred.user.uid))
-        console.log(store.getState().redux.user)
-        setEmail("")
-        setPassword("")
-        navSaver()
-        })
-    } 
 
   return (
     <SafeAreaView style={styles.container}>
@@ -154,6 +160,15 @@ function setupDataListener() {
         >
           <View style={styles.button}>
             <Text style={styles.buttonText}>DOWNLOAD DATA</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          Style={styles.butContainer}
+          onPress={() => signUserOut()}
+        >
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>SIGN OUT</Text>
           </View>
         </TouchableOpacity>
 

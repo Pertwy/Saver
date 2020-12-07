@@ -13,7 +13,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Cards from "../components/Cards";
 import * as firebase from 'firebase';
-import {newCardOut, newCardIn} from "../Redux/actions";
+import {newCardOut, newCardIn, newCardInView} from "../Redux/actions";
 import {store} from "../Redux/store";
 
 export default function CardScreen({ navigation }) {
@@ -85,6 +85,7 @@ export default function CardScreen({ navigation }) {
   function addCardIn() {
     setAddCardSwitchIn(false);
     store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
+    //store.dispatch(newCardInView(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
     setNewCardListIn(store.getState().redux.cardsIn)
     unsubscribe()
     console.log(store.getState())
@@ -96,15 +97,24 @@ export default function CardScreen({ navigation }) {
     setNewCardListOut(store.getState().redux.cardsOut)
   }
 
+  function handleDrawer(){
+    navigation.openDrawer();
+  }
+
   return (
     <View>
       <SafeAreaView style={styles.container}>
         <View style={styles.headingTopElement}>
+          <TouchableOpacity onPress={handleDrawer}>
+            <Text style={styles.informationTextHeading}>MENU</Text>
+          </TouchableOpacity>
+
           <Text style={styles.informationTextHeading}>ACCOUNTS</Text>
         </View>
-        <TouchableOpacity onPress={handleRefresh}>
+        
+        {/*<TouchableOpacity onPress={handleRefresh}>
           <Text style={styles.topButtons}>REFRESH</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
 
         <View style={styles.headingElement}>
           <Text style={styles.informationTextHeading}>OUTGOING ACCOUNTS</Text>
@@ -268,8 +278,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headingElement: {
-    marginTop: 60,
-    marginBottom: 20,
+    marginTop: 40,
+    marginBottom: 0,
     flexDirection:"row",
     alignItems:"center",
     //alignContent:"center",
@@ -279,6 +289,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     //marginBottom: 40,
     marginTop: 10,
+    maxHeight: "16%",
+    flexDirection: "row",
+    // justifyContent: "flex-end",
+    justifyContent: "center",
+    //flex: 1,
+    marginBottom: 15,
   },
   informationTextHeading: {
     fontSize: 20,
@@ -289,17 +305,19 @@ const styles = StyleSheet.create({
   },
   formQuestions: {
     paddingLeft: "5%",
-    marginTop: 35,
+    marginTop: 15,
   },
   formQuestions2: {
     paddingLeft: "5%",
-    marginTop: 10,
+    marginTop: 0,
   },
   formStyle: {
-    backgroundColor: "white",
+    //backgroundColor: "white",
     borderBottomColor: "#ccc",
-    borderBottomWidth: 1,
+    //borderBottomWidth: 1,
     height: 40,
     paddingLeft: "5%",
+    marginLeft: 15,
+    
   },
 });

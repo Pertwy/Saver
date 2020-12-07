@@ -4,7 +4,6 @@ import {
   StyleSheet,
   TextInput,
   View,
-  Button,
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
@@ -21,6 +20,9 @@ export default function LoginScreen({ navigation }) {
   function navSaver(){
     navigation.navigate('Saver')}
 
+  function handleDrawer(){
+    navigation.openDrawer();
+  }
 
   //Upload data to Firebase /////////////
   function backup(){
@@ -43,9 +45,6 @@ export default function LoginScreen({ navigation }) {
       }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
         })};
-
-
-  
 
     //Login Function ////////////
     function handleLogin(email, password) {
@@ -100,12 +99,14 @@ export default function LoginScreen({ navigation }) {
   }
   */
 
-
-
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.headingTopElement}>
-        <Text style={styles.informationTextHeading}>PROFILE</Text>
+      <View style={styles.buttonArea}>
+      <TouchableOpacity onPress={handleDrawer}>
+          <Text style={styles.topButtons}>MENU</Text>
+        </TouchableOpacity>
+        <Text style={styles.topButtons}>PROFILE</Text>
+
       </View>
 
       <View style={styles.loginForm}>
@@ -182,6 +183,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     //marginBottom: 40,
     marginTop: 10,
+  },
+  buttonArea: {
+    maxHeight: "10%",
+    flexDirection: "row",
+    // justifyContent: "flex-end",
+    justifyContent: "center",
+    flex: 1,
+    marginBottom: 15,
+  },
+  topButtons: {
+    fontSize: 20,
+    padding: 10,
   },
   informationTextHeading: {
     fontSize: 20,

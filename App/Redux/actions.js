@@ -63,6 +63,15 @@ export function newCardIn(account, sort, name, id){
             sort,
             id,}}}
 
+export function newCardInView(account, sort, name, id){
+    return{
+        type: actions.NEW_CARD_IN_VIEW,
+            payload:{
+                name,
+                account,
+                sort,
+                id,}}}
+
 export function newCardOut(account, sort, name, id){
     return{
         type: actions.NEW_CARD_OUT,
@@ -71,6 +80,8 @@ export function newCardOut(account, sort, name, id){
             account,
             sort,
             id,}}}
+
+
 
 
 export function newSaver(id, title, price, goalSwitch, goal, colour, transOpt){

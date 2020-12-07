@@ -6,6 +6,7 @@ let start = {redux:{
     savers:[],
     cardsIn:[],
     cardsOut:[],
+    cardsInView:[],
 }}
 
 
@@ -63,6 +64,17 @@ export function reducer(state = start, action){
             //draftState.cards.(action.payload.inOut).
             draftState.redux.cardsIn.push(action.payload)
         })
+
+    else if (action.type === actions.NEW_CARD_IN_VIEW)
+        return produce(state, draftState => {
+            draftState.redux.cardsInView.push(
+                //action.payload
+                {label: action.name , value: action.name , icon: () => <AntDesign name="creditcard" size={18} color="black" />, hidden: true}
+            )
+        })
+
+
+    
 
     else if (action.type === actions.NEW_CARD_OUT)
         return produce(state, draftState => {

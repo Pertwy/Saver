@@ -28,8 +28,9 @@ export default function Saver({
                                 Transfer,
                                 Addition,
                                 id,
+                                runningTot,
                               }) {
-  const [TotalSaved, setTotalSaved] = useState(0);
+  const [TotalSaved, setTotalSaved] = useState(runningTot);
   const [modalVisible, setModalVisible] = useState(false);
   const [varTitle, setVarTitle] = useState(Title);
   const [varCost, setVarCost] = useState(Cost);

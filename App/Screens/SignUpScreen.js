@@ -27,7 +27,7 @@ export default function SignUpScreen({ navigation }) {
         alert("Please enter more than 6 characters for a password");
         return;
       }
-      //firebase.auth().createUserWithEmailAndPassword(email, password);
+      firebase.auth().createUserWithEmailAndPassword(email, password);
       store.dispatch(currentUser(userName))
       console.log(store.getState().redux.user)
       navSaver()
@@ -58,14 +58,6 @@ export default function SignUpScreen({ navigation }) {
       </View>
 
       <View style={styles.loginForm}>
-      <TextInput
-          placeholder="User Name"
-          onChangeText={(text) => setUserName(text)}
-          style={styles.formStyle}
-          autoCorrect={false}
-          autoCapitalize="none"
-          secureTextEntry={true}
-        />
         <TextInput
           placeholder="Email"
           onChangeText={(text) => setEmail(text)}
@@ -98,7 +90,7 @@ export default function SignUpScreen({ navigation }) {
           onPress={() => navSaver()}
         >
           <View style={styles.button}>
-            <Text style={styles.buttonText}>NAVIGATE TO Saver</Text>
+            <Text style={styles.buttonText}>Saver</Text>
           </View>
         </TouchableOpacity>
 

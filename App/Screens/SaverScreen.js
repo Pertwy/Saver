@@ -59,6 +59,8 @@ export default function SaverScreen({navigation}) {
   const [saverList, setSaverList] = useState([]);
   const [newSaverList, setNewSaverList] = useState();
   //const [cardsInList, setCardsInList] = useState([]);
+  const [optionalText, setOptionalText] = useState(true)
+  const [lengthSavers, setLengthSavers] = useState(0)
 
   const [idCount, setIdCount] = useState(1);
   const [formError, setFormError] = useState(null);
@@ -79,18 +81,13 @@ export default function SaverScreen({navigation}) {
     setNewSaverList(store.getState().redux.savers)
   })
 
+  // setLengthSavers(store.getState().redux.savers)
+  // if (lengthSavers.length > 0){
+  //   setOptionalText(false)}
+
   useEffect(() => {
     unsubscribe
   },[])
-  //componentDidUMount(store.getState().redux.savers)
-  // const SampleComponent = () => {
-  //   useEffect(() => {
-  //     setNewSaverList(store.getState().redux.savers)
-  //   }, [])}
-
-  // useEffect(() => {
-  //   setNewSaverList(store.getState().redux.savers)
-  // }, [store.getState()])
 
   function updateAddSaver() {
     if (
@@ -121,6 +118,10 @@ export default function SaverScreen({navigation}) {
     return setInformationModalVisible(true);
   }
 
+  function handleDrawer(){
+    navigation.openDrawer();
+  }
+
   const deleteItemById = (id) => {
     const filteredData = saverList.filter((item) => item.id !== id);
     setSaverList(filteredData);
@@ -130,36 +131,21 @@ export default function SaverScreen({navigation}) {
     setTotalSaved(totalSaved + parseFloat(addition));
   };
 
-/*
-  function loadUserTypes() {
-    return cardsInList.map(card => (
-      {label: card.name, value: card.name, icon: "() => <AntDesign name=\"creditcard\" size={18} color=\"black\" />", hidden: true}
-    ))
-  }*/
 
-
-
-
-  // firebase.auth().onAuthStateChanged((user) => {
-  //   if (user){
-  //     //console.log(user)
-  //     //setupDataListener()
-  //     //setNewSaverList(store.getState().redux.savers)
-  //   }
-  // })
 
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.buttonArea}>
+        <TouchableOpacity onPress={handleDrawer}>
+          <Text style={styles.topButtons}>MENU</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={handleAdd}>
           <Text style={styles.topButtons}>ADD SAVER</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleRefresh}>
+        {/*<TouchableOpacity onPress={handleRefresh}>
           <Text style={styles.topButtons}>REFRESH</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleInfo}>
-          <Text style={styles.topButtons}>INFORMATION</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
+               
 
         <Modal
           style={styles.addModal}
@@ -223,7 +209,7 @@ export default function SaverScreen({navigation}) {
                   maxLength={20}
                 />
 
-                <View style={styles.formQuestionsInfo}>
+                {/*<View style={styles.formQuestionsInfo}>
                   <Text style={styles.formQuestions}>
                     Choose a cost every time you click the Saver
                   </Text>
@@ -235,7 +221,7 @@ export default function SaverScreen({navigation}) {
                       onValueChange={(newValue) => setVariable(newValue)}
                     />
                   </View>
-                </View>
+                 </View>*/}
 
                 {!variable && (
                   <View>
@@ -467,10 +453,13 @@ export default function SaverScreen({navigation}) {
           </ScrollView>
         </Modal>
       </SafeAreaView>
+      {optionalText && (
       <View style={styles.optionalText}>
-        
+        <Text>Add a Saver</Text>
+        <Text>Add some accounts</Text>
+        <Text>Start Saving</Text>
         {//<Text>Total Transfered: £{totalSaved.toFixed(2)}</Text>*/
-      }</View>
+      }</View>)}
         <FlatList
           style={{flex: 1}}
           data={newSaverList}
@@ -483,6 +472,7 @@ export default function SaverScreen({navigation}) {
               Colour={item.colour}
               GoalSwitch={item.goalSwitch}
               Transfer={item.transOpt}
+              runningTot={item.runningTot}
               Delete={() => deleteItemById(item.id)}
               //onPress={() => handleDeleteSaverList(item)}
               Addition={() => addToTotalSaved(item.price)}

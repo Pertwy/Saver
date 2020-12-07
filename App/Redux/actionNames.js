@@ -8,6 +8,7 @@ export const CURRENT_USER = "currentUser";
 
 export const NEW_CARD_IN = "newCardIn";
 export const NEW_CARD_OUT = "newCardOut";
+export const NEW_CARD_IN_VIEW = "newCardInView"
 
 
 export const REMOVE_SAVER = "removeSaver";

@@ -50,9 +50,9 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut}) {
       </TouchableOpacity>
 
       {editCardSwitch && (
-          <View>
+          <View style={styles.editContainer}>
             <View style={styles.switchQuestion}>
-              <Text style={styles.formQuestions}>Give the card a name</Text>
+              <Text style={styles.formQuestions}>Edit card a name</Text>
             </View>
 
             <TextInput
@@ -63,7 +63,7 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut}) {
             />
 
             <View style={styles.switchQuestion}>
-              <Text style={styles.formQuestions2}>Account Number</Text>
+              <Text style={styles.formQuestions2}>Edit Account Number</Text>
             </View>
 
             <TextInput
@@ -74,7 +74,7 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut}) {
               returnKeyType={"done"}
             />
             <View style={styles.switchQuestion}>
-              <Text style={styles.formQuestions2}>Sort Code</Text>
+              <Text style={styles.formQuestions2}>Edit Sort Code</Text>
             </View>
 
             <TextInput
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     alignItems:"center",
     paddingTop: 5,
     paddingBottom: 5,
+    marginTop:10
   },
   cardContainerText: {
     paddingLeft: "5%",
@@ -130,5 +131,14 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingLeft: "5%",
     paddingRight: "5%",
+  },
+  editContainer:{
+    marginTop:15,
+    //paddingBottom:15,
+    //marginBottom: 20,
+  },
+  formStyle:{
+    padding:5,
+    paddingLeft:15,
   },
 });

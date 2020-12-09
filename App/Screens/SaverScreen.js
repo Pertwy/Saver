@@ -21,10 +21,14 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
 import { AntDesign } from "@expo/vector-icons";
 
+import TransferButton from "../components/TransferButton"
+import ColourButtons from "../components/ColourButtons"
+
 import {newSaver, firebasePull} from "../Redux/actions";
 import {store} from "../Redux/store";
 
 import * as firebase from 'firebase';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCldOuLQaxZxzblxlNYUzQr0A8FP2PxLQY",
@@ -114,9 +118,6 @@ export default function SaverScreen({navigation}) {
     setNewSaverList(store.getState().redux.savers)
   }
 
-  function handleInfo() {
-    return setInformationModalVisible(true);
-  }
 
   function handleDrawer(){
     navigation.openDrawer();
@@ -265,6 +266,7 @@ export default function SaverScreen({navigation}) {
                   <Text style={styles.formQuestions}>
                     When would you like to transfer money?
                   </Text>
+
                   <TouchableOpacity
                     onPress={() => setTransferMoneyModalVisible(true)}
                   >
@@ -288,95 +290,10 @@ export default function SaverScreen({navigation}) {
                 </View>
 
                 <View style={styles.transferSchedule}>
-                  <TouchableOpacity
-                    style={[
-                      styles.transferButton,
-                      {
-                        backgroundColor:
-                          transferMethod == 1 ? "black" : "white",
-                      },
-                    ]}
-                    onPress={() => setTransferMethod(1)}
-                  >
-                    <View>
-                      <Text
-                        style={[
-                          styles.transferButtonText,
-                          {color: transferMethod == 1 ? "white" : "black"},
-                        ]}
-                      >
-                        On every click
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-
-                  {goalSwitch && (
-                    <TouchableOpacity
-                      style={[
-                        styles.transferButton,
-                        {
-                          backgroundColor:
-                            transferMethod == 2 ? "black" : "white",
-                        },
-                      ]}
-                      onPress={() => setTransferMethod(2)}
-                    >
-                      <View>
-                        <Text
-                          style={[
-                            styles.transferButtonText,
-                            {color: transferMethod == 2 ? "white" : "black"},
-                          ]}
-                        >
-                          On achieving your goal
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  )}
-
-                  <TouchableOpacity
-                    style={[
-                      styles.transferButton,
-                      {
-                        backgroundColor:
-                          transferMethod == 3 ? "black" : "white",
-                      },
-                    ]}
-                    onPress={() => setTransferMethod(3)}
-                  >
-                    <View>
-                      <Text
-                        style={[
-                          styles.transferButtonText,
-                          {color: transferMethod == 3 ? "white" : "black"},
-                        ]}
-                      >
-                        Upon pressing the "transfer" button
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={[
-                      styles.transferButton,
-                      {
-                        backgroundColor:
-                          transferMethod == 4 ? "black" : "white",
-                      },
-                    ]}
-                    onPress={() => setTransferMethod(4)}
-                  >
-                    <View>
-                      <Text
-                        style={[
-                          styles.transferButtonText,
-                          {color: transferMethod == 4 ? "white" : "black"},
-                        ]}
-                      >
-                        No Transfer
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
+                  <TransferButton number={1} title="On Every Click" setTransferMethod={setTransferMethod} currentTransfer={transferMethod}/>
+                  <TransferButton number={2} title="On achieving your goal" setTransferMethod={setTransferMethod} currentTransfer={transferMethod}/>
+                  <TransferButton number={3} title="Upon pressing the transfer button" setTransferMethod={setTransferMethod} currentTransfer={transferMethod}/>
+                  <TransferButton number={4} title="No Transfer" setTransferMethod={setTransferMethod} currentTransfer={transferMethod}/> 
                 </View>
 
                 <View>
@@ -419,36 +336,17 @@ export default function SaverScreen({navigation}) {
                   </View>
                 </View>
 
-                <Text style={styles.colorFormQuestions}>
-                  Select Saver Colour
-                </Text>
-                <View style={styles.circleContainer}>
-                  <TouchableOpacity
-                    style={[styles.Circle, styles.red]}
-                    onPress={() => setSaverColour("rgb(238, 64, 53)")}
-                  />
-                  <TouchableOpacity
-                    style={[styles.Circle, styles.orange]}
-                    onPress={() => setSaverColour("rgb(243, 119, 54)")}
-                  />
-                  <TouchableOpacity
-                    style={[styles.Circle, styles.yellow]}
-                    onPress={() => setSaverColour("rgb(253, 244, 152)")}
-                  />
-                  <TouchableOpacity
-                    style={[styles.Circle, styles.green]}
-                    onPress={() => setSaverColour("rgb(123, 192, 67)")}
-                  />
-                  <TouchableOpacity
-                    style={[styles.Circle, styles.blue]}
-                    onPress={() => setSaverColour("rgb(3, 146, 207)")}
-                  />
-                </View>
+                <Text style={styles.colorFormQuestions}> Select Saver Colour</Text>
+                
+                <ColourButtons setSaverColour={setSaverColour}/>
               </View>
+
               <View style={styles.errorContainer}>
                 <Text style={styles.errorText}>{formError}</Text>
               </View>
+
               <Button title="Submit" onPress={updateAddSaver}></Button>
+
             </SafeAreaView>
           </ScrollView>
         </Modal>
@@ -474,7 +372,6 @@ export default function SaverScreen({navigation}) {
               Transfer={item.transOpt}
               runningTot={item.runningTot}
               Delete={() => deleteItemById(item.id)}
-              //onPress={() => handleDeleteSaverList(item)}
               Addition={() => addToTotalSaved(item.price)}
               Variable={item.variable}
               id = {item.id}
@@ -499,7 +396,6 @@ const styles = StyleSheet.create({
     width: "40%",
     height: 50,
     zIndex:-100,
-    //backgroundColor: "#ccc",
   },
   outGoingAccount: {
     marginLeft: "5%",
@@ -568,7 +464,6 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   transferButton: {
-    //backgroundColor: "white",
     padding: 4,
     margin: 4,
     borderRadius: 5,
@@ -578,7 +473,6 @@ const styles = StyleSheet.create({
   },
   transferButtonText: {
     padding: 5,
-    //color: "green"
   },
   formContainer: {
     //width: "90%",
@@ -588,9 +482,6 @@ const styles = StyleSheet.create({
   transferSchedule: {
     padding: "5%",
   },
-  // container: {
-  //   flex: 1,
-  // },
 
   headerText: {
     padding: 20,
@@ -628,34 +519,7 @@ const styles = StyleSheet.create({
     height: 40,
     paddingLeft: "5%",
   },
-
-  circleContainer: {
-    flexDirection: "row",
-    alignContent: "center",
-    justifyContent: "center",
-    padding: 20,
-  },
-  Circle: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    margin: 10,
-  },
-  red: {
-    backgroundColor: "rgb(238, 64, 53)",
-  },
-  orange: {
-    backgroundColor: "rgb(243, 119, 54)",
-  },
-  yellow: {
-    backgroundColor: "rgb(253, 244, 152)",
-  },
-  green: {
-    backgroundColor: "rgb(123, 192, 67)",
-  },
-  blue: {
-    backgroundColor: "rgb(3, 146, 207)",
-  },
+ 
   informationContainer: {
     paddingTop: 10,
   },

@@ -27,13 +27,13 @@ import CardScreenIn from "./CardScreenIn"
 import TransferButton from "../components/TransferButton"
 import ColourButtons from "../components/ColourButtons"
 
-import {newSaver, firebasePull} from "../Redux/actions";
+import {newSaver, firebasePull, pageUpdate} from "../Redux/actions";
 import {store} from "../Redux/store";
 
 import * as firebase from 'firebase';
 import CardInModal from "../components/CardInModal";
 
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch,  } from 'react-redux'
 
 const firebaseConfig = {
   apiKey: "AIzaSyCldOuLQaxZxzblxlNYUzQr0A8FP2PxLQY",
@@ -88,21 +88,26 @@ export default function SaverScreen({navigation}) {
     setTransferMethod(1);
   }
 
-  const unsubscribe = store.subscribe(() => {
+
+  function handelChange(){
     setNewSaverList(store.getState().redux.savers)
-  })
+  }
 
-  // setLengthSavers(store.getState().redux.savers)
-  // if (lengthSavers.length > 0){
-  //   setOptionalText(false)}
+  const unsubscribe = store.subscribe(handelChange)
 
-  // function handleUpdate(){
-  //   () => 
-  // }
-
-  useEffect(()=>
+  useEffect(()=>{
+    store.dispatch(pageUpdate())
     unsubscribe
-  ,[])
+  },[])
+
+
+  // const unsubscribe = store.subscribe(() => {
+  //   setNewSaverList(store.getState().redux.savers)
+  // })
+
+  // useEffect(()=>
+  //   unsubscribe
+  // ,[])
 
   // function handleUpdate(){
   //   setUpdate(!update)

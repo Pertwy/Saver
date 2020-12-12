@@ -17,9 +17,12 @@ import InformationText from "../components/InformationText";
 import TransferInformationText from "../components/TransferInformationText";
 import IdeaInformationText from "../components/IdeaInformationText";
 import {FontAwesome} from "@expo/vector-icons";
+import { Feather } from '@expo/vector-icons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
 import { AntDesign } from "@expo/vector-icons";
+
+import CardScreenIn from "./CardScreenIn"
 
 import TransferButton from "../components/TransferButton"
 import ColourButtons from "../components/ColourButtons"
@@ -28,7 +31,9 @@ import {newSaver, firebasePull} from "../Redux/actions";
 import {store} from "../Redux/store";
 
 import * as firebase from 'firebase';
+import CardInModal from "../components/CardInModal";
 
+import { useSelector, useDispatch } from 'react-redux'
 
 const firebaseConfig = {
   apiKey: "AIzaSyCldOuLQaxZxzblxlNYUzQr0A8FP2PxLQY",
@@ -62,13 +67,15 @@ export default function SaverScreen({navigation}) {
   const [transferMoneyModalVisible, setTransferMoneyModalVisible] = useState(false);
   const [saverList, setSaverList] = useState([]);
   const [newSaverList, setNewSaverList] = useState();
-  //const [cardsInList, setCardsInList] = useState([]);
+  const [cardsInList, setCardsInList] = useState([]);
   const [optionalText, setOptionalText] = useState(true)
   const [lengthSavers, setLengthSavers] = useState(0)
+  const [update, setUpdate] = useState(false)
 
   const [idCount, setIdCount] = useState(1);
   const [formError, setFormError] = useState(null);
 
+  //const newSaverList = useSelector(store => store.redux.savers)
 
   function closeAddModal() {
     setSaverTitle("");
@@ -89,9 +96,18 @@ export default function SaverScreen({navigation}) {
   // if (lengthSavers.length > 0){
   //   setOptionalText(false)}
 
-  useEffect(() => {
+  // function handleUpdate(){
+  //   () => 
+  // }
+
+  useEffect(()=>
     unsubscribe
-  },[])
+  ,[])
+
+  // function handleUpdate(){
+  //   setUpdate(!update)
+  //   setNewSaverList(store.getState().redux.savers)
+  // }
 
   function updateAddSaver() {
     if (
@@ -103,12 +119,15 @@ export default function SaverScreen({navigation}) {
     } else {
         store.dispatch(newSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod))
         setNewSaverList(store.getState().redux.savers)
-        //unsubscribe()
+        unsubscribe()
         console.log(store.getState())
         setIdCount(idCount + 1);
         closeAddModal();
     }
   }
+
+  
+
 
   function handleAdd() {
     return setModalVisible(true);
@@ -137,32 +156,21 @@ export default function SaverScreen({navigation}) {
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.buttonArea}>
-        <TouchableOpacity onPress={handleDrawer}>
-          <Text style={styles.topButtons}>MENU</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleAdd}>
-          <Text style={styles.topButtons}>ADD SAVER</Text>
-        </TouchableOpacity>
-        {/*<TouchableOpacity onPress={handleRefresh}>
-          <Text style={styles.topButtons}>REFRESH</Text>
-        </TouchableOpacity>*/}
-               
 
-        <Modal
-          style={styles.addModal}
-          visible={informationModalVisible}
-          animationType="slide"
-        >
-          <ScrollView>
-            <SafeAreaView style={styles.informationContainer}>
-              <InformationText/>
-              <Button
-                title="Close"
-                onPress={() => setInformationModalVisible(false)}
-              />
-            </SafeAreaView>
-          </ScrollView>
-        </Modal>
+        <TouchableOpacity onPress={handleDrawer}>
+          <Feather style={[styles.topButtonsMenu]} name="menu" size={28} color="black" />
+        </TouchableOpacity>
+
+        <Text style={styles.topButtons}>SAVER</Text>
+
+        <TouchableOpacity onPress={handleAdd}>
+          <AntDesign style={styles.topButtons} name="pluscircleo" size={32} color="black" />
+        </TouchableOpacity>
+
+        {/* <TouchableOpacity onPress={() => setInformationModalVisible(true)}>
+          <Text style={styles.topButtons}>S/Text>
+        </TouchableOpacity> */}
+      
 
         <Modal
           style={styles.addModal}
@@ -302,37 +310,51 @@ export default function SaverScreen({navigation}) {
                   </Text>
 
                   <View style={styles.accountsContainer}>
-                    <TouchableOpacity
-                      onPress={() => navigation.navigate("Card")}
-                      style={styles.outGoingAccount}
-                    >
-                      <View>
-                        <Text>Select outgoing account</Text>
-                      </View>
+
+                    <TouchableOpacity onPress={() => setInformationModalVisible(true)}>
+                        <Text style={styles.topButtons}>Card OUT</Text>
                     </TouchableOpacity>
+                    
+          {/* Card in Modal */}
+                    <Modal
+                    style={styles.addModal}
+                    visible={informationModalVisible}
+                    animationType="slide">
+                    <ScrollView>
+                      <SafeAreaView style={styles.informationContainer}>
+                        <CardScreenIn/>
+                        <Button
+                          title="Close"
+                          onPress={() => setInformationModalVisible(false)}
+                        />
+                      </SafeAreaView>
+                    </ScrollView>
+                  </Modal>
+
 
                     <FontAwesome name="arrow-right" size={24} color="black"/>
 
-                    <View style={styles.inComingAccount}>
-                      <DropDownPicker
-                          items={[
-                            {label: 'USA', value: 'usa', icon: () => <AntDesign name="creditcard" size={18} color="black" />, hidden: true},
-                            {label: 'UK', value: 'uk', icon: () => <AntDesign name="creditcard" size={18} color="black" />},
-                            {label: 'France', value: 'france', icon: () => <AntDesign name="creditcard" size={18} color="black" />},
-                        ]}
-                          //defaultValue={this.state.country}
-                          placeholder = "Select incoming details"
-                          containerStyle={{height: 40, zIndex:-100,}}
-                          style={{backgroundColor: '#fafafa'}}
-                          itemStyle={{
-                              justifyContent: 'flex-start'
-                          }}
-                          dropDownStyle={{backgroundColor: '#fafafa', zIndex:-100,}}
-                          onChangeItem={item => this.setState({
-                              country: item.value
-                          })}
-                      />
-                    </View>
+                    <TouchableOpacity onPress={() => setInformationModalVisible(true)}>
+                        <Text style={styles.topButtons}>Card IN</Text>
+                    </TouchableOpacity>
+
+          {/* Card in Modal */}
+                    <Modal
+                    style={styles.addModal}
+                    visible={informationModalVisible}
+                    animationType="slide">
+                    <ScrollView>
+                      <SafeAreaView style={styles.informationContainer}>
+                        <CardScreenIn/>
+                        <Button
+                          title="Close"
+                          onPress={() => setInformationModalVisible(false)}
+                        />
+                      </SafeAreaView>
+                    </ScrollView>
+                  </Modal>
+
+                    
                   </View>
                 </View>
 
@@ -351,13 +373,14 @@ export default function SaverScreen({navigation}) {
           </ScrollView>
         </Modal>
       </SafeAreaView>
-      {optionalText && (
+      {/* {optionalText && (
       <View style={styles.optionalText}>
         <Text>Add a Saver</Text>
         <Text>Add some accounts</Text>
         <Text>Start Saving</Text>
-        {//<Text>Total Transfered: £{totalSaved.toFixed(2)}</Text>*/
-      }</View>)}
+        {//<Text>Total Transfered: £{totalSaved.toFixed(2)}</Text>
+      }</View>)} 
+    */}
         <FlatList
           style={{flex: 1}}
           data={newSaverList}
@@ -375,6 +398,7 @@ export default function SaverScreen({navigation}) {
               Addition={() => addToTotalSaved(item.price)}
               Variable={item.variable}
               id = {item.id}
+              //setUpdate={handleUpdate()}
             />
           )}
         />
@@ -387,9 +411,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
+  topButtonsMenu:{
+    fontSize: 20,
+    padding: 10,
+    //paddingTop:30
+    // marginLeft: -140
+    
+  },
   topButtons: {
     fontSize: 20,
     padding: 10,
+    paddingLeft: 90
   },
   inComingAccount: {
     marginRight: "5%",
@@ -496,8 +528,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     // justifyContent: "flex-end",
     justifyContent: "center",
+    alignContent: "space-between",
+
     flex: 1,
-    marginBottom: 15,
+    //marginBottom: 15,
+    marginTop:15
   },
   saverArea: {
     flexDirection: "row",

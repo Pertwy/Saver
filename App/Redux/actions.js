@@ -10,11 +10,42 @@ export function firebasePull(fbData){
     }
 }
 
+export function pageUpdate(){
+    return{
+        type: actions.PAGE_UPDATE,
+    }
+}
+
 export function signOutRedux(){
     return{
         type: actions.SIGNOUT
     }
 }
+
+export function plusCardId(){
+    return{
+        type: actions.PLUS_CARD_ID,
+    }
+}
+
+export function selectedCardIn(id){
+    return{
+        type: actions.SELECTED_CARD_IN,
+        payload:{
+            id,
+        }
+    }
+}
+
+export function selectedCardOut(id){
+    return{
+        type: actions.SELECTED_CARD_OUT,
+        payload:{
+            id,
+        }
+    }
+}
+
 
 export function removeCardIn(id){
     return{

@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, SafeAreaView, TextInput, Button } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import {removeCardIn, removeCardOut} from "../Redux/actions"
+import {removeCardIn, removeCardOut, selectedCardIn} from "../Redux/actions"
 import {store} from "../Redux/store"
 
 
-export default function Cards({ SortCode, AccountNum, AccountName, id, inOut}) {
+export default function Cards({ SortCode, AccountNum, AccountName, id, inOut, select}) {
     
   const [editCardSwitch, setEditCardSwitch] = useState(false)
   const [varSortCode, setVarSortCode] = useState(SortCode)
   const [varAccountNum, setVarAccountNum] = useState(AccountNum)
   const [varAccountName, setVarAccountName] = useState(AccountName)
+  const [varSelected, setVarSelected] = useState(false)
 
   function handleEditOn(){
     setEditCardSwitch(true)
@@ -33,6 +36,22 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut}) {
       handleEditOff();}
   }
 
+  function selectCard(){
+    setVarSelected(!varSelected)
+    store.dispatch(selectedCardIn(id))
+  }
+
+  let selectButton;
+  if (select == true) {
+      selectButton = <MaterialIcons name="check-box-outline-blank" size={36} color="black" />
+
+      if(varSelected == true){
+        selectButton = <Ionicons name="md-checkbox-outline" size={36} color="black" />
+      }
+    
+    }
+
+
 
   return (
     <SafeAreaView>
@@ -46,7 +65,13 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut}) {
           <Text>Sort code: {varSortCode}</Text>
           <Text>Account Number: {varAccountNum}</Text>
         </View>
+        <TouchableOpacity onPress={()=>selectCard()}>
+          {selectButton}
+        </TouchableOpacity>
+        
+
       </View>
+
       </TouchableOpacity>
 
       {editCardSwitch && (

@@ -7,6 +7,10 @@ let start = {redux:{
     cardsIn:[],
     cardsOut:[],
     cardsInView:[],
+    selectedCardIn:"",
+    selectedCardOut:"",
+    cardId:1,
+    update:1
 }}
 
 
@@ -22,6 +26,16 @@ export function reducer(state = start, action){
             draftState.redux = (action.payload.fbData)
         })
 
+    else if (action.type === actions.SELECTED_CARD_IN)    
+        return produce(state, draftState => {
+            draftState.redux.selectedCardIn = (action.payload.id)
+        })
+    
+    else if (action.type === actions.SELECTED_CARD_OUT)    
+        return produce(state, draftState => {
+            draftState.redux.selectedCardOut = (action.payload.id)
+        })
+
     else if (action.type === actions.SIGNOUT)    
         return produce(state, draftState => {
             draftState.redux = {redux:{
@@ -29,6 +43,10 @@ export function reducer(state = start, action){
                 savers:[],
                 cardsIn:[],
                 cardsOut:[],
+                selectedCardIn:"",
+                selectedCardOut:"",
+                cardId:1,
+                update:1
             }}
         })
 
@@ -59,22 +77,27 @@ export function reducer(state = start, action){
             });
         })
 
+    else if (action.type === actions.PLUS_CARD_ID)
+        return produce(state, draftState => {
+            draftState.redux.cardId += 1
+        })
+
+    else if (action.type === actions.PAGE_UPDATE)
+        return produce(state, draftState => {
+            draftState.redux.update += 1
+        })
+
     else if (action.type === actions.NEW_CARD_IN)
         return produce(state, draftState => {
-            //draftState.cards.(action.payload.inOut).
             draftState.redux.cardsIn.push(action.payload)
         })
 
     else if (action.type === actions.NEW_CARD_IN_VIEW)
         return produce(state, draftState => {
             draftState.redux.cardsInView.push(
-                //action.payload
                 {label: action.name , value: action.name , icon: () => <AntDesign name="creditcard" size={18} color="black" />, hidden: true}
             )
         })
-
-
-    
 
     else if (action.type === actions.NEW_CARD_OUT)
         return produce(state, draftState => {

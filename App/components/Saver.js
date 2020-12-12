@@ -29,6 +29,7 @@ export default function Saver({
                                 Addition,
                                 id,
                                 runningTot,
+                                setUpdate
                               }) {
   const [TotalSaved, setTotalSaved] = useState(runningTot);
   const [modalVisible, setModalVisible] = useState(false);
@@ -42,7 +43,7 @@ export default function Saver({
 
   function deleteSaver(){
     store.dispatch(removeSaver(id));
-    console.log(store.getState());
+    //() => setUpdate();
     return setModalVisible(false);
   }
 
@@ -208,7 +209,7 @@ export default function Saver({
           <View>
             <View style={styles.saverTop}>
               <Text style={styles.saverTopText}>
-                {varTitle} - £{varCost}
+                {varTitle} - £{parseFloat(varCost).toFixed(2)}
               </Text>
             </View>
             {mainSaverText}

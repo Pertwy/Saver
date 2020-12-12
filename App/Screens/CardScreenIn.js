@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
-  ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Cards from "../components/Cards";
@@ -16,7 +15,7 @@ import * as firebase from 'firebase';
 import {newCardOut, newCardIn, newCardInView, plusCardId, pageUpdate} from "../Redux/actions";
 import {store} from "../Redux/store";
 
-export default function CardScreen({ navigation }) {
+export default function CardScreenIn({ navigation }) {
   const [addCardSwitch, setAddCardSwitch] = useState(false);
   const [sortCode, setSortCode] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
@@ -34,9 +33,14 @@ export default function CardScreen({ navigation }) {
   const unsubscribe = store.subscribe(handelChange)
 
   useEffect(()=>{
+    //setNewCardListIn(store.getState().redux.cardsIn)
+    //setNewCardListOut(store.getState().redux.cardsOut)
+    //setIdCounter(store.getState().redux.cardId)
     store.dispatch(pageUpdate())
     unsubscribe
   },[])
+
+
 
   let addSubtract;
   if (addCardSwitch == true) {
@@ -58,10 +62,9 @@ export default function CardScreen({ navigation }) {
   function addCard() {
     setAddCardSwitch(false);
     store.dispatch(newCardOut(accountNumber,sortCode,accountName, idCounter))
-    //plusCardId()
     setNewCardListOut(store.getState().redux.cardsOut)
     unsubscribe()
-    // setIdCounter(idCounter + 1);
+    setIdCounter(idCounter + 1);
   }
 
   const [addCardSwitchIn, setAddCardSwitchIn] = useState(false);
@@ -88,10 +91,11 @@ export default function CardScreen({ navigation }) {
 
   function addCardIn() {
     setAddCardSwitchIn(false);
+    unsubscribe()
     store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
     //store.dispatch(newCardInView(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
     setNewCardListIn(store.getState().redux.cardsIn)
-    unsubscribe()
+    
     console.log(store.getState())
     store.dispatch(plusCardId())
     //setIdCounter(idCounter + 1);
@@ -108,99 +112,21 @@ export default function CardScreen({ navigation }) {
 
   return (
     <View>
-      <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container}>
+
         <View style={styles.headingTopElement}>
-          <TouchableOpacity onPress={handleDrawer}>
+          {/* <TouchableOpacity onPress={handleDrawer}>
             <Text style={styles.informationTextHeading}>MENU</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
-          <Text style={styles.informationTextHeading}>ACCOUNTS</Text>
-        </View>
-        
-        {/*<TouchableOpacity onPress={handleRefresh}>
-          <Text style={styles.topButtons}>REFRESH</Text>
-        </TouchableOpacity>*/}
-
-        <View style={styles.headingElement}>
-          <Text style={styles.informationTextHeading}>OUTGOING ACCOUNTS</Text>
-          <TouchableOpacity onPress={() => viewAddCard()}>
-            {addSubtract}
-          </TouchableOpacity>
+          <Text style={styles.informationTextHeading}>CHOOSE AN INCOMING ACCOUNTS</Text>
         </View>
 
-        <FlatList
-          //style={{flex: 1}}
-          data={newCardListOut}
-          keyExtractor={(newCardListOut) => newCardListOut.id.toString()}
-          renderItem={({ item }) => (
-            <Cards
-              SortCode={item.sort}
-              AccountNum={item.account}
-              AccountName={item.name}
-              id = {item.id}
-              inOut = "cardsOut"
-            />
-          )}
-        />
-
-        {addCardSwitch && (
-          <View>
-            <View style={styles.switchQuestion}>
-              <Text style={styles.formQuestions}>Give the card a name</Text>
-            </View>
-
-            <TextInput
-              onChangeText={(text) => setAccountName(text)}
-              placeholder="Current account"
-              style={styles.formStyle}
-              //returnKeyType={"done"}
-            />
-
-            <View style={styles.switchQuestion}>
-              <Text style={styles.formQuestions2}>Account Number</Text>
-            </View>
-
-            <TextInput
-              onChangeText={(text) => setAccountNumber(text)}
-              placeholder="XXXXXXXX"
-              style={styles.formStyle}
-              keyboardType="decimal-pad"
-              returnKeyType={"done"}
-            />
-            <View style={styles.switchQuestion}>
-              <Text style={styles.formQuestions2}>Sort Code</Text>
-            </View>
-
-            <TextInput
-              onChangeText={(text) => setSortCode(text)}
-              placeholder="XX-XX-XX"
-              style={styles.formStyle}
-              keyboardType="decimal-pad"
-              returnKeyType={"done"}
-            />
-            <Button title="Add" onPress={() => addCard()}></Button>
-          </View>
-        )}
-      </SafeAreaView>
-
-      <SafeAreaView style={styles.container}>
         <View style={styles.headingElement}>
-          <Text style={styles.informationTextHeading}>INCOMING ACCOUNTS</Text>
           <TouchableOpacity onPress={() => viewAddCardIn()}>
             {addSubtractIn}
           </TouchableOpacity>
         </View>
-
-
-{/* {
- newCardListIn.map(person=>{
-   return(
-     <Cards
-     
-     />
-   )
- })
-} */}
          
         <FlatList
           //style={{flex: 1}}
@@ -213,6 +139,7 @@ export default function CardScreen({ navigation }) {
               AccountName={item.name}
               id = {item.id}
               inOut = "cardsIn"
+              select = {true}
             />
           )}
         />

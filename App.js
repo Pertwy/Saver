@@ -12,6 +12,7 @@ import WelcomeScreen from "./App/Screens/WelcomeScreen";
 import CardScreen from "./App/Screens/CardScreen";
 import SignUpScreen from "./App/Screens/SignUpScreen";
 import InformationScreen from "./App/Screens/InformationScreen";
+import ProfileScreen from "./App/Screens/ProfileScreen"
 
 const Tab = createBottomTabNavigator();
 
@@ -21,12 +22,11 @@ export function DrawerScreens() {
   return (
     <NavigationContainer independent={true}>
       <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Saver" component={SaverScreen} />
-        <Drawer.Screen name="Card" component={CardScreen} />
-        <Drawer.Screen name="Login" component={LoginScreen} />
+        <Drawer.Screen name="Savers" component={SaverScreen} />
+        <Drawer.Screen name="Manage Acounts" component={CardScreen} />
+        
         <Drawer.Screen name="Information" component={InformationScreen} />
-        {/* LogOut
-        Info */}
+        <Drawer.Screen name="Profile" component={ProfileScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
@@ -62,6 +62,7 @@ function App() {
         }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen}/>
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Main" component={DrawerScreens} />
       </Stack.Navigator>
     </NavigationContainer>

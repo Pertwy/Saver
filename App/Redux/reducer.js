@@ -10,6 +10,7 @@ let start = {redux:{
     selectedCardIn:"",
     selectedCardOut:"",
     cardId:1,
+    saverId:1,
     update:1
 }}
 
@@ -28,12 +29,12 @@ export function reducer(state = start, action){
 
     else if (action.type === actions.SELECTED_CARD_IN)    
         return produce(state, draftState => {
-            draftState.redux.selectedCardIn = (action.payload.id)
+            draftState.redux.selectedCardIn = (action.payload.AccountName)
         })
     
     else if (action.type === actions.SELECTED_CARD_OUT)    
         return produce(state, draftState => {
-            draftState.redux.selectedCardOut = (action.payload.id)
+            draftState.redux.selectedCardOut = (action.payload.AccountName)
         })
 
     else if (action.type === actions.SIGNOUT)    
@@ -43,9 +44,11 @@ export function reducer(state = start, action){
                 savers:[],
                 cardsIn:[],
                 cardsOut:[],
+                cardsInView:[],
                 selectedCardIn:"",
                 selectedCardOut:"",
                 cardId:1,
+                saverId:1,
                 update:1
             }}
         })
@@ -76,6 +79,12 @@ export function reducer(state = start, action){
                 return element !== undefined;
             });
         })
+
+    else if (action.type === actions.PLUS_SAVER_ID)
+        return produce(state, draftState => {
+            draftState.redux.saverId += 1
+        })
+
 
     else if (action.type === actions.PLUS_CARD_ID)
         return produce(state, draftState => {

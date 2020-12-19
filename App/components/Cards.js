@@ -38,7 +38,7 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut, se
 
   function selectCard(){
     setVarSelected(!varSelected)
-    store.dispatch(selectedCardIn(id))
+    store.dispatch(selectedCardIn(AccountName))
   }
 
   let selectButton;
@@ -48,8 +48,7 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut, se
       if(varSelected == true){
         selectButton = <Ionicons name="md-checkbox-outline" size={36} color="black" />
       }
-    
-    }
+  }
 
 
 

@@ -16,7 +16,7 @@ export default function WelcomeScreen({ navigation }) {
       </View>
 
       <View style={styles.footer}>
-        <TouchableOpacity onPress={() => navigation.navigate("Main", { screen: 'Login' })}>
+        <TouchableOpacity onPress={() => navigation.navigate("Main", { screen: 'Savers' })}>
           <View style={styles.button}>
             <Text>LOGIN</Text>
           </View>

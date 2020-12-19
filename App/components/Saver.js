@@ -38,12 +38,12 @@ export default function Saver({
   const [varGoal, setVarGoal] = useState(Goal);
   const [transferOption, setTransferOption] = useState(Transfer);
   const [varGoalSwitch, setVarGoalSwitch] = useState(true);
+  const [formError, setFormError] = useState("");
 
   
 
   function deleteSaver(){
     store.dispatch(removeSaver(id));
-    //() => setUpdate();
     return setModalVisible(false);
   }
 
@@ -52,12 +52,12 @@ export default function Saver({
   }
 
   function completeEdit(){
-    //if (varCost == "NaN"){setVarCost(0)}
-    //if (varGoal == "NaN"){setVarGoal(0)}
-    //if (TotalSaved == "NaN"){setTotalSaved(0)}
 
-    store.dispatch(editSaver(id, varTitle, varCost, varGoalSwitch, varGoal, Colour, transferOption, TotalSaved))
-    setModalVisible(false)
+    if (varTitle == "" || varCost == "" || varGoal == "")
+       {setFormError("All fields must be filled in")
+      } else {
+      store.dispatch(editSaver(id, varTitle, varCost, varGoalSwitch, varGoal, Colour, transferOption, TotalSaved))
+      setModalVisible(false)}
   }
 
   function handleSaver() {
@@ -382,6 +382,11 @@ export default function Saver({
                 </View>
               </TouchableOpacity>
             </View>
+
+            <View style={styles.errorContainer}>
+              <Text style={styles.errorText}>{formError}</Text>
+            </View>
+
             <Button title="Delete Saver" color="red" onPress={() =>deleteSaver()}></Button>
           </SafeAreaView>
         </ScrollView>
@@ -508,5 +513,15 @@ const styles = StyleSheet.create({
   },
   modalTopTextText: {
     fontSize: 13,
+  },
+  errorContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingBottom: 10,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });

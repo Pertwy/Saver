@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Button, SafeAreaView, ScrollView, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
+import {FontAwesome, Feather, AntDesign} from "@expo/vector-icons";
 import InformationText from "../components/InformationText"
+import { color } from "react-native-reanimated";
 
 export default function InformationScreen({ navigation }) {
   
@@ -11,38 +12,54 @@ export default function InformationScreen({ navigation }) {
   }
   
   return (
-    <View>
-      <ScrollView>
-            
-            <SafeAreaView style={styles.buttonArea}>
-              <TouchableOpacity onPress={handleDrawer}>
-                <Text style={styles.topButtons}>MENU</Text>
-              </TouchableOpacity>
+    <View style={styles.container}>
+      <SafeAreaView>
+        <ScrollView>
               
-              <Text style={styles.topButtons}>INFORMATION</Text>
-            </SafeAreaView>
+              <SafeAreaView style={styles.buttonArea}>
+                <TouchableOpacity onPress={handleDrawer}>
+                  <Feather style={styles.topButtons} name="menu" size={28} color="black" />
+                </TouchableOpacity>
 
-            <View style={styles.informationContainer}>  
-              <InformationText/>
-            </View>
-      </ScrollView>
+                <Text style={styles.topButtons}>INFORMATION</Text>
+
+                <Text style={[styles.topButtonshidden]}>X</Text>
+
+              </SafeAreaView>
+
+              <View style={styles.informationContainer}>  
+                <InformationText/>
+              </View>
+        </ScrollView>
+      </SafeAreaView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    backgroundColor:"white"
+  },
   buttonArea: {
     maxHeight: "10%",
     flexDirection: "row",
-    // justifyContent: "flex-end",
     justifyContent: "center",
     flex: 1,
     marginBottom: 15,
+    marginTop:15,
+    alignContent: "space-between",
   },
   topButtons: {
-    fontSize: 20,
-    padding: 10,
+    fontSize: 25,
+    paddingLeft: 40,
+    paddingRight:40
+  },
+  topButtonshidden: {
+    fontSize: 25,
+    paddingLeft: 40,
+    paddingRight:40,
+    color: "white"
+
   },
   header: {
     flex: 0.6,

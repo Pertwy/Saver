@@ -28,20 +28,26 @@ export function plusCardId(){
     }
 }
 
-export function selectedCardIn(id){
+export function plusSaverId(){
+    return{
+        type: actions.PLUS_SAVER_ID,
+    }
+}
+
+export function selectedCardIn(AccountName){
     return{
         type: actions.SELECTED_CARD_IN,
         payload:{
-            id,
+            AccountName,
         }
     }
 }
 
-export function selectedCardOut(id){
+export function selectedCardOut(AccountName){
     return{
         type: actions.SELECTED_CARD_OUT,
         payload:{
-            id,
+            AccountName,
         }
     }
 }

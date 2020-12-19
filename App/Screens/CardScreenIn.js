@@ -74,10 +74,10 @@ export default function CardScreenIn({ navigation }) {
 
   let addSubtractIn;
   if (addCardSwitchIn == true) {
-    addSubtractIn = <AntDesign name="minuscircleo" size={32} color="black" />;
+    addSubtractIn = <AntDesign style={styles.topButtons} name="minuscircleo" size={32} color="black" />;
   }
   if (addCardSwitchIn == false) {
-    addSubtractIn = <AntDesign name="pluscircleo" size={32} color="black" />;
+    addSubtractIn = <AntDesign style={styles.topButtons} name="pluscircleo" size={32} color="black" />;
   }
 
   function viewAddCardIn() {
@@ -93,12 +93,10 @@ export default function CardScreenIn({ navigation }) {
     setAddCardSwitchIn(false);
     unsubscribe()
     store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
-    //store.dispatch(newCardInView(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
     setNewCardListIn(store.getState().redux.cardsIn)
     
     console.log(store.getState())
     store.dispatch(plusCardId())
-    //setIdCounter(idCounter + 1);
   }
 
   function handleRefresh(){
@@ -114,20 +112,18 @@ export default function CardScreenIn({ navigation }) {
     <View>
         <SafeAreaView style={styles.container}>
 
-        <View style={styles.headingTopElement}>
-          {/* <TouchableOpacity onPress={handleDrawer}>
-            <Text style={styles.informationTextHeading}>MENU</Text>
-          </TouchableOpacity> */}
+        <View style={styles.buttonArea}>
 
-          <Text style={styles.informationTextHeading}>CHOOSE AN INCOMING ACCOUNTS</Text>
-        </View>
+          <Text style={[styles.topButtonshidden]}>X</Text>
 
-        <View style={styles.headingElement}>
+          <Text style={styles.topButtons}>INCOMING ACCOUNTS</Text>
+
           <TouchableOpacity onPress={() => viewAddCardIn()}>
             {addSubtractIn}
           </TouchableOpacity>
         </View>
          
+
         <FlatList
           //style={{flex: 1}}
           data={newCardListIn}
@@ -250,6 +246,27 @@ const styles = StyleSheet.create({
     height: 40,
     paddingLeft: "5%",
     marginLeft: 15,
+    color:"black"
     
+  },
+  topButtons: {
+    fontSize: 25,
+    paddingLeft: 30,
+    paddingRight:30
+  },
+  topButtonshidden: {
+    fontSize: 25,
+    paddingLeft: 30,
+    paddingRight:30,
+    color: "white"
+  },
+  buttonArea: {
+    maxHeight: "38%",
+    flexDirection: "row",
+    justifyContent: "center",
+    flex: 1,
+    marginBottom: 15,
+    marginTop:15,
+    alignContent: "space-between",
   },
 });

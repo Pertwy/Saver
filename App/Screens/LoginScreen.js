@@ -14,11 +14,12 @@ import {store} from "../Redux/store"
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [formError, setFormError] = useState("")
 
 
   //Navigate to Saver Page////..
   function navSaver(){
-    navigation.navigate('Saver')}
+    navigation.navigate('Savers')}
 
   function handleDrawer(){
     navigation.openDrawer();
@@ -48,17 +49,15 @@ export default function LoginScreen({ navigation }) {
 
     //Login Function ////////////
     function handleLogin(email, password) {
-      try {
         firebase
           .auth()
           .signInWithEmailAndPassword(email, password).then(cred =>{
             store.dispatch(currentUser(cred.user.uid))
             setupDataListener()
             navSaver()
-          });
-      } catch {
-        console.log(error.toString());
-      }}
+          }).catch(err => {
+            setFormError(err.message)})
+      }
 
 
     //SignUP
@@ -71,7 +70,11 @@ export default function LoginScreen({ navigation }) {
         store.dispatch(currentUser(cred.user.uid))
         setEmail("")
         setPassword("")
+        // {() => setEmail("")}
+        // {() => setPassword("")}
         navSaver()
+        }).catch(err => {
+          setFormError(err.message)
         })
     } 
 
@@ -102,10 +105,12 @@ export default function LoginScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.buttonArea}>
-      <TouchableOpacity onPress={handleDrawer}>
+
+        {/* <TouchableOpacity onPress={handleDrawer}>
           <Text style={styles.topButtons}>MENU</Text>
-        </TouchableOpacity>
-        <Text style={styles.topButtons}>PROFILE</Text>
+        </TouchableOpacity> */}
+
+        <Text style={styles.topButtons}>SIGN IN</Text>
 
       </View>
 
@@ -127,6 +132,10 @@ export default function LoginScreen({ navigation }) {
         />
       </View>
 
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{formError}</Text>
+      </View>
+
       <View style={styles.loginButtons}>
         <TouchableOpacity
           Style={styles.butContainer}
@@ -137,16 +146,16 @@ export default function LoginScreen({ navigation }) {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           Style={styles.butContainer}
           onPress={() => handleSignUp(email, password)}
         >
           <View style={styles.button}>
             <Text style={styles.buttonText}>SIGN UP</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           Style={styles.butContainer}
           onPress={() => backup()}
         >
@@ -162,16 +171,16 @@ export default function LoginScreen({ navigation }) {
           <View style={styles.button}>
             <Text style={styles.buttonText}>DOWNLOAD DATA</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           Style={styles.butContainer}
           onPress={() => signUserOut()}
         >
           <View style={styles.button}>
             <Text style={styles.buttonText}>SIGN OUT</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
       </View>
     </SafeAreaView>
@@ -193,11 +202,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   topButtons: {
-    fontSize: 20,
+    fontSize: 25,
     padding: 10,
   },
   informationTextHeading: {
-    fontSize: 20,
+    fontSize: 25,
   },
   container: {
     backgroundColor: "white",
@@ -219,7 +228,7 @@ const styles = StyleSheet.create({
     padding: 14,
     margin: 5,
     borderColor: "black",
-    borderWidth: 3,
+    borderWidth: 2,
     borderRadius: 30,
     alignContent: "center",
     justifyContent: "center",
@@ -242,5 +251,15 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 40,
+  },
+  errorContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingBottom: 10,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 })

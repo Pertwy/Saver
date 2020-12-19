@@ -2,6 +2,7 @@ export const LOG_CLICK = "logClick";
 
 export const NEW_SAVER = "newSaver";
 export const EDIT_SAVER = "editSaver"
+export const PLUS_SAVER_ID = "plusSaverId"
 
 export const CURRENT_USER = "currentUser";
 

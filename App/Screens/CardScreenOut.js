@@ -8,15 +8,14 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
-  ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Cards from "../components/Cards";
 import * as firebase from 'firebase';
-import {newCardOut, newCardIn, newCardInView} from "../Redux/actions";
+import {newCardOut, newCardIn, newCardInView, plusCardId, pageUpdate} from "../Redux/actions";
 import {store} from "../Redux/store";
 
-export default function CardScreenIn({ navigation }) {
+export default function CardScreenOut({ navigation }) {
   const [addCardSwitch, setAddCardSwitch] = useState(false);
   const [sortCode, setSortCode] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
@@ -25,15 +24,23 @@ export default function CardScreenIn({ navigation }) {
   const [newCardListIn, setNewCardListIn] = useState([])
   const [newCardListOut, setNewCardListOut] = useState([])
 
-  
-  // const unsubscribe = store.subscribe(() => {
-  //   setNewCardListIn(store.getState().redux.cardsIn)
-  //   setNewCardListOut(store.getState().redux.cardsOut)
-  // })
+  function handelChange(){
+    setNewCardListIn(store.getState().redux.cardsIn)
+    setNewCardListOut(store.getState().redux.cardsOut)
+    setIdCounter(store.getState().redux.cardId)
+  }
 
-  // useEffect(()=>{
-  //   unsubscribe
-  // },[])
+  const unsubscribe = store.subscribe(handelChange)
+
+  useEffect(()=>{
+    //setNewCardListIn(store.getState().redux.cardsIn)
+    //setNewCardListOut(store.getState().redux.cardsOut)
+    //setIdCounter(store.getState().redux.cardId)
+    store.dispatch(pageUpdate())
+    unsubscribe
+  },[])
+
+
 
   let addSubtract;
   if (addCardSwitch == true) {
@@ -67,10 +74,10 @@ export default function CardScreenIn({ navigation }) {
 
   let addSubtractIn;
   if (addCardSwitchIn == true) {
-    addSubtractIn = <AntDesign name="minuscircleo" size={32} color="black" />;
+    addSubtractIn = <AntDesign style={styles.topButtons} name="minuscircleo" size={32} color="black" />;
   }
   if (addCardSwitchIn == false) {
-    addSubtractIn = <AntDesign name="pluscircleo" size={32} color="black" />;
+    addSubtractIn = <AntDesign style={styles.topButtons} name="pluscircleo" size={32} color="black" />;
   }
 
   function viewAddCardIn() {
@@ -84,12 +91,12 @@ export default function CardScreenIn({ navigation }) {
 
   function addCardIn() {
     setAddCardSwitchIn(false);
-    store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
-    //store.dispatch(newCardInView(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
-    setNewCardListIn(store.getState().redux.cardsIn)
     unsubscribe()
+    store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
+    setNewCardListIn(store.getState().redux.cardsIn)
+    
     console.log(store.getState())
-    setIdCounter(idCounter + 1);
+    store.dispatch(plusCardId())
   }
 
   function handleRefresh(){
@@ -103,100 +110,20 @@ export default function CardScreenIn({ navigation }) {
 
   return (
     <View>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.headingTopElement}>
-          <TouchableOpacity onPress={handleDrawer}>
-            <Text style={styles.informationTextHeading}>MENU</Text>
-          </TouchableOpacity>
+        <SafeAreaView style={styles.container}>
 
-          <Text style={styles.informationTextHeading}>ACCOUNTS</Text>
-        </View>
-        
-        {/*<TouchableOpacity onPress={handleRefresh}>
-          <Text style={styles.topButtons}>REFRESH</Text>
-        </TouchableOpacity>*/}
+        <View style={styles.buttonArea}>
 
-        <View style={styles.headingElement}>
-          <Text style={styles.informationTextHeading}>OUTGOING ACCOUNTS</Text>
-          <TouchableOpacity onPress={() => viewAddCard()}>
-            {addSubtract}
-          </TouchableOpacity>
-        </View>
+          <Text style={[styles.topButtonshidden]}>X</Text>
 
-        <FlatList
-          //style={{flex: 1}}
-          data={newCardListOut}
-          keyExtractor={(newCardListOut) => newCardListOut.id.toString()}
-          renderItem={({ item }) => (
-            <Cards
-              SortCode={item.sort}
-              AccountNum={item.account}
-              AccountName={item.name}
-              id = {item.id}
-              inOut = "cardsOut"
-            />
-          )}
-        />
+          <Text style={styles.topButtons}>OUTGOING ACCOUNTS</Text>
 
-        {addCardSwitch && (
-          <View>
-            <View style={styles.switchQuestion}>
-              <Text style={styles.formQuestions}>Give the card a name</Text>
-            </View>
-
-            <TextInput
-              onChangeText={(text) => setAccountName(text)}
-              placeholder="Current account"
-              style={styles.formStyle}
-              //returnKeyType={"done"}
-            />
-
-            <View style={styles.switchQuestion}>
-              <Text style={styles.formQuestions2}>Account Number</Text>
-            </View>
-
-            <TextInput
-              onChangeText={(text) => setAccountNumber(text)}
-              placeholder="XXXXXXXX"
-              style={styles.formStyle}
-              keyboardType="decimal-pad"
-              returnKeyType={"done"}
-            />
-            <View style={styles.switchQuestion}>
-              <Text style={styles.formQuestions2}>Sort Code</Text>
-            </View>
-
-            <TextInput
-              onChangeText={(text) => setSortCode(text)}
-              placeholder="XX-XX-XX"
-              style={styles.formStyle}
-              keyboardType="decimal-pad"
-              returnKeyType={"done"}
-            />
-            <Button title="Add" onPress={() => addCard()}></Button>
-          </View>
-        )}
-      </SafeAreaView>
-
-      <SafeAreaView style={styles.container}>
-        <View style={styles.headingElement}>
-          <Text style={styles.informationTextHeading}>INCOMING ACCOUNTS</Text>
           <TouchableOpacity onPress={() => viewAddCardIn()}>
             {addSubtractIn}
           </TouchableOpacity>
         </View>
-
-
-{/* {
- newCardListIn.map(person=>{
-   return(
-     <Cards
-     
-     />
-   )
- })
-} */}
          
+
         <FlatList
           //style={{flex: 1}}
           data={newCardListIn}
@@ -208,6 +135,7 @@ export default function CardScreenIn({ navigation }) {
               AccountName={item.name}
               id = {item.id}
               inOut = "cardsIn"
+              select = {true}
             />
           )}
         />
@@ -318,6 +246,27 @@ const styles = StyleSheet.create({
     height: 40,
     paddingLeft: "5%",
     marginLeft: 15,
+    color:"black"
     
+  },
+  topButtons: {
+    fontSize: 25,
+    paddingLeft: 30,
+    paddingRight:30
+  },
+  topButtonshidden: {
+    fontSize: 25,
+    paddingLeft: 30,
+    paddingRight:30,
+    color: "white"
+  },
+  buttonArea: {
+    maxHeight: "38%",
+    flexDirection: "row",
+    justifyContent: "center",
+    flex: 1,
+    marginBottom: 15,
+    marginTop:15,
+    alignContent: "space-between",
   },
 });

@@ -10,7 +10,7 @@ import {
   FlatList,
   ScrollView,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import {FontAwesome, Feather, AntDesign} from "@expo/vector-icons";
 import Cards from "../components/Cards";
 import * as firebase from 'firebase';
 import {newCardOut, newCardIn, newCardInView, plusCardId, pageUpdate} from "../Redux/actions";
@@ -58,8 +58,9 @@ export default function CardScreen({ navigation }) {
   function addCard() {
     setAddCardSwitch(false);
     store.dispatch(newCardOut(accountNumber,sortCode,accountName, idCounter))
-    //plusCardId()
+    
     setNewCardListOut(store.getState().redux.cardsOut)
+    plusCardId()
     unsubscribe()
     // setIdCounter(idCounter + 1);
   }
@@ -89,12 +90,10 @@ export default function CardScreen({ navigation }) {
   function addCardIn() {
     setAddCardSwitchIn(false);
     store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
-    //store.dispatch(newCardInView(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
     setNewCardListIn(store.getState().redux.cardsIn)
     unsubscribe()
     console.log(store.getState())
     store.dispatch(plusCardId())
-    //setIdCounter(idCounter + 1);
   }
 
   function handleRefresh(){
@@ -107,19 +106,19 @@ export default function CardScreen({ navigation }) {
   }
 
   return (
-    <View>
+    <View style={styles.main}>
       <SafeAreaView style={styles.container}>
         <View style={styles.headingTopElement}>
+
           <TouchableOpacity onPress={handleDrawer}>
-            <Text style={styles.informationTextHeading}>MENU</Text>
+            <Feather style={[styles.topButtonsMenu]} name="menu" size={28} color="black" />
           </TouchableOpacity>
 
-          <Text style={styles.informationTextHeading}>ACCOUNTS</Text>
+          <Text style={styles.topButtons}>ACCOUNTS</Text>
+
+          <Text style={[styles.topButtonshidden]}>.</Text>
+
         </View>
-        
-        {/*<TouchableOpacity onPress={handleRefresh}>
-          <Text style={styles.topButtons}>REFRESH</Text>
-        </TouchableOpacity>*/}
 
         <View style={styles.headingElement}>
           <Text style={styles.informationTextHeading}>OUTGOING ACCOUNTS</Text>
@@ -185,22 +184,11 @@ export default function CardScreen({ navigation }) {
 
       <SafeAreaView style={styles.container}>
         <View style={styles.headingElement}>
-          <Text style={styles.informationTextHeading}>INCOMING ACCOUNTS</Text>
+          <Text style={styles.informationTextHeadingIncomingAccount}>INCOMING ACCOUNTS</Text>
           <TouchableOpacity onPress={() => viewAddCardIn()}>
             {addSubtractIn}
           </TouchableOpacity>
         </View>
-
-
-{/* {
- newCardListIn.map(person=>{
-   return(
-     <Cards
-     
-     />
-   )
- })
-} */}
          
         <FlatList
           //style={{flex: 1}}
@@ -263,7 +251,7 @@ export default function CardScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   informationText: {
-    paddingTop: 4,
+    paddingTop: 9,
   },
   addCardText: {
     paddingLeft: "5%",
@@ -272,6 +260,11 @@ const styles = StyleSheet.create({
   container: {
     marginLeft: "5%",
     marginRight: "5%",
+    //backgroundColor:"white"
+  },
+  main:{
+    //backgroundColor:"white",
+    //display:"flex"
   },
   addCard: {
     flexDirection: "row",
@@ -283,27 +276,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headingElement: {
-    marginTop: 40,
+    marginTop: 50,
     marginBottom: 0,
+    display:"flex",
     flexDirection:"row",
     alignItems:"center",
-    //alignContent:"center",
-    //justifyContent:"center"
+    alignContent:"space-between",
+
   },
   headingTopElement: {
-    alignItems: "center",
-    //marginBottom: 40,
-    marginTop: 10,
-    maxHeight: "16%",
+    marginBottom: 19,
+    maxHeight: "30%",
     flexDirection: "row",
-    // justifyContent: "flex-end",
     justifyContent: "center",
-    //flex: 1,
-    marginBottom: 15,
+    alignContent: "space-between",
+    alignItems:"center"
   },
   informationTextHeading: {
     fontSize: 20,
-    paddingRight:20
+    paddingRight:20,
+  },
+  informationTextHeadingIncomingAccount:{
+    fontSize: 20,
+    paddingRight:25,
   },
   switchQuestion: {
     flexDirection: "row",
@@ -323,6 +318,23 @@ const styles = StyleSheet.create({
     height: 40,
     paddingLeft: "5%",
     marginLeft: 15,
-    
+  },
+  topButtonsMenu:{
+    fontSize: 25,
+    //padding: 10,
+    //paddingTop:30
+    // marginLeft: -140
+  },
+  topButtons: {
+    fontSize: 25,
+    padding: 10,
+    paddingLeft: 90
+  },
+  topButtonshidden: {
+    fontSize: 25,
+    paddingLeft: 40,
+    paddingRight:40,
+    color: "white"
+
   },
 });

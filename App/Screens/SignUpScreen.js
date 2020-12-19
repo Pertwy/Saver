@@ -19,7 +19,7 @@ export default function SignUpScreen({ navigation }) {
 
 
   function navSaver(){
-    navigation.navigate("Main", { screen: 'Saver' })}
+    navigation.navigate("Main", { screen: 'Savers' })}
 
 
   function handleSignUp(email, password) {
@@ -54,7 +54,7 @@ export default function SignUpScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headingTopElement}>
-        <Text style={styles.informationTextHeading}>PROFILE</Text>
+        <Text style={styles.informationTextHeading}>CREATE NEW ACCOUNT</Text>
       </View>
 
       <View style={styles.loginForm}>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   informationTextHeading: {
-    fontSize: 20,
+    fontSize: 25,
   },
   container: {
     backgroundColor: "white",
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     padding: 14,
     margin: 5,
     borderColor: "black",
-    borderWidth: 3,
+    borderWidth: 2,
     borderRadius: 30,
     alignContent: "center",
     justifyContent: "center",

@@ -13,27 +13,25 @@ import {
   ScrollView,
 } from "react-native";
 import Saver from "../components/Saver";
-import InformationText from "../components/InformationText";
 import TransferInformationText from "../components/TransferInformationText";
 import IdeaInformationText from "../components/IdeaInformationText";
-import {FontAwesome} from "@expo/vector-icons";
-import { Feather } from '@expo/vector-icons';
-import DropDownPicker from 'react-native-dropdown-picker';
-import Icon from 'react-native-vector-icons/Feather';
-import { AntDesign } from "@expo/vector-icons";
+import {FontAwesome, Feather, AntDesign} from "@expo/vector-icons";
 
 import CardScreenIn from "./CardScreenIn"
+import CardScreenOut from "./CardScreenOut"
 
 import TransferButton from "../components/TransferButton"
 import ColourButtons from "../components/ColourButtons"
 
-import {newSaver, firebasePull, pageUpdate} from "../Redux/actions";
+import {newSaver, firebasePull, pageUpdate, plusSaverId} from "../Redux/actions";
 import {store} from "../Redux/store";
 
 import * as firebase from 'firebase';
-import CardInModal from "../components/CardInModal";
 
-import { useSelector, useDispatch,  } from 'react-redux'
+import { Dimensions } from 'react-native';
+
+
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCldOuLQaxZxzblxlNYUzQr0A8FP2PxLQY",
@@ -52,7 +50,6 @@ if (!firebase.apps.length) {
 
 
 export default function SaverScreen({navigation}) {
-  const [user, setUser] = useState("John");
   const [totalSaved, setTotalSaved] = useState(0);
   const [saverTitle, setSaverTitle] = useState("");
   const [saverAmount, setSaverAmount] = useState(0);
@@ -65,17 +62,19 @@ export default function SaverScreen({navigation}) {
   const [ideaModalVisible, setIdeaModalVisible] = useState(false);
   const [variable, setVariable] = useState(false);
   const [transferMoneyModalVisible, setTransferMoneyModalVisible] = useState(false);
-  const [saverList, setSaverList] = useState([]);
-  const [newSaverList, setNewSaverList] = useState();
-  const [cardsInList, setCardsInList] = useState([]);
-  const [optionalText, setOptionalText] = useState(true)
-  const [lengthSavers, setLengthSavers] = useState(0)
-  const [update, setUpdate] = useState(false)
-
+  const [newSaverList, setNewSaverList] = useState([]);
+  const [optionalText, setOptionalText] = useState(false)
   const [idCount, setIdCount] = useState(1);
   const [formError, setFormError] = useState(null);
 
-  //const newSaverList = useSelector(store => store.redux.savers)
+  const [selectedCardIn, setSelectedCardIn] = useState("")
+  const [selectedCardOut, setSelectedCardOut] = useState("")
+
+  const [cardInModal, setCardInModal] = useState(false)
+  const [cardOutModal, setCardOutModal] = useState(false)
+
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
 
   function closeAddModal() {
     setSaverTitle("");
@@ -91,6 +90,14 @@ export default function SaverScreen({navigation}) {
 
   function handelChange(){
     setNewSaverList(store.getState().redux.savers)
+    setIdCount(store.getState().redux.saverId)
+
+    setSelectedCardIn(store.getState().redux.selectedCardIn)
+    setSelectedCardOut(store.getState().redux.selectedCardOut)
+
+    // if(newSaverList.length >= 1){
+    //   setOptionalText(false)
+    // }
   }
 
   const unsubscribe = store.subscribe(handelChange)
@@ -98,21 +105,7 @@ export default function SaverScreen({navigation}) {
   useEffect(()=>{
     store.dispatch(pageUpdate())
     unsubscribe
-  },[])
-
-
-  // const unsubscribe = store.subscribe(() => {
-  //   setNewSaverList(store.getState().redux.savers)
-  // })
-
-  // useEffect(()=>
-  //   unsubscribe
-  // ,[])
-
-  // function handleUpdate(){
-  //   setUpdate(!update)
-  //   setNewSaverList(store.getState().redux.savers)
-  // }
+  })
 
   function updateAddSaver() {
     if (
@@ -120,19 +113,16 @@ export default function SaverScreen({navigation}) {
       (saverTitle == "" || saverAmount == "" || saverGoal == "")
     ) {
       setFormError("All fields must be filled in");
-      //console.log(formError);
     } else {
         store.dispatch(newSaver(idCount, saverTitle, saverAmount, goalSwitch, saverGoal, saverColour, transferMethod))
         setNewSaverList(store.getState().redux.savers)
         unsubscribe()
         console.log(store.getState())
-        setIdCount(idCount + 1);
+        //setIdCount(idCount + 1);
+        store.dispatch(plusSaverId())
         closeAddModal();
     }
   }
-
-  
-
 
   function handleAdd() {
     return setModalVisible(true);
@@ -147,14 +137,20 @@ export default function SaverScreen({navigation}) {
     navigation.openDrawer();
   }
 
-  const deleteItemById = (id) => {
-    const filteredData = saverList.filter((item) => item.id !== id);
-    setSaverList(filteredData);
-  };
 
   const addToTotalSaved = (addition) => {
     setTotalSaved(totalSaved + parseFloat(addition));
   };
+
+  let cardInBox = <Text style={styles.cardBoxText}>{selectedCardIn}</Text>;
+  if (selectedCardIn == "") {
+    cardInBox = <Text style={styles.cardBoxText}>Card In</Text>
+  }
+
+  let cardOutBox = <Text style={styles.cardBoxText}>{selectedCardOut}</Text>;
+  if (selectedCardOut == "") {
+    cardOutBox = <Text style={styles.cardBoxText}>Card Out</Text>
+  }
 
 
 
@@ -304,7 +300,9 @@ export default function SaverScreen({navigation}) {
 
                 <View style={styles.transferSchedule}>
                   <TransferButton number={1} title="On Every Click" setTransferMethod={setTransferMethod} currentTransfer={transferMethod}/>
+                  {goalSwitch && (
                   <TransferButton number={2} title="On achieving your goal" setTransferMethod={setTransferMethod} currentTransfer={transferMethod}/>
+                  )}
                   <TransferButton number={3} title="Upon pressing the transfer button" setTransferMethod={setTransferMethod} currentTransfer={transferMethod}/>
                   <TransferButton number={4} title="No Transfer" setTransferMethod={setTransferMethod} currentTransfer={transferMethod}/> 
                 </View>
@@ -316,44 +314,43 @@ export default function SaverScreen({navigation}) {
 
                   <View style={styles.accountsContainer}>
 
-                    <TouchableOpacity onPress={() => setInformationModalVisible(true)}>
-                        <Text style={styles.topButtons}>Card OUT</Text>
+                  <TouchableOpacity style={styles.cardBox} onPress={() => setCardInModal(true)}>
+                        {cardOutBox}
                     </TouchableOpacity>
-                    
-          {/* Card in Modal */}
+
+          {/* Card out Modal */}
                     <Modal
                     style={styles.addModal}
-                    visible={informationModalVisible}
+                    visible={cardInModal}
                     animationType="slide">
                     <ScrollView>
                       <SafeAreaView style={styles.informationContainer}>
-                        <CardScreenIn/>
+                        <CardScreenOut/>
                         <Button
                           title="Close"
-                          onPress={() => setInformationModalVisible(false)}
+                          onPress={() => setCardInModal(false)}
                         />
                       </SafeAreaView>
                     </ScrollView>
                   </Modal>
 
-
                     <FontAwesome name="arrow-right" size={24} color="black"/>
 
-                    <TouchableOpacity onPress={() => setInformationModalVisible(true)}>
-                        <Text style={styles.topButtons}>Card IN</Text>
+                    <TouchableOpacity style={styles.cardBox} onPress={() => setCardOutModal(true)}>
+                        {cardInBox}
                     </TouchableOpacity>
-
+                    
           {/* Card in Modal */}
                     <Modal
                     style={styles.addModal}
-                    visible={informationModalVisible}
+                    visible={cardOutModal}
                     animationType="slide">
                     <ScrollView>
                       <SafeAreaView style={styles.informationContainer}>
                         <CardScreenIn/>
                         <Button
                           title="Close"
-                          onPress={() => setInformationModalVisible(false)}
+                          onPress={() => setCardOutModal(false)}
                         />
                       </SafeAreaView>
                     </ScrollView>
@@ -378,14 +375,14 @@ export default function SaverScreen({navigation}) {
           </ScrollView>
         </Modal>
       </SafeAreaView>
-      {/* {optionalText && (
-      <View style={styles.optionalText}>
+
+      {optionalText && (
+      <View style={[styles.optionalText, {paddingTop: windowHeight/3}]}>
         <Text>Add a Saver</Text>
         <Text>Add some accounts</Text>
         <Text>Start Saving</Text>
-        {//<Text>Total Transfered: £{totalSaved.toFixed(2)}</Text>
-      }</View>)} 
-    */}
+      </View>)} 
+    
         <FlatList
           style={{flex: 1}}
           data={newSaverList}
@@ -399,11 +396,9 @@ export default function SaverScreen({navigation}) {
               GoalSwitch={item.goalSwitch}
               Transfer={item.transOpt}
               runningTot={item.runningTot}
-              Delete={() => deleteItemById(item.id)}
               Addition={() => addToTotalSaved(item.price)}
               Variable={item.variable}
               id = {item.id}
-              //setUpdate={handleUpdate()}
             />
           )}
         />
@@ -416,15 +411,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
-  topButtonsMenu:{
+  cardBox:{
+    borderWidth:2,
+    borderRadius:5,
+    maxWidth:"38%",
+    width:"38%",
+    alignItems: "center",
+    flexDirection:"row",
+    justifyContent:"center"
+  },
+  cardBoxText:{
     fontSize: 20,
+  },
+  topButtonsMenu:{
+    fontSize: 25,
     padding: 10,
     //paddingTop:30
     // marginLeft: -140
     
   },
   topButtons: {
-    fontSize: 20,
+    fontSize: 25,
     padding: 10,
     paddingLeft: 90
   },
@@ -442,6 +449,7 @@ const styles = StyleSheet.create({
   },
   accountsContainer: {
     flexDirection: "row",
+    marginLeft: "5%",
   },
   listcontainer: {
     width: "100%",
@@ -534,9 +542,7 @@ const styles = StyleSheet.create({
     // justifyContent: "flex-end",
     justifyContent: "center",
     alignContent: "space-between",
-
     flex: 1,
-    //marginBottom: 15,
     marginTop:15
   },
   saverArea: {

@@ -116,7 +116,7 @@ export default function CardScreenIn({ navigation }) {
 
           <Text style={[styles.topButtonshidden]}>X</Text>
 
-          <Text style={styles.topButtons}>INCOMING ACCOUNTS</Text>
+          <Text style={styles.topButtons}>INCOMING</Text>
 
           <TouchableOpacity onPress={() => viewAddCardIn()}>
             {addSubtractIn}

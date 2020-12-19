@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import {removeCardIn, removeCardOut, selectedCardIn} from "../Redux/actions"
+import {removeCardIn, removeCardOut, selectedCardIn, selectedCardOut} from "../Redux/actions"
 import {store} from "../Redux/store"
 
 
@@ -37,8 +37,14 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut, se
   }
 
   function selectCard(){
-    setVarSelected(!varSelected)
-    store.dispatch(selectedCardIn(AccountName))
+    if (inOut == "cardsIn"){
+      setVarSelected(!varSelected)
+      store.dispatch(selectedCardIn(AccountName))
+    }
+    else if(inOut == "cardsOut"){
+      setVarSelected(!varSelected)
+      store.dispatch(selectedCardOut(AccountName))
+    }
   }
 
   let selectButton;
@@ -64,6 +70,7 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut, se
           <Text>Sort code: {varSortCode}</Text>
           <Text>Account Number: {varAccountNum}</Text>
         </View>
+
         <TouchableOpacity onPress={()=>selectCard()}>
           {selectButton}
         </TouchableOpacity>

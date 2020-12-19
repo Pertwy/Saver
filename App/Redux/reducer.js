@@ -101,13 +101,6 @@ export function reducer(state = start, action){
             draftState.redux.cardsIn.push(action.payload)
         })
 
-    else if (action.type === actions.NEW_CARD_IN_VIEW)
-        return produce(state, draftState => {
-            draftState.redux.cardsInView.push(
-                {label: action.name , value: action.name , icon: () => <AntDesign name="creditcard" size={18} color="black" />, hidden: true}
-            )
-        })
-
     else if (action.type === actions.NEW_CARD_OUT)
         return produce(state, draftState => {
             draftState.redux.cardsOut.push(action.payload)

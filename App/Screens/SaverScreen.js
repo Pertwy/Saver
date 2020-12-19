@@ -315,8 +315,8 @@ export default function SaverScreen({navigation}) {
                   <View style={styles.accountsContainer}>
 
                   <TouchableOpacity style={styles.cardBox} onPress={() => setCardInModal(true)}>
-                        {cardOutBox}
-                    </TouchableOpacity>
+                    {cardOutBox}
+                  </TouchableOpacity>
 
           {/* Card out Modal */}
                     <Modal

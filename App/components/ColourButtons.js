@@ -26,12 +26,14 @@ Circle: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    margin: 10,
+    marginRight: 10,
+    marginLeft: 10
   },
 circleContainer: {
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
     padding: 20,
+    paddingBottom:0
 },
 })

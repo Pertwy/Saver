@@ -66,6 +66,7 @@ export default function SaverScreen({navigation}) {
   const [optionalText, setOptionalText] = useState(false)
   const [idCount, setIdCount] = useState(1);
   const [formError, setFormError] = useState(null);
+  const [noTransfer, setNoTransfer] = useState(true)
 
   const [selectedCardIn, setSelectedCardIn] = useState("")
   const [selectedCardOut, setSelectedCardOut] = useState("")
@@ -159,7 +160,7 @@ export default function SaverScreen({navigation}) {
       <SafeAreaView style={styles.buttonArea}>
 
         <TouchableOpacity onPress={handleDrawer}>
-          <Feather style={[styles.topButtonsMenu]} name="menu" size={28} color="black" />
+          <Feather style={styles.topButtons} name="menu" size={28} color="black" />
         </TouchableOpacity>
 
         <Text style={styles.topButtons}>SAVER</Text>
@@ -167,10 +168,6 @@ export default function SaverScreen({navigation}) {
         <TouchableOpacity onPress={handleAdd}>
           <AntDesign style={styles.topButtons} name="pluscircleo" size={32} color="black" />
         </TouchableOpacity>
-
-        {/* <TouchableOpacity onPress={() => setInformationModalVisible(true)}>
-          <Text style={styles.topButtons}>S/Text>
-        </TouchableOpacity> */}
       
 
         <Modal
@@ -178,8 +175,9 @@ export default function SaverScreen({navigation}) {
           visible={modalVisible}
           animationType="slide"
         >
-          <ScrollView>
-            <SafeAreaView>
+          
+          <SafeAreaView>
+            <ScrollView>
               <View style={styles.addSaverHeading}>
                 <Text style={styles.addSaverHeadingText}>ADD A SAVER</Text>
                 <View style={styles.addSaverHeadingButton}>
@@ -299,14 +297,18 @@ export default function SaverScreen({navigation}) {
                 </View>
 
                 <View style={styles.transferSchedule}>
-                  <TransferButton number={1} title="On Every Click" setTransferMethod={setTransferMethod} currentTransfer={transferMethod}/>
+                  <TransferButton number={1} title="On Every Click" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/>
                   {goalSwitch && (
-                  <TransferButton number={2} title="On achieving your goal" setTransferMethod={setTransferMethod} currentTransfer={transferMethod}/>
+                  <TransferButton number={2} title="On achieving your goal" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/>
                   )}
-                  <TransferButton number={3} title="Upon pressing the transfer button" setTransferMethod={setTransferMethod} currentTransfer={transferMethod}/>
-                  <TransferButton number={4} title="No Transfer" setTransferMethod={setTransferMethod} currentTransfer={transferMethod}/> 
+                  <TransferButton number={3} title="Upon pressing the transfer button" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/>
+                  
+                  <TransferButton number={4} title="No Transfer" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/> 
+                  
                 </View>
 
+
+                {noTransfer && (
                 <View>
                   <Text style={styles.colorFormQuestions}>
                     Select account details
@@ -314,25 +316,25 @@ export default function SaverScreen({navigation}) {
 
                   <View style={styles.accountsContainer}>
 
-                  <TouchableOpacity style={styles.cardBox} onPress={() => setCardInModal(true)}>
-                    {cardOutBox}
-                  </TouchableOpacity>
+                    <TouchableOpacity style={styles.cardBox} onPress={() => setCardInModal(true)}>
+                      {cardOutBox}
+                    </TouchableOpacity>
 
-          {/* Card out Modal */}
+                    {/* Card out Modal */}
                     <Modal
                     style={styles.addModal}
                     visible={cardInModal}
                     animationType="slide">
                     <ScrollView>
                       <SafeAreaView style={styles.informationContainer}>
-                        <CardScreenOut/>
+                        <CardScreenOut />
                         <Button
-                          title="Close"
+                          title="Complete/Close"
                           onPress={() => setCardInModal(false)}
                         />
                       </SafeAreaView>
                     </ScrollView>
-                  </Modal>
+                   </Modal>
 
                     <FontAwesome name="arrow-right" size={24} color="black"/>
 
@@ -340,7 +342,7 @@ export default function SaverScreen({navigation}) {
                         {cardInBox}
                     </TouchableOpacity>
                     
-          {/* Card in Modal */}
+                    {/* Card in Modal */}
                     <Modal
                     style={styles.addModal}
                     visible={cardOutModal}
@@ -354,11 +356,9 @@ export default function SaverScreen({navigation}) {
                         />
                       </SafeAreaView>
                     </ScrollView>
-                  </Modal>
-
-                    
+                    </Modal> 
                   </View>
-                </View>
+                </View>)}
 
                 <Text style={styles.colorFormQuestions}> Select Saver Colour</Text>
                 
@@ -370,9 +370,8 @@ export default function SaverScreen({navigation}) {
               </View>
 
               <Button title="Submit" onPress={updateAddSaver}></Button>
-
-            </SafeAreaView>
-          </ScrollView>
+            </ScrollView>
+          </SafeAreaView>
         </Modal>
       </SafeAreaView>
 
@@ -414,8 +413,9 @@ const styles = StyleSheet.create({
   cardBox:{
     borderWidth:2,
     borderRadius:5,
-    maxWidth:"38%",
-    width:"38%",
+    height:35,
+    maxWidth:"45%",
+    width:"45%",
     alignItems: "center",
     flexDirection:"row",
     justifyContent:"center"
@@ -423,18 +423,7 @@ const styles = StyleSheet.create({
   cardBoxText:{
     fontSize: 20,
   },
-  topButtonsMenu:{
-    fontSize: 25,
-    padding: 10,
-    //paddingTop:30
-    // marginLeft: -140
-    
-  },
-  topButtons: {
-    fontSize: 25,
-    padding: 10,
-    paddingLeft: 90
-  },
+
   inComingAccount: {
     marginRight: "5%",
     width: "40%",
@@ -450,6 +439,9 @@ const styles = StyleSheet.create({
   accountsContainer: {
     flexDirection: "row",
     marginLeft: "5%",
+    marginRight:"5%",
+    alignItems:"center",
+    justifyContent:"center"
   },
   listcontainer: {
     width: "100%",
@@ -459,17 +451,20 @@ const styles = StyleSheet.create({
   },
   addSaverHeadingText: {
     flex: 1,
-    marginLeft: "5%",
+    //marginLeft: "5%",
     fontSize: 20,
   },
   addSaverHeadingButton: {
     flex: 1,
-    marginLeft: "12%",
+    //marginLeft: "12%",
   },
   addSaverHeading: {
     flexDirection: "row",
-    alignItems: "center",
+    marginLeft: "5%",
     marginTop: 10,
+    justifyContent: "space-between",
+    width: "108%",
+    marginRight:0
   },
   formQuestionsInfoText: {
     padding: 6,
@@ -486,9 +481,15 @@ const styles = StyleSheet.create({
   },
   formQuestionsInfo: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    width: "93%",
+    //marginLeft:"5%",
+    // marginRight:"5%"
   },
   switchQuestion: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    width: "93%",
   },
   formQuestions: {
     paddingLeft: "5%",
@@ -497,6 +498,7 @@ const styles = StyleSheet.create({
   colorFormQuestions: {
     paddingLeft: "5%",
     marginTop: 15,
+    marginBottom: 10,
   },
   switchView: {
     marginLeft: 60,
@@ -520,9 +522,6 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   formContainer: {
-    //width: "90%",
-    //alignItems:"center",
-    //flex:1
   },
   transferSchedule: {
     padding: "5%",
@@ -537,13 +536,18 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   buttonArea: {
+    alignItems:"center",
     maxHeight: "10%",
-    flexDirection: "row",
-    // justifyContent: "flex-end",
-    justifyContent: "center",
-    alignContent: "space-between",
     flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "80%",
+    marginLeft:"5%",
+    marginRight:"5%",
     marginTop:15
+  },
+  topButtons: {
+    fontSize: 25,
   },
   saverArea: {
     flexDirection: "row",
@@ -553,9 +557,9 @@ const styles = StyleSheet.create({
     height: "80%",
   },
   container: {
-    width: "100%",
     flex: 1,
     justifyContent: "center",
+    alignItems:"center"
   },
 
   formStyle: {

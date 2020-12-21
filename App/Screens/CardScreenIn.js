@@ -33,9 +33,6 @@ export default function CardScreenIn({ navigation }) {
   const unsubscribe = store.subscribe(handelChange)
 
   useEffect(()=>{
-    //setNewCardListIn(store.getState().redux.cardsIn)
-    //setNewCardListOut(store.getState().redux.cardsOut)
-    //setIdCounter(store.getState().redux.cardId)
     store.dispatch(pageUpdate())
     unsubscribe
   },[])
@@ -114,7 +111,11 @@ export default function CardScreenIn({ navigation }) {
 
         <View style={styles.buttonArea}>
 
-          <Text style={[styles.topButtonshidden]}>X</Text>
+          {/* <TouchableOpacity onPress={() => viewAddCard()}>
+            <AntDesign name="checkcircleo" size={24} color="black" />
+          </TouchableOpacity> */}
+
+          <Text style={styles.topButtonshidden}>X</Text>
 
           <Text style={styles.topButtons}>INCOMING</Text>
 
@@ -150,6 +151,7 @@ export default function CardScreenIn({ navigation }) {
             <TextInput
               onChangeText={(text) => setAccountNameIn(text)}
               placeholder="Current account"
+              placeholderTextColor = "#D3D3D3"
               style={styles.formStyle}
               //returnKeyType={"done"}
             />
@@ -161,6 +163,7 @@ export default function CardScreenIn({ navigation }) {
             <TextInput
               onChangeText={(text) => setAccountNumberIn(text)}
               placeholder="XXXXXXXX"
+              placeholderTextColor = "#D3D3D3"
               style={styles.formStyle}
               keyboardType="decimal-pad"
               returnKeyType={"done"}
@@ -172,6 +175,7 @@ export default function CardScreenIn({ navigation }) {
             <TextInput
               onChangeText={(text) => setSortCodeIn(text)}
               placeholder="XX-XX-XX"
+              placeholderTextColor = "#D3D3D3"
               style={styles.formStyle}
               keyboardType="decimal-pad"
               returnKeyType={"done"}
@@ -193,8 +197,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   container: {
-    marginLeft: "5%",
-    marginRight: "5%",
+    marginLeft: "10%",
+    //marginRight: "5%",
   },
   addCard: {
     flexDirection: "row",
@@ -215,13 +219,10 @@ const styles = StyleSheet.create({
   },
   headingTopElement: {
     alignItems: "center",
-    //marginBottom: 40,
     marginTop: 10,
     maxHeight: "16%",
     flexDirection: "row",
-    // justifyContent: "flex-end",
     justifyContent: "center",
-    //flex: 1,
     marginBottom: 15,
   },
   informationTextHeading: {
@@ -232,41 +233,32 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   formQuestions: {
-    paddingLeft: "5%",
     marginTop: 15,
   },
   formQuestions2: {
-    paddingLeft: "5%",
     marginTop: 0,
   },
   formStyle: {
-    //backgroundColor: "white",
     borderBottomColor: "#ccc",
-    //borderBottomWidth: 1,
     height: 40,
-    paddingLeft: "5%",
     marginLeft: 15,
-    color:"black"
     
   },
   topButtons: {
     fontSize: 25,
-    paddingLeft: 30,
-    paddingRight:30
   },
   topButtonshidden: {
     fontSize: 25,
-    paddingLeft: 30,
-    paddingRight:30,
     color: "white"
   },
   buttonArea: {
     maxHeight: "38%",
     flexDirection: "row",
-    justifyContent: "center",
     flex: 1,
-    marginBottom: 15,
+    marginBottom: 30,
     marginTop:15,
-    alignContent: "space-between",
+    justifyContent: "space-between",
+    alignItems:"center",
+    width: "90%",
   },
 });

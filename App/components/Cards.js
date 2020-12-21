@@ -64,11 +64,14 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut, se
       onLongPress={() => handleEditOn()}
       >
       <View style={styles.cardContainer}>
-        <AntDesign name="creditcard" size={36} color="black" />
-        <View style={styles.cardContainerText}>
-          <Text>{varAccountName}</Text>
-          <Text>Sort code: {varSortCode}</Text>
-          <Text>Account Number: {varAccountNum}</Text>
+        
+        <View style={styles.cardContainerLeft}>
+          <AntDesign name="creditcard" size={36} color="black" />
+          <View style={styles.cardContainerText}>
+            <Text>{varAccountName}</Text>
+            <Text>Sort code: {varSortCode}</Text>
+            <Text>Account Number: {varAccountNum}</Text>
+          </View>
         </View>
 
         <TouchableOpacity onPress={()=>selectCard()}>
@@ -129,14 +132,23 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut, se
 const styles = StyleSheet.create({
   cardContainer: {
     borderTopWidth: 3,
+    width:"90%",
     flexDirection: "row",
     alignItems:"center",
     paddingTop: 5,
     paddingBottom: 5,
-    marginTop:10
+    marginTop:10,
+    justifyContent: "space-between",
   },
   cardContainerText: {
     paddingLeft: "5%",
+    //flexDirection: "row",
+    //paddingRight:"30%"
+  },
+  cardContainerLeft: {
+    alignItems:"center",
+    flexDirection: "row",
+    //paddingRight:"30%"
   },
   informationTextTOP: {
     marginTop: 12,
@@ -171,5 +183,8 @@ const styles = StyleSheet.create({
   formStyle:{
     padding:5,
     paddingLeft:15,
+  },
+  selectButtonstyle:{
+    paddingLeft: "20%"
   },
 });

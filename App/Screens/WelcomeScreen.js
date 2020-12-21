@@ -16,7 +16,8 @@ export default function WelcomeScreen({ navigation }) {
       </View>
 
       <View style={styles.footer}>
-        <TouchableOpacity onPress={() => navigation.navigate("Main", { screen: 'Savers' })}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate("Main", { screen: 'Savers' })}> */}
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <View style={styles.button}>
             <Text>LOGIN</Text>
           </View>
@@ -27,16 +28,6 @@ export default function WelcomeScreen({ navigation }) {
             <Text>CREATE NEW ACCOUNT</Text>
           </View>
         </TouchableOpacity>
-
-        {/*
-        <TouchableOpacity
-          Style={styles.butContainer}
-          onPress={() => navigation.navigate("Saver")}
-        >
-          <View style={styles.button}>
-            <Text>SAVER PAGE</Text>
-          </View>
-        </TouchableOpacity>*/}
 
       </View>
     </SafeAreaView>
@@ -71,7 +62,7 @@ const styles = StyleSheet.create({
     paddingLeft: 60,
     margin: 7,
     borderColor: "black",
-    borderWidth: 2,
+    borderWidth: 3,
     borderRadius: 30,
     alignItems: "center",
   },

@@ -24,6 +24,7 @@ export function DrawerScreens() {
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Savers" component={SaverScreen} />
         <Drawer.Screen name="Manage Acounts" component={CardScreen} />
+        {/* <Drawer.Screen name="SignUp" component={SignUpScreen}/> */}
         
         <Drawer.Screen name="Information" component={InformationScreen} />
         <Drawer.Screen name="Profile" component={ProfileScreen} />

@@ -6,8 +6,14 @@ export default function TransferButton(props){
     
   const updateTransfer = () => {
     props.setTransferMethod(props.number)
+    if (props.number == 4){
+      props.setNoTransfer(false)
+    } else {
+      props.setNoTransfer(true)
+    }
   };
   
+  //props.setNoTransfer(false)
 
   return(
     <TouchableOpacity 

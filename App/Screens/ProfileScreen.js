@@ -10,6 +10,7 @@ import {
 import * as firebase from 'firebase';
 import {currentUser, firebasePull, signOutRedux} from "../Redux/actions"
 import {store} from "../Redux/store"
+// import "../components/test.css"
 
 import {FontAwesome, Feather, AntDesign} from "@expo/vector-icons";
 
@@ -67,8 +68,6 @@ export default function LoginScreen({ navigation }) {
         <Text style={[styles.topButtonshidden]}>X</Text>
       </SafeAreaView>
 
-
-
       <View style={styles.loginButtons}>
         <TouchableOpacity
           Style={styles.butContainer}
@@ -87,7 +86,6 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.buttonText}>SIGN OUT</Text>
           </View>
         </TouchableOpacity>
-
       </View>
     </SafeAreaView>
   );
@@ -98,24 +96,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
+
   buttonArea: {
     maxHeight: "10%",
     flexDirection: "row",
-    justifyContent: "center",
     flex: 1,
     marginBottom: 15,
     marginTop:15,
-    alignContent: "space-between",
+    justifyContent: "space-between",
+    width: "80%",
+    marginLeft:"5%",
+    marginRight:"5%"
   },
   topButtons: {
     fontSize: 25,
-    paddingLeft: 40,
-    paddingRight:40
   },
   topButtonshidden: {
     fontSize: 25,
-    paddingLeft: 40,
-    paddingRight:40,
     color: "white"
   },
   informationTextHeading: {

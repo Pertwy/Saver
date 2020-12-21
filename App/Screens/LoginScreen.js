@@ -104,14 +104,9 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+      
       <View style={styles.buttonArea}>
-
-        {/* <TouchableOpacity onPress={handleDrawer}>
-          <Text style={styles.topButtons}>MENU</Text>
-        </TouchableOpacity> */}
-
         <Text style={styles.topButtons}>SIGN IN</Text>
-
       </View>
 
       <View style={styles.loginForm}>
@@ -190,16 +185,13 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   headingTopElement: {
     alignItems: "center",
-    //marginBottom: 40,
     marginTop: 10,
   },
   buttonArea: {
     maxHeight: "10%",
     flexDirection: "row",
-    // justifyContent: "flex-end",
     justifyContent: "center",
     flex: 1,
-    marginBottom: 15,
   },
   topButtons: {
     fontSize: 25,
@@ -214,13 +206,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   loginForm: {
-    padding: 30,
-    paddingTop: 40,
+    paddingLeft:"5%",
+    paddingRight:"5%",
     paddingBottom: 50,
     width: "90%",
   },
   loginButtons: {
-    marginTop: 50,
     flex: 1,
     width: "80%",
   },
@@ -228,7 +219,7 @@ const styles = StyleSheet.create({
     padding: 14,
     margin: 5,
     borderColor: "black",
-    borderWidth: 2,
+    borderWidth: 3,
     borderRadius: 30,
     alignContent: "center",
     justifyContent: "center",

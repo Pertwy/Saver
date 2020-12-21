@@ -40,10 +40,10 @@ export default function CardScreen({ navigation }) {
 
   let addSubtract;
   if (addCardSwitch == true) {
-    addSubtract = <AntDesign name="minuscircleo" size={32} color="black" />;
+    addSubtract = <AntDesign name="minuscircleo" size={25} color="black" />;
   }
   if (addCardSwitch == false) {
-    addSubtract = <AntDesign name="pluscircleo" size={32} color="black" />;
+    addSubtract = <AntDesign name="pluscircleo" size={25} color="black" />;
   }
 
   function viewAddCard() {
@@ -72,10 +72,10 @@ export default function CardScreen({ navigation }) {
 
   let addSubtractIn;
   if (addCardSwitchIn == true) {
-    addSubtractIn = <AntDesign name="minuscircleo" size={32} color="black" />;
+    addSubtractIn = <AntDesign name="minuscircleo" size={25} color="black" />;
   }
   if (addCardSwitchIn == false) {
-    addSubtractIn = <AntDesign name="pluscircleo" size={32} color="black" />;
+    addSubtractIn = <AntDesign name="pluscircleo" size={25} color="black" />;
   }
 
   function viewAddCardIn() {
@@ -106,18 +106,17 @@ export default function CardScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.main}>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.headingTopElement}>
 
+      <SafeAreaView style={styles.container}>
+        
+        <View style={styles.buttonArea}>
           <TouchableOpacity onPress={handleDrawer}>
-            <Feather style={[styles.topButtonsMenu]} name="menu" size={28} color="black" />
+            <Feather style={styles.topButtons} name="menu" size={28} color="black" />
           </TouchableOpacity>
 
           <Text style={styles.topButtons}>ACCOUNTS</Text>
 
           <Text style={[styles.topButtonshidden]}>.</Text>
-
         </View>
 
         <View style={styles.headingElement}>
@@ -180,9 +179,7 @@ export default function CardScreen({ navigation }) {
             <Button title="Add" onPress={() => addCard()}></Button>
           </View>
         )}
-      </SafeAreaView>
 
-      <SafeAreaView style={styles.container}>
         <View style={styles.headingElement}>
           <Text style={styles.informationTextHeadingIncomingAccount}>INCOMING ACCOUNTS</Text>
           <TouchableOpacity onPress={() => viewAddCardIn()}>
@@ -191,7 +188,6 @@ export default function CardScreen({ navigation }) {
         </View>
          
         <FlatList
-          //style={{flex: 1}}
           data={newCardListIn}
           keyExtractor={(newCardListIn) => newCardListIn.id.toString()}
           renderItem={({ item }) => (
@@ -244,8 +240,8 @@ export default function CardScreen({ navigation }) {
             <Button title="Add" onPress={() => addCardIn()}></Button>
           </View>
         )}
+
       </SafeAreaView>
-    </View>
   );
 }
 
@@ -259,13 +255,10 @@ const styles = StyleSheet.create({
   },
   container: {
     marginLeft: "5%",
-    marginRight: "5%",
+    //marginRight: "5%",
     //backgroundColor:"white"
   },
-  main:{
-    //backgroundColor:"white",
-    //display:"flex"
-  },
+
   addCard: {
     flexDirection: "row",
     borderTopWidth: 3,
@@ -281,24 +274,39 @@ const styles = StyleSheet.create({
     display:"flex",
     flexDirection:"row",
     alignItems:"center",
-    alignContent:"space-between",
+    justifyContent: "space-between",
+    width: "80%",
+    marginLeft:"5%",
+    //marginRight:"5%"
 
   },
-  headingTopElement: {
-    marginBottom: 19,
-    maxHeight: "30%",
+  buttonArea: {
+    maxHeight: "50%",
     flexDirection: "row",
-    justifyContent: "center",
-    alignContent: "space-between",
-    alignItems:"center"
+    //flex: 1,
+    marginBottom: 15,
+    marginTop:15,
+    justifyContent: "space-between",
+    width: "80%",
+    marginLeft:"5%",
+    marginRight:"5%"
   },
+  topButtons: {
+    fontSize: 25,
+  },
+  topButtonshidden: {
+    fontSize: 25,
+    color: "white"
+  },
+
+
   informationTextHeading: {
     fontSize: 20,
     paddingRight:20,
   },
   informationTextHeadingIncomingAccount:{
     fontSize: 20,
-    paddingRight:25,
+    paddingRight:23,
   },
   switchQuestion: {
     flexDirection: "row",
@@ -312,29 +320,9 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   formStyle: {
-    //backgroundColor: "white",
     borderBottomColor: "#ccc",
-    //borderBottomWidth: 1,
     height: 40,
     paddingLeft: "5%",
     marginLeft: 15,
-  },
-  topButtonsMenu:{
-    fontSize: 25,
-    //padding: 10,
-    //paddingTop:30
-    // marginLeft: -140
-  },
-  topButtons: {
-    fontSize: 25,
-    padding: 10,
-    paddingLeft: 90
-  },
-  topButtonshidden: {
-    fontSize: 25,
-    paddingLeft: 40,
-    paddingRight:40,
-    color: "white"
-
   },
 });

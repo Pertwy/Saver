@@ -90,7 +90,7 @@ export default function SignUpScreen({ navigation }) {
           onPress={() => navSaver()}
         >
           <View style={styles.button}>
-            <Text style={styles.buttonText}>Saver</Text>
+            <Text style={styles.buttonText}>SAVER</Text>
           </View>
         </TouchableOpacity>
 
@@ -102,7 +102,6 @@ export default function SignUpScreen({ navigation }) {
 const styles = StyleSheet.create({
   headingTopElement: {
     alignItems: "center",
-    //marginBottom: 40,
     marginTop: 10,
   },
   informationTextHeading: {
@@ -120,7 +119,6 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   loginButtons: {
-    marginTop: 50,
     flex: 1,
     width: "80%",
   },
@@ -128,7 +126,7 @@ const styles = StyleSheet.create({
     padding: 14,
     margin: 5,
     borderColor: "black",
-    borderWidth: 2,
+    borderWidth: 3,
     borderRadius: 30,
     alignContent: "center",
     justifyContent: "center",

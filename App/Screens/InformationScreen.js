@@ -13,7 +13,7 @@ export default function InformationScreen({ navigation }) {
   
   return (
     <View style={styles.container}>
-      <SafeAreaView>
+      <SafeAreaView style={styles.container2}>
         <ScrollView>
               
               <SafeAreaView style={styles.buttonArea}>
@@ -23,7 +23,7 @@ export default function InformationScreen({ navigation }) {
 
                 <Text style={styles.topButtons}>INFORMATION</Text>
 
-                <Text style={[styles.topButtonshidden]}>X</Text>
+                <Text style={[styles.topButtonshidden]}>.</Text>
 
               </SafeAreaView>
 
@@ -38,60 +38,31 @@ export default function InformationScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:"white"
+    backgroundColor:"white",
+    flex:1,
+    alignItems:"center",
+    width:"100%",
+  },
+  container2: {
+
+    //alignItems:"center"
   },
   buttonArea: {
     maxHeight: "10%",
     flexDirection: "row",
-    justifyContent: "center",
     flex: 1,
     marginBottom: 15,
     marginTop:15,
-    alignContent: "space-between",
+    justifyContent: "space-between",
+    width: "80%",
+    marginLeft:"10%",
+    marginRight:"5%",
   },
   topButtons: {
     fontSize: 25,
-    paddingLeft: 40,
-    paddingRight:40
   },
   topButtonshidden: {
     fontSize: 25,
-    paddingLeft: 40,
-    paddingRight:40,
     color: "white"
-
-  },
-  header: {
-    flex: 0.6,
-    justifyContent: "center",
-    paddingTop: 20,
-    paddingBottom: 10,
-    marginLeft: "12%",
-  },
-  body: {
-    flex: 0.4,
-    width: "60%",
-    marginBottom: 40,
-    //alignItems: "center",
-    marginLeft: "12%",
-  },
-  footer: {
-    flex: 0.2,
-    marginBottom: 40,
-    marginLeft: "10%",
-    width: "80%",
-  },
-  button: {
-    padding: 15,
-    paddingRight: 60,
-    paddingLeft: 60,
-    margin: 7,
-    borderColor: "black",
-    borderWidth: 2,
-    borderRadius: 30,
-    alignItems: "center",
-  },
-  titleText: {
-    fontSize: 40,
   },
 });

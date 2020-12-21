@@ -40,10 +40,10 @@ export default function CardScreenOut({ navigation }) {
 
   let addSubtract;
   if (addCardSwitch == true) {
-    addSubtract = <AntDesign name="minuscircleo" size={32} color="black" />;
+    addSubtract = <AntDesign style={styles.topButtons} name="minuscircleo" size={32} color="black" />;
   }
   if (addCardSwitch == false) {
-    addSubtract = <AntDesign name="pluscircleo" size={32} color="black" />;
+    addSubtract = <AntDesign style={styles.topButtons} name="pluscircleo" size={32} color="black" />;
   }
 
   function viewAddCard() {
@@ -71,7 +71,11 @@ export default function CardScreenOut({ navigation }) {
 
         <View style={styles.buttonArea}>
 
-          <Text style={[styles.topButtonshidden]}>X</Text>
+          {/* <TouchableOpacity>
+            <AntDesign name="checkcircleo" size={24} color="black" />
+          </TouchableOpacity> */}
+          
+          <Text style={styles.topButtonshidden}>X</Text>
 
           <Text style={styles.topButtons}>OUTGOING</Text>
 
@@ -82,7 +86,6 @@ export default function CardScreenOut({ navigation }) {
          
 
         <FlatList
-          //style={{flex: 1}}
           data={newCardListOut}
           keyExtractor={(newCardListOut) => newCardListOut.id.toString()}
           renderItem={({ item }) => (
@@ -107,6 +110,7 @@ export default function CardScreenOut({ navigation }) {
             <TextInput
               onChangeText={(text) => setAccountName(text)}
               placeholder="Current account"
+              placeholderTextColor = "#D3D3D3"
               style={styles.formStyle}
               //returnKeyType={"done"}
             />
@@ -119,6 +123,7 @@ export default function CardScreenOut({ navigation }) {
               onChangeText={(text) => setAccountNumber(text)}
               placeholder="XXXXXXXX"
               style={styles.formStyle}
+              placeholderTextColor = "#D3D3D3"
               keyboardType="decimal-pad"
               returnKeyType={"done"}
             />
@@ -129,6 +134,7 @@ export default function CardScreenOut({ navigation }) {
             <TextInput
               onChangeText={(text) => setSortCode(text)}
               placeholder="XX-XX-XX"
+              placeholderTextColor = "#D3D3D3"
               style={styles.formStyle}
               keyboardType="decimal-pad"
               returnKeyType={"done"}
@@ -150,8 +156,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   container: {
-    marginLeft: "5%",
-    marginRight: "5%",
+    marginLeft: "10%",
   },
   addCard: {
     flexDirection: "row",
@@ -189,41 +194,33 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   formQuestions: {
-    paddingLeft: "5%",
     marginTop: 15,
   },
   formQuestions2: {
-    paddingLeft: "5%",
     marginTop: 0,
   },
   formStyle: {
-    //backgroundColor: "white",
     borderBottomColor: "#ccc",
-    //borderBottomWidth: 1,
     height: 40,
     paddingLeft: "5%",
-    marginLeft: 15,
     color:"black"
     
   },
   topButtons: {
     fontSize: 25,
-    paddingLeft: 30,
-    paddingRight:30
   },
   topButtonshidden: {
     fontSize: 25,
-    paddingLeft: 30,
-    paddingRight:30,
     color: "white"
   },
   buttonArea: {
     maxHeight: "38%",
     flexDirection: "row",
-    justifyContent: "center",
     flex: 1,
-    marginBottom: 15,
+    marginBottom: 30,
     marginTop:15,
-    alignContent: "space-between",
+    justifyContent: "space-between",
+    alignItems:"center",
+    width: "90%",
   },
 });

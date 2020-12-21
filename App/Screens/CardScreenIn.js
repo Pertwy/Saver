@@ -15,7 +15,7 @@ import * as firebase from 'firebase';
 import {newCardOut, newCardIn, newCardInView, plusCardId, pageUpdate} from "../Redux/actions";
 import {store} from "../Redux/store";
 
-export default function CardScreenIn({ navigation }) {
+export default function CardScreenIn(props) {
   const [addCardSwitch, setAddCardSwitch] = useState(false);
   const [sortCode, setSortCode] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
@@ -105,17 +105,19 @@ export default function CardScreenIn({ navigation }) {
     navigation.openDrawer();
   }
 
+  function handleClose(){
+    props.setCardInModal(false)
+  }
+
   return (
     <View>
         <SafeAreaView style={styles.container}>
 
         <View style={styles.buttonArea}>
 
-          {/* <TouchableOpacity onPress={() => viewAddCard()}>
+          <TouchableOpacity onPress={() => handleClose()}>
             <AntDesign name="checkcircleo" size={24} color="black" />
-          </TouchableOpacity> */}
-
-          <Text style={styles.topButtonshidden}>X</Text>
+          </TouchableOpacity>
 
           <Text style={styles.topButtons}>INCOMING</Text>
 
@@ -242,6 +244,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
     height: 40,
     marginLeft: 15,
+    color:"black"
     
   },
   topButtons: {

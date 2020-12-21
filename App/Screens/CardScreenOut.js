@@ -15,7 +15,7 @@ import * as firebase from 'firebase';
 import {newCardOut, pageUpdate} from "../Redux/actions";
 import {store} from "../Redux/store";
 
-export default function CardScreenOut({ navigation }) {
+export default function CardScreenOut(props) {
   const [idCounter, setIdCounter] = useState(1);
   const [newCardListOut, setNewCardListOut] = useState([])
   const [addCardSwitch, setAddCardSwitch] = useState(false);
@@ -63,6 +63,9 @@ export default function CardScreenOut({ navigation }) {
     setIdCounter(idCounter + 1);
   }
 
+  function handleClose(){
+    props.setCardOutModal(false)
+  }
 
 
   return (
@@ -71,11 +74,9 @@ export default function CardScreenOut({ navigation }) {
 
         <View style={styles.buttonArea}>
 
-          {/* <TouchableOpacity>
+          <TouchableOpacity onPress={() => handleClose()}>
             <AntDesign name="checkcircleo" size={24} color="black" />
-          </TouchableOpacity> */}
-          
-          <Text style={styles.topButtonshidden}>X</Text>
+          </TouchableOpacity>
 
           <Text style={styles.topButtons}>OUTGOING</Text>
 

@@ -86,6 +86,7 @@ export default function SaverScreen({navigation}) {
     setModalVisible(false);
     setGoalSwitch(true);
     setTransferMethod(1);
+    setNoTransfer(true);
   }
 
 
@@ -217,20 +218,6 @@ export default function SaverScreen({navigation}) {
                   maxLength={20}
                 />
 
-                {/*<View style={styles.formQuestionsInfo}>
-                  <Text style={styles.formQuestions}>
-                    Choose a cost every time you click the Saver
-                  </Text>
-
-                  <View style={styles.costSwitchView}>
-                    <Switch
-                      trackColor={{true: "black", false: "red"}}
-                      value={variable}
-                      onValueChange={(newValue) => setVariable(newValue)}
-                    />
-                  </View>
-                 </View>*/}
-
                 {!variable && (
                   <View>
                     <Text style={styles.formQuestions}>
@@ -316,44 +303,36 @@ export default function SaverScreen({navigation}) {
 
                   <View style={styles.accountsContainer}>
 
-                    <TouchableOpacity style={styles.cardBox} onPress={() => setCardInModal(true)}>
+                    <TouchableOpacity style={styles.cardBox} onPress={() => setCardOutModal(true)}>
                       {cardOutBox}
                     </TouchableOpacity>
 
                     {/* Card out Modal */}
                     <Modal
                     style={styles.addModal}
-                    visible={cardInModal}
+                    visible={cardOutModal}
                     animationType="slide">
                     <ScrollView>
                       <SafeAreaView style={styles.informationContainer}>
-                        <CardScreenOut />
-                        <Button
-                          title="Complete/Close"
-                          onPress={() => setCardInModal(false)}
-                        />
+                        <CardScreenOut setCardOutModal={setCardOutModal}/>
                       </SafeAreaView>
                     </ScrollView>
                    </Modal>
 
                     <FontAwesome name="arrow-right" size={24} color="black"/>
 
-                    <TouchableOpacity style={styles.cardBox} onPress={() => setCardOutModal(true)}>
+                    <TouchableOpacity style={styles.cardBox} onPress={() => setCardInModal(true)}>
                         {cardInBox}
                     </TouchableOpacity>
                     
                     {/* Card in Modal */}
                     <Modal
                     style={styles.addModal}
-                    visible={cardOutModal}
+                    visible={cardInModal}
                     animationType="slide">
                     <ScrollView>
                       <SafeAreaView style={styles.informationContainer}>
-                        <CardScreenIn/>
-                        <Button
-                          title="Close"
-                          onPress={() => setCardOutModal(false)}
-                        />
+                        <CardScreenIn setCardInModal={setCardInModal}/>
                       </SafeAreaView>
                     </ScrollView>
                     </Modal> 
@@ -398,9 +377,8 @@ export default function SaverScreen({navigation}) {
               Addition={() => addToTotalSaved(item.price)}
               Variable={item.variable}
               id = {item.id}
-            />
-          )}
-        />
+            />)}/>
+
     </View>
   );
 }
@@ -409,6 +387,9 @@ const styles = StyleSheet.create({
   optionalText: {
     alignItems: "center",
     marginBottom: 10,
+  },
+  testCont:{
+    width:"100%"
   },
   cardBox:{
     borderWidth:2,
@@ -542,7 +523,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "80%",
-    marginLeft:"5%",
+    marginLeft:"10%",
     marginRight:"5%",
     marginTop:15
   },
@@ -559,7 +540,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems:"center"
+    //alignItems:"center"
   },
 
   formStyle: {

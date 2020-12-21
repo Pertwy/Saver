@@ -15,6 +15,7 @@ import {
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {AntDesign} from "@expo/vector-icons";
 import moment from 'moment';
+import ColourButtons from "../components/ColourButtons"
 
 import {logClick, removeSaver, editSaver} from "../Redux/actions"
 import {store} from "../Redux/store"
@@ -36,6 +37,7 @@ export default function Saver({
   const [varTitle, setVarTitle] = useState(Title);
   const [varCost, setVarCost] = useState(Cost);
   const [varGoal, setVarGoal] = useState(Goal);
+  const [varColour, setVarColour] = useState(Colour)
   const [transferOption, setTransferOption] = useState(Transfer);
   const [varGoalSwitch, setVarGoalSwitch] = useState(true);
   const [formError, setFormError] = useState("");
@@ -56,7 +58,7 @@ export default function Saver({
     if (varTitle == "" || varCost == "" || varGoal == "")
        {setFormError("All fields must be filled in")
       } else {
-      store.dispatch(editSaver(id, varTitle, varCost, varGoalSwitch, varGoal, Colour, transferOption, TotalSaved))
+      store.dispatch(editSaver(id, varTitle, varCost, varGoalSwitch, varGoal, varColour, transferOption, TotalSaved))
       setModalVisible(false)}
   }
 
@@ -204,7 +206,7 @@ export default function Saver({
         <TouchableOpacity
           onPress={() => handleSaver()}
           onLongPress={() => handleModal()}
-          style={[styles.info, {backgroundColor: Colour}]}
+          style={[styles.info, {backgroundColor: varColour}]}
         >
           <View>
             <View style={styles.saverTop}>
@@ -224,8 +226,9 @@ export default function Saver({
         visible={modalVisible}
         animationType="slide"
       >
-        <ScrollView>
-          <SafeAreaView>
+        
+        <SafeAreaView>
+          <ScrollView>
             <View style={styles.editSaverHeading}>
               <Text style={styles.editSaverHeadingText}>EDIT A SAVER</Text>
               <View style={styles.editSaverHeadingButton}>
@@ -238,7 +241,7 @@ export default function Saver({
 
             <View style={styles.modalTopText}>
               <Text style={styles.modalTopTextText}>
-                Type in the greay areas and click Close/Done to save your
+                Type in the grey areas and click Close/Done to save your
                 changes
               </Text>
             </View>
@@ -383,13 +386,16 @@ export default function Saver({
               </TouchableOpacity>
             </View>
 
+            <ColourButtons setSaverColour={setVarColour}/>
+
             <View style={styles.errorContainer}>
               <Text style={styles.errorText}>{formError}</Text>
             </View>
 
             <Button title="Delete Saver" color="red" onPress={() =>deleteSaver()}></Button>
-          </SafeAreaView>
-        </ScrollView>
+          </ScrollView>
+        </SafeAreaView>
+        
       </Modal>
     </View>
   );

@@ -109,6 +109,7 @@ export default function CardScreen({ navigation }) {
 
       <SafeAreaView style={styles.container}>
         
+        
         <View style={styles.buttonArea}>
           <TouchableOpacity onPress={handleDrawer}>
             <Feather style={styles.topButtons} name="menu" size={28} color="black" />
@@ -119,6 +120,7 @@ export default function CardScreen({ navigation }) {
           <Text style={[styles.topButtonshidden]}>.</Text>
         </View>
 
+        
         <View style={styles.headingElement}>
           <Text style={styles.informationTextHeading}>OUTGOING ACCOUNTS</Text>
           <TouchableOpacity onPress={() => viewAddCard()}>
@@ -201,7 +203,7 @@ export default function CardScreen({ navigation }) {
           )}
         />
 
-
+        
         {addCardSwitchIn && (
           <View>
             <View style={styles.switchQuestion}>
@@ -240,7 +242,6 @@ export default function CardScreen({ navigation }) {
             <Button title="Add" onPress={() => addCardIn()}></Button>
           </View>
         )}
-
       </SafeAreaView>
   );
 }

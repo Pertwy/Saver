@@ -50,11 +50,11 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut, se
   let selectButton;
   if (select == true) {
       selectButton = <MaterialIcons name="check-box-outline-blank" size={36} color="black" />
-
-      if(varSelected == true){
-        selectButton = <Ionicons name="md-checkbox-outline" size={36} color="black" />
-      }
   }
+  if(varSelected == true){
+    selectButton = <Ionicons name="md-checkbox-outline" size={36} color="black" />
+  }
+  
 
 
 

@@ -58,9 +58,7 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <NavigationContainer independent={true} >
-      <Stack.Navigator         screenOptions={{
-          headerShown: false,
-        }}>
+      <Stack.Navigator screenOptions={{headerShown: false,}}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen}/>
         <Stack.Screen name="Login" component={LoginScreen} />

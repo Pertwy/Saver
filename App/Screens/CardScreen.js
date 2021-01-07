@@ -15,6 +15,7 @@ import Cards from "../components/Cards";
 import * as firebase from 'firebase';
 import {newCardOut, newCardIn, newCardInView, plusCardId, pageUpdate} from "../Redux/actions";
 import {store} from "../Redux/store";
+import backup from "../functions/backup"
 
 export default function CardScreen({ navigation }) {
   const [addCardSwitch, setAddCardSwitch] = useState(false);
@@ -60,6 +61,7 @@ export default function CardScreen({ navigation }) {
     store.dispatch(newCardOut(accountNumber,sortCode,accountName, idCounter))
     
     setNewCardListOut(store.getState().redux.cardsOut)
+    backup()
     plusCardId()
     unsubscribe()
     // setIdCounter(idCounter + 1);
@@ -91,6 +93,7 @@ export default function CardScreen({ navigation }) {
     setAddCardSwitchIn(false);
     store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
     setNewCardListIn(store.getState().redux.cardsIn)
+    backup()
     unsubscribe()
     console.log(store.getState())
     store.dispatch(plusCardId())

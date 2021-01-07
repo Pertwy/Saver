@@ -19,8 +19,8 @@ export default function LoginScreen({ navigation }) {
 
   //Navigate to Saver Page////..
   function navSaver(){
-    navigation.navigate('Savers')}
-
+    navigation.navigate("Main", { screen: 'Savers' })}
+    
   function handleDrawer(){
     navigation.openDrawer();
   }

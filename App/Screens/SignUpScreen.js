@@ -9,33 +9,45 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as firebase from 'firebase';
-import {currentUser, firebasePull} from "../Redux/actions"
+import {currentUser} from "../Redux/actions"
 import {store} from "../Redux/store"
 
 export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
+  const [formError, setFormError] = useState("")
 
+  function backup(){
+    firebase
+      .database()
+      .ref()
+      .child(store.getState().redux.user)
+      .set(store.getState().redux);
+  }
 
   function navSaver(){
     navigation.navigate("Main", { screen: 'Savers' })}
 
 
   function handleSignUp(email, password) {
-      if (password.length < 6) {
-        alert("Please enter more than 6 characters for a password");
-        return;
-      }
-      firebase.auth().createUserWithEmailAndPassword(email, password);
-      store.dispatch(currentUser(userName))
-      console.log(store.getState().redux.user)
-      navSaver()
-      
+    if (password.length < 6) {
+      alert("Please enter more than 6 characters for a password");
+      return;
+    }
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(cred =>{
+      store.dispatch(currentUser(cred.user.uid))
       setEmail("")
       setPassword("")
-    } 
-
+      backup()
+      // {() => setEmail("")}
+      // {() => setPassword("")}
+      navSaver()
+      }).catch(err => {
+        setFormError(err.message)
+      })
+  } 
+    
   /*
     function handleSignUp(email, password) {
     try {
@@ -94,6 +106,10 @@ export default function SignUpScreen({ navigation }) {
           </View>
         </TouchableOpacity>
 
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{formError}</Text>
+        </View>
+
       </View>
     </SafeAreaView>
   );
@@ -149,5 +165,15 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 40,
+  },
+  errorContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingBottom: 10,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 })

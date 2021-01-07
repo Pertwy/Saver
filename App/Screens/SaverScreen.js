@@ -31,8 +31,6 @@ import * as firebase from 'firebase';
 import { Dimensions } from 'react-native';
 
 
-
-
 const firebaseConfig = {
   apiKey: "AIzaSyCldOuLQaxZxzblxlNYUzQr0A8FP2PxLQY",
   authDomain: "saverapp-28931.firebaseapp.com",
@@ -77,6 +75,15 @@ export default function SaverScreen({navigation}) {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
 
+  function backup(){
+    firebase
+      .database()
+      .ref()
+      .child(store.getState().redux.user)
+      .set(store.getState().redux);
+  }
+
+
   function closeAddModal() {
     setSaverTitle("");
     setSaverGoal("");
@@ -120,7 +127,7 @@ export default function SaverScreen({navigation}) {
         setNewSaverList(store.getState().redux.savers)
         unsubscribe()
         console.log(store.getState())
-        //setIdCount(idCount + 1);
+        backup();
         store.dispatch(plusSaverId())
         closeAddModal();
     }

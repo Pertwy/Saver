@@ -7,6 +7,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import {removeCardIn, removeCardOut, selectedCardIn, selectedCardOut} from "../Redux/actions"
 import {store} from "../Redux/store"
+import backup from "../functions/backup";
 
 
 export default function Cards({ SortCode, AccountNum, AccountName, id, inOut, select}) {
@@ -34,6 +35,7 @@ export default function Cards({ SortCode, AccountNum, AccountName, id, inOut, se
       store.dispatch(removeCardOut(id));
       console.log(store.getState());
       handleEditOff();}
+    backup()
   }
 
   function selectCard(){

@@ -18,7 +18,8 @@ export default function LoginScreen({ navigation }) {
 
   //Navigate to Saver Page////..
   function navWelcome(){
-    navigation.navigate('Welcome')}
+    //navigation.navigate('Welcome')}
+    navigation.goBack()}
 
   function handleDrawer(){
     navigation.openDrawer();
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
     padding: 14,
     margin: 5,
     borderColor: "black",
-    borderWidth: 2,
+    borderWidth: 3,
     borderRadius: 30,
     alignContent: "center",
     justifyContent: "center",

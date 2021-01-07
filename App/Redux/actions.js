@@ -1,7 +1,6 @@
 import * as actions from "./actionNames";
 
 export function firebasePull(fbData){
-    //console.log(fbData)
     return{
         type: actions.FIREBASE_PULL,
         payload:{

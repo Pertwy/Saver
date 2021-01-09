@@ -54,7 +54,7 @@ export default function SaverScreen({navigation}) {
   const [saverGoal, setSaverGoal] = useState(0);
   const [goalSwitch, setGoalSwitch] = useState(true);
   const [saverColour, setSaverColour] = useState("#FFF7F0");
-  const [transferMethod, setTransferMethod] = useState(1);
+  const [transferMethod, setTransferMethod] = useState(3);
   const [modalVisible, setModalVisible] = useState(false);
   const [informationModalVisible, setInformationModalVisible] = useState(false);
   const [ideaModalVisible, setIdeaModalVisible] = useState(false);

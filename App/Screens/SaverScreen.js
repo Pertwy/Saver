@@ -127,7 +127,7 @@ export default function SaverScreen({navigation}) {
         setNewSaverList(store.getState().redux.savers)
         unsubscribe()
         console.log(store.getState())
-        backup();
+        //backup();
         store.dispatch(plusSaverId())
         closeAddModal();
     }
@@ -291,10 +291,10 @@ export default function SaverScreen({navigation}) {
                 </View>
 
                 <View style={styles.transferSchedule}>
-                  <TransferButton number={1} title="On Every Click" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/>
+                  {/* <TransferButton number={1} title="On Every Click" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/>
                   {goalSwitch && (
                   <TransferButton number={2} title="On achieving your goal" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/>
-                  )}
+                  )} */}
                   <TransferButton number={3} title="Upon pressing the transfer button" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/>
                   
                   <TransferButton number={4} title="No Transfer" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/> 

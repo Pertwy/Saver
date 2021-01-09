@@ -299,7 +299,7 @@ export default function Saver({
               Change when you would like to transfer money
             </Text>
             <View style={styles.transferSchedule}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={[
                   styles.transferButton,
                   {
@@ -341,7 +341,7 @@ export default function Saver({
                     </Text>
                   </View>
                 </TouchableOpacity>
-              )}
+              )} */}
 
               <TouchableOpacity
                 style={[

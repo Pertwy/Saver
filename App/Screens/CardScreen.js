@@ -61,7 +61,7 @@ export default function CardScreen({ navigation }) {
     store.dispatch(newCardOut(accountNumber,sortCode,accountName, idCounter))
     
     setNewCardListOut(store.getState().redux.cardsOut)
-    backup()
+    //backup()
     plusCardId()
     unsubscribe()
     // setIdCounter(idCounter + 1);
@@ -93,7 +93,7 @@ export default function CardScreen({ navigation }) {
     setAddCardSwitchIn(false);
     store.dispatch(newCardIn(accountNumberIn,sortCodeIn,accountNameIn, idCounter, "cardsIn"))
     setNewCardListIn(store.getState().redux.cardsIn)
-    backup()
+    //backup()
     unsubscribe()
     console.log(store.getState())
     store.dispatch(plusCardId())

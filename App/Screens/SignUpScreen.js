@@ -102,7 +102,7 @@ export default function SignUpScreen({ navigation }) {
           onPress={() => navSaver()}
         >
           <View style={styles.button}>
-            <Text style={styles.buttonText}>SAVER</Text>
+            <Text style={styles.buttonText}>SKIP</Text>
           </View>
         </TouchableOpacity>
 

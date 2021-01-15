@@ -153,12 +153,12 @@ export default function SaverScreen({navigation}) {
 
   let cardInBox = <Text style={styles.cardBoxText}>{selectedCardIn}</Text>;
   if (selectedCardIn == "") {
-    cardInBox = <Text style={styles.cardBoxText}>Card In</Text>
+    cardInBox = <Text style={styles.cardBoxText}>Transfer In</Text>
   }
 
   let cardOutBox = <Text style={styles.cardBoxText}>{selectedCardOut}</Text>;
   if (selectedCardOut == "") {
-    cardOutBox = <Text style={styles.cardBoxText}>Card Out</Text>
+    cardOutBox = <Text style={styles.cardBoxText}>Transfer Out</Text>
   }
 
 
@@ -291,10 +291,10 @@ export default function SaverScreen({navigation}) {
                 </View>
 
                 <View style={styles.transferSchedule}>
-                  {/* <TransferButton number={1} title="On Every Click" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/>
+                  <TransferButton number={1} title="On Every Click" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/>
                   {goalSwitch && (
                   <TransferButton number={2} title="On achieving your goal" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/>
-                  )} */}
+                  )}
                   <TransferButton number={3} title="Upon pressing the transfer button" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/>
                   
                   <TransferButton number={4} title="No Transfer" setTransferMethod={setTransferMethod} currentTransfer={transferMethod} setNoTransfer={setNoTransfer}/> 

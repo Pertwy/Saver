@@ -14,6 +14,7 @@ import Cards from "../components/Cards";
 import * as firebase from 'firebase';
 import {newCardOut, pageUpdate} from "../Redux/actions";
 import {store} from "../Redux/store";
+import WarningText from "../components/WarningText"
 
 export default function CardScreenOut(props) {
   const [idCounter, setIdCounter] = useState(1);
@@ -85,6 +86,7 @@ export default function CardScreenOut(props) {
           </TouchableOpacity>
         </View>
          
+         <WarningText/>
 
         <FlatList
           data={newCardListOut}

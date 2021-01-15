@@ -13,6 +13,7 @@ import CardScreen from "./App/Screens/CardScreen";
 import SignUpScreen from "./App/Screens/SignUpScreen";
 import InformationScreen from "./App/Screens/InformationScreen";
 import ProfileScreen from "./App/Screens/ProfileScreen"
+import FeedbackScreen from "./App/Screens/FeedbackScreen"
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +29,7 @@ export function DrawerScreens() {
         
         <Drawer.Screen name="Information" component={InformationScreen} />
         <Drawer.Screen name="Profile" component={ProfileScreen} />
+        <Drawer.Screen name="Feedback" component={FeedbackScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

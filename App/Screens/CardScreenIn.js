@@ -14,6 +14,7 @@ import Cards from "../components/Cards";
 import * as firebase from 'firebase';
 import {newCardOut, newCardIn, newCardInView, plusCardId, pageUpdate} from "../Redux/actions";
 import {store} from "../Redux/store";
+import WarningText from "../components/WarningText"
 
 export default function CardScreenIn(props) {
   const [addCardSwitch, setAddCardSwitch] = useState(false);
@@ -126,6 +127,7 @@ export default function CardScreenIn(props) {
           </TouchableOpacity>
         </View>
          
+        <WarningText/>
 
         <FlatList
           //style={{flex: 1}}

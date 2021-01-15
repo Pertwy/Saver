@@ -16,6 +16,7 @@ import * as firebase from 'firebase';
 import {newCardOut, newCardIn, newCardInView, plusCardId, pageUpdate} from "../Redux/actions";
 import {store} from "../Redux/store";
 import backup from "../functions/backup"
+import WarningText from "../components/WarningText"
 
 export default function CardScreen({ navigation }) {
   const [addCardSwitch, setAddCardSwitch] = useState(false);
@@ -123,6 +124,7 @@ export default function CardScreen({ navigation }) {
           <Text style={[styles.topButtonshidden]}>.</Text>
         </View>
 
+        <WarningText/>
         
         <View style={styles.headingElement}>
           <Text style={styles.informationTextHeading}>OUTGOING ACCOUNTS</Text>
@@ -130,6 +132,8 @@ export default function CardScreen({ navigation }) {
             {addSubtract}
           </TouchableOpacity>
         </View>
+
+        
 
         <FlatList
           //style={{flex: 1}}

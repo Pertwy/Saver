@@ -20,6 +20,8 @@ export default function IdeaInformationText() {
       <Text style={styles.informationText}></Text>
       <Text style={styles.informationTextTitle}>Eat in</Text>
       <Text style={styles.informationText}></Text>
+      <Text style={styles.informationTextTitle}>Teach children to save</Text>
+      <Text style={styles.informationText}>When children ask for something, let them click a Saver instead. At the end of the year, let them know what they've earned</Text>
     </View>
   );
 }

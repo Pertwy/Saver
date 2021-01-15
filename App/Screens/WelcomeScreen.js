@@ -11,7 +11,10 @@ export default function WelcomeScreen({ navigation }) {
 
       <View style={styles.body}>
         <Text>
-          Send money to your savings or a charity with one click
+          Send money to your savings account or a charity with one click {"\n"}
+        </Text>
+        <Text>
+          Please help test the app at this early stage, and provide feedback on the "Feedback" page
         </Text>
       </View>
 
@@ -39,14 +42,14 @@ const styles = StyleSheet.create({
   header: {
     flex: 0.6,
     justifyContent: "center",
-    paddingTop: 20,
-    paddingBottom: 10,
+    paddingTop: 0,
+    paddingBottom: 0,
     marginLeft: "12%",
   },
   body: {
     flex: 0.4,
     width: "60%",
-    marginBottom: 40,
+    marginBottom: 20,
     //alignItems: "center",
     marginLeft: "12%",
   },

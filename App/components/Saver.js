@@ -19,7 +19,7 @@ import ColourButtons from "../components/ColourButtons"
 
 import {logClick, removeSaver, editSaver} from "../Redux/actions"
 import {store} from "../Redux/store"
-
+import backup from "../functions/backup"
 
 export default function Saver({
                                 Title,
@@ -72,7 +72,8 @@ export default function Saver({
     }
 
     store.dispatch(logClick(moment().format("DD-MM-YY HH:mm:ss"), id, TotalSaved))
-    console.log(store.getState())
+    //console.log(store.getState())
+    backup()
 
   }
 

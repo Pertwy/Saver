@@ -127,7 +127,7 @@ export default function SaverScreen({navigation}) {
         setNewSaverList(store.getState().redux.savers)
         unsubscribe()
         console.log(store.getState())
-        //backup();
+        backup();
         store.dispatch(plusSaverId())
         closeAddModal();
     }

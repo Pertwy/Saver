@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "SaverDemo",
-    "slug": "saverdemo",
-    "version": "1.0.0",
+    "name": "SaverMVP",
+    "slug": "savermvp",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./App/assets/icon.png",
+    "icon": "./App/assets/logo.PNG",
     "splash": {
-      "image": "./App/assets/splash.png",
+      "image": "./App/assets/logo.PNG",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,11 +17,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.johnpatrickperkins.savermvp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "Third Day Saver App\n - Can increase by tapping\n - Click \"Add a Saver\" to bring up a form\n - The form now works. Add new \"Savers here\n - Format and colour change\n - Information from the form is set to individual states, then they are all set to one state object, and then pushed to the object array <FlatList>\n - Delete button added on swipe left - Does not work yet\n - Full width now\nRemoved\n - Click \"Delete Saver\" to add a button the the centre (it is pre-set) \n\n05/09/202\n - Added colour picker\n - Scrollable - but not correct apparently\n - Colour changes\n\n07/09/2020\n - Added an edit page\n - The 2d.p now does not work though\n - Added an information panel for instructions\n\n14/09/2020\n - Expo has not saved my prevoius comments\n - NAvigation working\n - Welcome screen\n - Login Screen\n - FireBAse worked for a minute, but then not again after that\n - Reorganised folders\n - The welcome and login screens look better now\n - Re-did what the Saver looks like\n - Changed the Saver screen - added a footer - Changed background colour\n - Added an Edit and transaction button\n\n15/09/2020\n - Added optional goal \n - When the goal is not there, it does not appear on the saver\n - Added the \"when to transfer money\" option\n - Updated Warning\n\n19/09/2020\n - Scroll Views on the modals\n - Added ideas and transfer info modals\n - Updated the edit screen to reflect the add screen \n\n21/09/2020\n - Delete function now works\n - Added info to the information tab\n\n21/09/2020\n - Added further switches and information to the Add Modal\n - You can now close the numeric pads\n - No Transfer options - Currently takes the transfer button off the Saver\n - Variable saver option - Does not work yet\n - Started adding the account detail section \n\n08/12/2020\n - updates being kept on Github\n\n"
+    "description": "15/01/2020\n - Publish version\n",
+    "android": {
+      "package": "com.johnpatrickperkins.savermvp",
+      "permissions": [],
+      "versionCode": 2
+    }
   }
 }

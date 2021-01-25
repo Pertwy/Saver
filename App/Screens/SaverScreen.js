@@ -65,6 +65,7 @@ export default function SaverScreen({navigation}) {
   const [idCount, setIdCount] = useState(1);
   const [formError, setFormError] = useState(null);
   const [noTransfer, setNoTransfer] = useState(true)
+  const [onePChallengeSwitch, setOnePChallengeSwitch] = useState(false)
 
   const [selectedCardIn, setSelectedCardIn] = useState("")
   const [selectedCardOut, setSelectedCardOut] = useState("")
@@ -146,6 +147,19 @@ export default function SaverScreen({navigation}) {
     navigation.openDrawer();
   }
 
+  function handleOnePChallengeOn(){
+    setOnePChallengeSwitch(!onePChallengeSwitch)
+    setSaverTitle("1p Challenge");
+    setSaverGoal(667.97);
+    setSaverAmount(0.01);
+  }
+
+  function handleOnePChallengeOff(){
+    setOnePChallengeSwitch(!onePChallengeSwitch)
+    setSaverTitle("");
+    setSaverGoal("");
+    setSaverAmount("");
+  }
 
   const addToTotalSaved = (addition) => {
     setTotalSaved(totalSaved + parseFloat(addition));
@@ -160,6 +174,39 @@ export default function SaverScreen({navigation}) {
   if (selectedCardOut == "") {
     cardOutBox = <Text style={styles.cardBoxText}>Transfer Out</Text>
   }
+
+let oneP
+
+if (onePChallengeSwitch){
+  oneP = (<TouchableOpacity 
+  style={[styles.onePChallengeButton, 
+        {backgroundColor: "black"}]}
+        onPress={() => handleOnePChallengeOff()}>
+
+    <Text 
+      style={[styles.onePChallengeButtonText,
+            {color: "white"}]}>
+      
+      On
+
+    </Text>
+</TouchableOpacity>)
+}
+
+if (!onePChallengeSwitch){
+oneP =(<TouchableOpacity 
+  style={[styles.onePChallengeButton, 
+        {backgroundColor: "white"}]}
+        onPress={() => handleOnePChallengeOn()}>
+
+    <Text 
+      style={[styles.onePChallengeButtonButtonText,
+            {color:"black"}]}>
+      
+      Off
+
+    </Text>
+</TouchableOpacity>)}
 
 
 
@@ -225,6 +272,13 @@ export default function SaverScreen({navigation}) {
                   maxLength={20}
                 />
 
+                  <View>
+                    <Text style={styles.formQuestions}>
+                      Take the 1p challenge?
+                    </Text>
+                    {oneP}
+                  </View>
+
                 {!variable && (
                   <View>
                     <Text style={styles.formQuestions}>
@@ -233,6 +287,7 @@ export default function SaverScreen({navigation}) {
 
                     <TextInput
                       onChangeText={(text) => setSaverAmount(text)}
+                      value={saverAmount}
                       placeholder="£3.50"
                       style={styles.formStyle}
                       keyboardType="decimal-pad"
@@ -255,11 +310,13 @@ export default function SaverScreen({navigation}) {
                 </View>
                 {goalSwitch && (
                   <TextInput
+                    defaultValue={saverGoal}
                     onChangeText={(text) => setSaverGoal(text)}
                     placeholder="£100"
                     style={styles.formStyle}
                     keyboardType="decimal-pad"
                     returnKeyType={"done"}
+
                   />
                 )}
 
@@ -391,6 +448,17 @@ export default function SaverScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  onePChallengeButton: {
+    padding: 4,
+    margin: 4,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: "black",
+    paddingLeft: "5%",
+  },
+  onePChallengeButtonText: {
+    padding: 5,
+  },
   optionalText: {
     alignItems: "center",
     marginBottom: 10,

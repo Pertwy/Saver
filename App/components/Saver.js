@@ -41,6 +41,8 @@ export default function Saver({
   const [transferOption, setTransferOption] = useState(Transfer);
   const [varGoalSwitch, setVarGoalSwitch] = useState(true);
   const [formError, setFormError] = useState("");
+  const [onePChallangeAmount, setOnePChallangeAmount] = useState(0.00)
+  const [onePChallangeSwitch, setOnePChallangeSwitch] = useState(false)
 
   
 
@@ -51,6 +53,10 @@ export default function Saver({
 
   function handleModal() {
     return setModalVisible(true);
+  }
+
+  function handleOnePChallange(){
+    setOnePChallangeSwitch(!onePChallangeSwitch)
   }
 
   function completeEdit(){
@@ -68,7 +74,11 @@ export default function Saver({
     } else if (transferOption == 2 && (parseFloat(TotalSaved) + parseFloat(varCost)) > parseFloat(varGoal)) {
       transfer2Alert();
     } else {
-      setTotalSaved(parseFloat(TotalSaved) + parseFloat(varCost));
+      setTotalSaved(parseFloat(TotalSaved) + parseFloat(varCost) + onePChallangeAmount);
+    }
+
+    if(onePChallangeSwitch){
+      setOnePChallangeAmount(onePChallangeAmount + 0.01)
     }
 
     store.dispatch(logClick(moment().format("DD-MM-YY HH:mm:ss"), id, TotalSaved))
@@ -113,6 +123,20 @@ export default function Saver({
             <AntDesign name="edit" size={30} color="black"/>
           </View>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => handleOnePChallange()}
+          style={styles.buttonAreaEdit}
+        >
+          {onePChallangeSwitch &&(<View>
+            <Text style={styles.onePOn}>1p</Text> 
+          </View>)}
+
+          {!onePChallangeSwitch &&(<View>
+            <Text style={styles.onePOff}>1p</Text> 
+          </View>)}
+
+        </TouchableOpacity>
       </View>
     );
   }
@@ -140,6 +164,20 @@ export default function Saver({
               color="black"
             />
           </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => handleOnePChallange()}
+          style={styles.buttonAreaEdit}
+        >
+          {onePChallangeSwitch &&(<View>
+            <Text style={styles.onePOn}>1p</Text> 
+          </View>)}
+
+          {!onePChallangeSwitch &&(<View>
+            <Text style={styles.onePOff}>1p</Text> 
+          </View>)}
+
         </TouchableOpacity>
       </View>
     );
@@ -212,7 +250,7 @@ export default function Saver({
           <View>
             <View style={styles.saverTop}>
               <Text style={styles.saverTopText}>
-                {varTitle} - £{parseFloat(varCost).toFixed(2)}
+                {varTitle} - £{(parseFloat(varCost)+onePChallangeAmount).toFixed(2)}
               </Text>
             </View>
             {mainSaverText}
@@ -403,6 +441,12 @@ export default function Saver({
 }
 
 const styles = StyleSheet.create({
+  onePOn:{
+    color:"white"
+  },
+  onePOff:{
+    color:"black"
+  },
   editModal: {
     maxHeight: "100vh",
   },

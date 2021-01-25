@@ -18,14 +18,15 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.johnpatrickperkins.savermvp"
+      "bundleIdentifier": "com.thesaverapp.savermvp",
+      "buildNumber": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "description": "15/01/2020\n - Publish version\n",
     "android": {
-      "package": "com.johnpatrickperkins.savermvp",
+      "package": "com.thesaverapp.savermvp",
       "permissions": [],
       "versionCode": 2
     }

@@ -86,7 +86,7 @@ export default function CardScreenOut(props) {
           </TouchableOpacity>
         </View>
          
-        <WarningText/>
+        {/* <WarningText/> */}
 
         <FlatList
           data={newCardListOut}

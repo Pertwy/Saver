@@ -41,8 +41,10 @@ export default function Saver({
   const [transferOption, setTransferOption] = useState(Transfer);
   const [varGoalSwitch, setVarGoalSwitch] = useState(true);
   const [formError, setFormError] = useState("");
+
   const [onePChallangeAmount, setOnePChallangeAmount] = useState(0.00)
   const [onePChallangeSwitch, setOnePChallangeSwitch] = useState(false)
+  const [onePChallangeDay, setOnePChallangeDay] = useState(1)
 
   
 
@@ -79,6 +81,7 @@ export default function Saver({
 
     if(onePChallangeSwitch){
       setOnePChallangeAmount(onePChallangeAmount + 0.01)
+      setOnePChallangeDay(onePChallangeDay + 1)
     }
 
     store.dispatch(logClick(moment().format("DD-MM-YY HH:mm:ss"), id, TotalSaved))
@@ -254,6 +257,9 @@ export default function Saver({
               </Text>
             </View>
             {mainSaverText}
+            {onePChallangeSwitch && (
+              <View style={styles.saverTop}><Text>Day {onePChallangeDay}</Text></View>
+            )}
           </View>
         </TouchableOpacity>
 

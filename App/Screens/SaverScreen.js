@@ -22,12 +22,11 @@ import CardScreenOut from "./CardScreenOut"
 
 import TransferButton from "../components/TransferButton"
 import ColourButtons from "../components/ColourButtons"
+import backup from "../functions/backup"
 
 import {newSaver, firebasePull, pageUpdate, plusSaverId} from "../Redux/actions";
 import {store} from "../Redux/store";
-
 import * as firebase from 'firebase';
-
 import { Dimensions } from 'react-native';
 
 
@@ -61,7 +60,7 @@ export default function SaverScreen({navigation}) {
   const [variable, setVariable] = useState(false);
   const [transferMoneyModalVisible, setTransferMoneyModalVisible] = useState(false);
   const [newSaverList, setNewSaverList] = useState([]);
-  const [optionalText, setOptionalText] = useState(false)
+  const [optionalText, setOptionalText] = useState(true)
   const [idCount, setIdCount] = useState(1);
   const [formError, setFormError] = useState(null);
   const [noTransfer, setNoTransfer] = useState(true)
@@ -76,13 +75,7 @@ export default function SaverScreen({navigation}) {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
 
-  function backup(){
-    firebase
-      .database()
-      .ref()
-      .child(store.getState().redux.user)
-      .set(store.getState().redux);
-  }
+ 
 
 
   function closeAddModal() {
@@ -105,9 +98,9 @@ export default function SaverScreen({navigation}) {
     setSelectedCardIn(store.getState().redux.selectedCardIn)
     setSelectedCardOut(store.getState().redux.selectedCardOut)
 
-    // if(newSaverList.length >= 1){
-    //   setOptionalText(false)
-    // }
+    if(newSaverList.length >= 1){
+      setOptionalText(false)
+    }
   }
 
   const unsubscribe = store.subscribe(handelChange)
@@ -272,12 +265,12 @@ oneP =(<TouchableOpacity
                   maxLength={20}
                 />
 
-                  <View>
+                  {/* <View>
                     <Text style={styles.formQuestions}>
                       Take the 1p challenge?
                     </Text>
                     {oneP}
-                  </View>
+                  </View> */}
 
                 {!variable && (
                   <View>
@@ -287,7 +280,6 @@ oneP =(<TouchableOpacity
 
                     <TextInput
                       onChangeText={(text) => setSaverAmount(text)}
-                      value={saverAmount}
                       placeholder="£3.50"
                       style={styles.formStyle}
                       keyboardType="decimal-pad"
@@ -310,7 +302,6 @@ oneP =(<TouchableOpacity
                 </View>
                 {goalSwitch && (
                   <TextInput
-                    defaultValue={saverGoal}
                     onChangeText={(text) => setSaverGoal(text)}
                     placeholder="£100"
                     style={styles.formStyle}
@@ -420,8 +411,8 @@ oneP =(<TouchableOpacity
 
       {optionalText && (
       <View style={[styles.optionalText, {paddingTop: windowHeight/3}]}>
-        <Text>Add a Saver</Text>
-        <Text>Add some accounts</Text>
+        <Text>Click the + to add a Saver</Text>
+        <Text>Fill in the form</Text>
         <Text>Start Saving</Text>
       </View>)} 
     

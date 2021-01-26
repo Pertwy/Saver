@@ -124,7 +124,7 @@ export default function CardScreen({ navigation }) {
           <Text style={[styles.topButtonshidden]}>.</Text>
         </View>
 
-        <WarningText/>
+        {/* <WarningText/> */}
         
         <View style={styles.headingElement}>
           <Text style={styles.informationTextHeading}>OUTGOING ACCOUNTS</Text>

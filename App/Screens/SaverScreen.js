@@ -163,11 +163,13 @@ export default function SaverScreen({navigation}) {
     cardInBox = <Text style={styles.cardBoxText}>Transfer In</Text>
   }
 
+
   let cardOutBox = <Text style={styles.cardBoxText}>{selectedCardOut}</Text>;
   if (selectedCardOut == "") {
     cardOutBox = <Text style={styles.cardBoxText}>Transfer Out</Text>
   }
 
+  
 let oneP
 
 if (onePChallengeSwitch){

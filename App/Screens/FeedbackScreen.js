@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -13,6 +13,8 @@ import {Feather} from "@expo/vector-icons";
 
 export default function FeedbackScreen({ navigation }) {
   const [feedback, setFeedback] = useState("")
+  // const [showFeedback, setShowFeedback] =useState([
+  // ])
 
   //Navigate to Saver Page////..
   function navWelcome(){
@@ -20,6 +22,18 @@ export default function FeedbackScreen({ navigation }) {
 
   function handleDrawer(){
     navigation.openDrawer();}
+
+  // function setupDataListener() {
+  //   firebase
+  //     .database()
+  //     .ref("showFeedback")
+  //     .on('value', (snapshot) => {
+  //       setShowFeedback([...showFeedback, snapshot])
+  //       console.log(showFeedback)
+
+  //     }, function (errorObject) {
+  //       console.log("The read failed: " + errorObject.code);
+  //       })};
 
   //Upload data to Firebase /////////////
   function backup(){
@@ -36,6 +50,19 @@ export default function FeedbackScreen({ navigation }) {
     setFeedback("")
     navWelcome()
   }
+
+  // useEffect(() => {
+  //   setupDataListener()
+  // }, []);
+
+  // function HandleShowFeedback(){
+  //   return(showFeedback.map(feedback => {
+  //     return(
+  //     <View><Text>{feedback}</Text></View>
+  //     )
+  //   })
+  //   )
+  // }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -77,12 +104,30 @@ export default function FeedbackScreen({ navigation }) {
           </View>
         </TouchableOpacity>
 
+
+        <View style={styles.currentIssues}>
+          <Text style={styles.currentIssuesHeading}>Issues currently being addressed</Text>
+          <Text style={styles.currentIssuesText}> - Persistent log-ins</Text>
+          <Text style={styles.currentIssuesText}> - Immidiate undo button</Text>
+        </View>
+
       </View>
+
+      
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  currentIssues:{
+    paddingTop: 90
+  },
+  currentIssuesHeading:{
+    // fontWeight: "bold",
+    fontSize: 15,
+    paddingBottom: 5,
+    fontWeight:"bold"
+  },
   headingTopElement: {
     alignItems: "center",
     marginTop: 10,
@@ -123,7 +168,7 @@ const styles = StyleSheet.create({
   loginButtons: {
     marginTop: 30,
     flex: 1,
-    width: "80%",
+    width: "90%",
   },
   button: {
     padding: 14,

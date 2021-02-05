@@ -127,7 +127,7 @@ export default function CardScreenIn(props) {
           </TouchableOpacity>
         </View>
          
-        <WarningText/>
+        {/* <WarningText/> */}
 
         <FlatList
           //style={{flex: 1}}

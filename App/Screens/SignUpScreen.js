@@ -97,14 +97,14 @@ export default function SignUpScreen({ navigation }) {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           Style={styles.butContainer}
           onPress={() => navSaver()}
         >
           <View style={styles.button}>
             <Text style={styles.buttonText}>SKIP</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{formError}</Text>

@@ -22,12 +22,11 @@ import CardScreenOut from "./CardScreenOut"
 
 import TransferButton from "../components/TransferButton"
 import ColourButtons from "../components/ColourButtons"
+import backup from "../functions/backup"
 
 import {newSaver, firebasePull, pageUpdate, plusSaverId} from "../Redux/actions";
 import {store} from "../Redux/store";
-
 import * as firebase from 'firebase';
-
 import { Dimensions } from 'react-native';
 
 
@@ -61,10 +60,11 @@ export default function SaverScreen({navigation}) {
   const [variable, setVariable] = useState(false);
   const [transferMoneyModalVisible, setTransferMoneyModalVisible] = useState(false);
   const [newSaverList, setNewSaverList] = useState([]);
-  const [optionalText, setOptionalText] = useState(false)
+  const [optionalText, setOptionalText] = useState(true)
   const [idCount, setIdCount] = useState(1);
   const [formError, setFormError] = useState(null);
   const [noTransfer, setNoTransfer] = useState(true)
+  const [onePChallengeSwitch, setOnePChallengeSwitch] = useState(false)
 
   const [selectedCardIn, setSelectedCardIn] = useState("")
   const [selectedCardOut, setSelectedCardOut] = useState("")
@@ -75,13 +75,7 @@ export default function SaverScreen({navigation}) {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
 
-  function backup(){
-    firebase
-      .database()
-      .ref()
-      .child(store.getState().redux.user)
-      .set(store.getState().redux);
-  }
+ 
 
 
   function closeAddModal() {
@@ -104,9 +98,9 @@ export default function SaverScreen({navigation}) {
     setSelectedCardIn(store.getState().redux.selectedCardIn)
     setSelectedCardOut(store.getState().redux.selectedCardOut)
 
-    // if(newSaverList.length >= 1){
-    //   setOptionalText(false)
-    // }
+    if(newSaverList.length >= 1){
+      setOptionalText(false)
+    }
   }
 
   const unsubscribe = store.subscribe(handelChange)
@@ -146,6 +140,19 @@ export default function SaverScreen({navigation}) {
     navigation.openDrawer();
   }
 
+  function handleOnePChallengeOn(){
+    setOnePChallengeSwitch(!onePChallengeSwitch)
+    setSaverTitle("1p Challenge");
+    setSaverGoal(667.97);
+    setSaverAmount(0.01);
+  }
+
+  function handleOnePChallengeOff(){
+    setOnePChallengeSwitch(!onePChallengeSwitch)
+    setSaverTitle("");
+    setSaverGoal("");
+    setSaverAmount("");
+  }
 
   const addToTotalSaved = (addition) => {
     setTotalSaved(totalSaved + parseFloat(addition));
@@ -156,10 +163,45 @@ export default function SaverScreen({navigation}) {
     cardInBox = <Text style={styles.cardBoxText}>Transfer In</Text>
   }
 
+
   let cardOutBox = <Text style={styles.cardBoxText}>{selectedCardOut}</Text>;
   if (selectedCardOut == "") {
     cardOutBox = <Text style={styles.cardBoxText}>Transfer Out</Text>
   }
+
+  
+let oneP
+
+if (onePChallengeSwitch){
+  oneP = (<TouchableOpacity 
+  style={[styles.onePChallengeButton, 
+        {backgroundColor: "black"}]}
+        onPress={() => handleOnePChallengeOff()}>
+
+    <Text 
+      style={[styles.onePChallengeButtonText,
+            {color: "white"}]}>
+      
+      On
+
+    </Text>
+</TouchableOpacity>)
+}
+
+if (!onePChallengeSwitch){
+oneP =(<TouchableOpacity 
+  style={[styles.onePChallengeButton, 
+        {backgroundColor: "white"}]}
+        onPress={() => handleOnePChallengeOn()}>
+
+    <Text 
+      style={[styles.onePChallengeButtonButtonText,
+            {color:"black"}]}>
+      
+      Off
+
+    </Text>
+</TouchableOpacity>)}
 
 
 
@@ -225,6 +267,13 @@ export default function SaverScreen({navigation}) {
                   maxLength={20}
                 />
 
+                  {/* <View>
+                    <Text style={styles.formQuestions}>
+                      Take the 1p challenge?
+                    </Text>
+                    {oneP}
+                  </View> */}
+
                 {!variable && (
                   <View>
                     <Text style={styles.formQuestions}>
@@ -260,6 +309,7 @@ export default function SaverScreen({navigation}) {
                     style={styles.formStyle}
                     keyboardType="decimal-pad"
                     returnKeyType={"done"}
+
                   />
                 )}
 
@@ -363,8 +413,8 @@ export default function SaverScreen({navigation}) {
 
       {optionalText && (
       <View style={[styles.optionalText, {paddingTop: windowHeight/3}]}>
-        <Text>Add a Saver</Text>
-        <Text>Add some accounts</Text>
+        <Text>Click the + to add a Saver</Text>
+        <Text>Fill in the form</Text>
         <Text>Start Saving</Text>
       </View>)} 
     
@@ -391,6 +441,17 @@ export default function SaverScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  onePChallengeButton: {
+    padding: 4,
+    margin: 4,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: "black",
+    paddingLeft: "5%",
+  },
+  onePChallengeButtonText: {
+    padding: 5,
+  },
   optionalText: {
     alignItems: "center",
     marginBottom: 10,

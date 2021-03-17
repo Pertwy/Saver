@@ -1,12 +1,27 @@
 # Saver
 Saving App
 
+https://pertwy.github.io/saver-landing-page/
+
+## Purpose
 This app is designed to help users to save money by “not doing something”. i.e. when you choose not to buy a coffee in the morning, you would open the app and click 
 a button to transfer the cost of that coffee into your savings account or to a charity.
+	
+## Technologies
+Project is created with:
+* React Native
+* Redux
+* Firebase
+* Javascript, HTML, CSS
 
-The app has been created using React Native, JS, CSS, Redux, and firebase.
+	
+## Setup
+First clone the repo, and then:
 
-As this is app to help people save money, I would like it to be completely free. This means that transactions will need to be free. This requires an application to use 
-Open Banking. To increase the likelihood of the application being approved, I plan to first deploy the app using Stripe to transfer money. As Stripe charges a transfer 
-fee (albeit a very small one) I will recommend to users that until the Open Banking application has been successful, that they should not use the transfer function in the app, 
-and should instead use their usual online banking app to transfer money. This is a means to an end to ensure the final product is completely fit for purpose
+```
+$ npm install
+$ npm init
+```
+
+## Inspiration
+The origional inspiration for this application was Richard Thaler, in his bookk Nudge, and on the Micheal Lewis podcast Against The Rules. Thaler talks about samll changes/"Nudges" that can push people in the right direction without being overbearing. HE also speaks about "The Good Bank", which is an idealised sinario where banks remove features that some people would class as unfair. I see this app as a nudge to help people save for what they really want, instead of spending on what they don't need
